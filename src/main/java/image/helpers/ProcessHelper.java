@@ -41,9 +41,6 @@ public class ProcessHelper {
             Analyzer analyzer = new Analyzer(this.imagePlus, measurements, rt);
             analyzer.measure();
 
-//            String headers = IntStream.range(0, 36)
-//                    .mapToObj(j -> rt.getColumnHeading(j))
-//                    .collect(Collectors.joining(","));
             String headers = rt.getColumnHeadings().replace('\t', ',');
             StringBuilder sb = new StringBuilder(headers);
             sb.append("\n");
@@ -93,17 +90,13 @@ public class ProcessHelper {
 //			new File(resultCsvPath);
 //			rt.saveAs(resultCsvPath);
 
-            String headers = IntStream.range(0, ResultsTable.MAX_COLUMNS)
-                    .mapToObj(j -> rt.getColumnHeading(j))
-                    .collect(Collectors.joining(","));
+            String headers = rt.getColumnHeadings().replace('\t', ',');
             StringBuilder sb = new StringBuilder(headers);
             sb.append("\n");
             sb.append(
                     IntStream.range(0, rt.getCounter())
                     .mapToObj(i -> {
-                        return IntStream.range(0, ResultsTable.MAX_COLUMNS)
-                                .mapToObj(j -> Double.toString(rt.getValueAsDouble(j, i)))
-                                .collect(Collectors.joining(","));
+                        return rt.getRowAsString(i).replace('\t', ',');
                     }).collect(Collectors.joining("\n"))
             );
 
