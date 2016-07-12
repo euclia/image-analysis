@@ -20,6 +20,7 @@ public class ParticleResult {
     private String integrated_density;
     private String kurtosis;
     private String major;
+    private String modal_grey_value;
     private String max_grey_value;
     private String mean_grey_value;
     private String median;
@@ -56,6 +57,7 @@ public class ParticleResult {
         this.solidity = replaceNull(map.get("Solidity"));
         this.x_center_of_mass = replaceNull(map.get("XM"));
         this.y_center_of_mass = replaceNull(map.get("YM"));
+        this.modal_grey_value = replaceNull(map.get("Mode"));
         this.min_grey_value = replaceNull(map.get("Min"));
         this.max_grey_value = replaceNull(map.get("Max"));
         this.bounding_rectangle_origin_x = replaceNull(map.get("BX"));
@@ -415,4 +417,13 @@ public class ParticleResult {
     public void setVolumeToSurface(String volumeToSurface) {
         this.volumeToSurface = volumeToSurface;
     }
+
+    public String getModal_grey_value() {
+        return modal_grey_value;
+    }
+
+    public void setModal_grey_value(String modal_grey_value) {
+        this.modal_grey_value = modal_grey_value;
+    }
+    
 }
