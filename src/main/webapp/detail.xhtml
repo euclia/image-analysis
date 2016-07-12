@@ -163,6 +163,9 @@
         <h:outputText value="#{imageResult.modal_grey_value}" />
     </p:column>
 
+    <p:column headerText="Mean Grey Value" rendered="#{resultController.isMeanGrayValueSelected}" width="200">
+        <h:outputText value="#{imageResult.mean_grey_value}" />
+    </p:column>
 
 
 </p:dataTable>
