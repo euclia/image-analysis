@@ -78,7 +78,7 @@ public class AnalysisResource {
             Measurement measurementModel = new Measurement();
             List<String> selectedMeasurements = measurementModel.getMeasurementList();
             ApplicationMain applicationMain = new ApplicationMain(
-                    selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus, fileName);
+                    selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
 
             Result result = null;
             if (type == null || type.isEmpty() || type.equals("Analyze")) {
