@@ -21,18 +21,19 @@
         <h:form enctype="multipart/form-data">
             
             <h:panelGrid columns="2">
-            <p:outputLabel for="thresholdType" value="Select the filter type:" style="font-size: x-large"/>
-            <p:selectOneMenu id="thresholdType" onchange="submit()" valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}">
+            <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
+            <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
                 <f:selectItem itemLabel="Default" itemValue="Default"/>
                 <f:selectItem itemLabel="Huang" itemValue="Huang"/>
                 <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
                 <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
                 <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
                 <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
+                <p:ajax update="basic"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
-            <p:selectOneMenu id="function" value="#{indexController.function}">
+            <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
                 <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
                 <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
             </p:selectOneMenu>
