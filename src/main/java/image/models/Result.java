@@ -1,10 +1,11 @@
 package image.models;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-public class Result {
+public class Result implements Serializable{
 
 	public List<ParticleResult> particleResults;
 	public ParticleResult staticParticle;

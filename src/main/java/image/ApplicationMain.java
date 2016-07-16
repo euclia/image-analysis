@@ -19,18 +19,17 @@ public class ApplicationMain {
 	private String filePath;
 	private ImagePlus imagePlus;
 
-	public ApplicationMain(String[] selectedMeasurements, String selectedThreshold, ImagePlus imagePlus, String theUploadedFilePath){
+	public ApplicationMain(String[] selectedMeasurements, String selectedThreshold, ImagePlus imagePlus){
 		this.selectedMeasurements = selectedMeasurements;
 		this.selectedThreshold = selectedThreshold;
 		this.measurement = new Measurement();
 
 		this.imagePlus = imagePlus;
-		this.filePath = theUploadedFilePath;
 	}
 
-	public ApplicationMain(ImagePlus imagePlus, String uploadedFilePath){
+	public ApplicationMain(ImagePlus imagePlus){
 		this.imagePlus = imagePlus;
-		this.filePath = uploadedFilePath;
+//		this.filePath = uploadedFilePath;
 	}
 
 	public Result analyseImage(){
