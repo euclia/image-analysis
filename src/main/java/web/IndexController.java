@@ -55,17 +55,17 @@ public class IndexController implements Serializable {
     private String function;
     private Result result;
     private List<ParticleResult> resultMap;
-
+    
     @Inject
     private ServletContext context;
-
+    
     @PostConstruct
     public void init() {
         Measurement measurementModel = new Measurement();
         this.measurements = measurementModel.getMeasurementList();
         this.fileMinion = new FileMinion();
     }
-
+    
     public String submitForm() {
         try {
             String msg = FORM_SUBMITTED;
@@ -86,32 +86,11 @@ public class IndexController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("result", this.result);
         return "detail?faces-redirect=true";
     }
-
+    
     public void handleFileUpload(FileUploadEvent event) {
-//        String sessionID = this.getSessionID();
-//        this.uploadedFilePath = DIR_PATH + sessionID + "/" + event.getFile().getFileName();
         try {
-//            fileMinion.createUserDir(sessionID, DIR_PATH);
-//            File result = new File(this.uploadedFilePath);
-//            FileOutputStream fileOutputStream = new FileOutputStream(result);
-//
-//            byte[] buffer = new byte[BUFFER_SIZE];
-//
-//            int bulk;
             InputStream inputStream = event.getFile().getInputstream();
             bufferedImage = ImageIO.read(inputStream);
-//            while (true) {
-//                bulk = inputStream.read(buffer);
-//                if (bulk < 0) {
-//                    break;
-//                }
-//                fileOutputStream.write(buffer, 0, bulk);
-//                fileOutputStream.flush();
-//            }
-//
-//            fileOutputStream.close();
-//            inputStream.close();
-
             FacesMessage msg
                     = new FacesMessage("File Description", "file name: "
                             + event.getFile().getFileName() + "file size: "
@@ -119,59 +98,65 @@ public class IndexController implements Serializable {
                             + event.getFile().getContentType() + "The file was uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (IOException e) {
-//            this.uploadedFilePath = null;
             e.printStackTrace();
             FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "The files were not uploaded!", "");
             FacesContext.getCurrentInstance().addMessage(null, error);
         }
     }
-
+    
     private String getSessionID() {
         FacesContext fCtx = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fCtx.getExternalContext().getSession(false);
         return session.getId();
     }
-
+    
     private DefaultStreamedContent getBlankImage() {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
-
+        
         return new DefaultStreamedContent(is);
-
+        
     }
-    private static final Logger LOG = Logger.getLogger(IndexController.class.getName());
-
+    
+    public void selectAllMeasurements() {
+        this.setSelectedMeasurements(measurements.toArray(new String[measurements.size()]));
+    }
+    
+    public void deselectAllMeasurements() {
+        this.setSelectedMeasurements(new String[measurements.size()]);
+    }
+    
     public String getThresholdType() {
         return thresholdType;
     }
-
+    
     public void setThresholdType(String thresholdType) {
         this.thresholdType = thresholdType;
     }
-
+    
     public String[] getSelectedMeasurements() {
         return selectedMeasurements;
     }
-
+    
     public void setSelectedMeasurements(String[] selectedMeasurements) {
         this.selectedMeasurements = selectedMeasurements;
     }
-
+    
     public List<String> getMeasurements() {
         return measurements;
     }
-
+    
     public void setMeasurements(List<String> measurements) {
         this.measurements = measurements;
     }
-
+    
     public String getFunction() {
         return function;
     }
-
+    
     public void setFunction(String function) {
         this.function = function;
     }
-
+    
     public DefaultStreamedContent getImgPreview() {
         DefaultStreamedContent imgPreview;
         if (bufferedImage != null) {
@@ -197,15 +182,15 @@ public class IndexController implements Serializable {
             imgPreview = this.getBlankImage();
         }
         return imgPreview;
-
+        
     }
-
+    
     public void updateThresholdType(ValueChangeEvent event) {
         event.getNewValue();
     }
-
+    
     public BufferedImage getBufferedImage() {
         return bufferedImage;
     }
-
+    
 }

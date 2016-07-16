@@ -1,175 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-<f:metadata>
-    <f:event type="preRenderView" listener="#{resultController.initialize}"/>
-</f:metadata>
-<h:head>
-    <title>Detail page</title>
-</h:head>
-<h:body>
-<h:form enctype="multipart/form-data">
-	<p:commandButton value="Image Preview" type="button" update="basic">
-		<p:ajax id="aj2" event="click" immediate="true" update="basic"/>
-	</p:commandButton>
-	<p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
-		<h:panelGrid columns="2" cellpadding="10">
-			<p:graphicImage value="#{resultController.imgPreview}" cache="false" onmouseup="#{resultController.imgPreview}"/>
-		</h:panelGrid>
-	</p:panel>
-<p:dataTable id="imageResults" var="imageResult" value="#{resultController.particleResults}" scrollable="true" scrollWidth="100%" scrollHeight="100%">
-    <f:facet name="header">
-        List of Properties
-        <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-        <p:columnToggler datasource="imageResults" trigger="toggler" />
-    </f:facet>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{resultController.initialize}"/>
+    </f:metadata>
+    <h:head>
+        <title>Detail page</title>
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <p:button value="Back" outcome="index" />
+            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:graphicImage value="#{resultController.imgPreview}" cache="false" onmouseup="#{resultController.imgPreview}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:dataTable id="imageResults" var="imageResult" value="#{resultController.particleResults}" scrollable="true" scrollWidth="100%" scrollHeight="100%">
+                <f:facet name="header">
+                    List of Properties
+                    <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                    <p:columnToggler datasource="imageResults" trigger="toggler" />
+                </f:facet>
 
-    <p:column headerText="id" width="200">
-        <h:outputText value="#{imageResult.id}"/>
-    </p:column>
+                <p:column headerText="id" width="200">
+                    <h:outputText value="#{imageResult.id}"/>
+                </p:column>
 
-    <p:column headerText="Min Feret" rendered="#{resultController.isFeretSelected}" width="200">
-        <h:outputText value="#{imageResult.min_feret}" />
-    </p:column>
+                <p:column headerText="Min Feret" rendered="#{resultController.isFeretSelected}" width="200">
+                    <h:outputText value="#{imageResult.min_feret}" />
+                </p:column>
 
-    <p:column headerText="Feret Angle" rendered="#{resultController.isFeretSelected}" width="200">
-        <h:outputText value="#{imageResult.feret_angle}" />
-    </p:column>
+                <p:column headerText="Feret Angle" rendered="#{resultController.isFeretSelected}" width="200">
+                    <h:outputText value="#{imageResult.feret_angle}" />
+                </p:column>
 
-    <p:column headerText="Feret X" rendered="#{resultController.isFeretSelected}" width="200">
-        <h:outputText value="#{imageResult.feret_x}" />
-    </p:column>
+                <p:column headerText="Feret X" rendered="#{resultController.isFeretSelected}" width="200">
+                    <h:outputText value="#{imageResult.feret_x}" />
+                </p:column>
 
-    <p:column headerText="Feret Y" rendered="#{resultController.isFeretSelected}" width="200">
-        <h:outputText value="#{imageResult.feret_y}" />
-    </p:column>
+                <p:column headerText="Feret Y" rendered="#{resultController.isFeretSelected}" width="200">
+                    <h:outputText value="#{imageResult.feret_y}" />
+                </p:column>
 
-    <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
-        <h:outputText value="#{imageResult.area}" />
-    </p:column>
+                <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
+                    <h:outputText value="#{imageResult.area}" />
+                </p:column>
 
-    <p:column headerText="Porosity" rendered="#{resultController.isPorositySelected}" width="200">
-        <h:outputText value="#{imageResult.area_fraction}" />
-    </p:column>
+                <p:column headerText="Porosity" rendered="#{resultController.isPorositySelected}" width="200">
+                    <h:outputText value="#{imageResult.area_fraction}" />
+                </p:column>
 
-    <p:column headerText="Perimeter" rendered="#{resultController.isPerimeterSelected}" width="200">
-        <h:outputText value="#{imageResult.perimeter}" />
-    </p:column>
+                <p:column headerText="Perimeter" rendered="#{resultController.isPerimeterSelected}" width="200">
+                    <h:outputText value="#{imageResult.perimeter}" />
+                </p:column>
 
-    <p:column headerText="Circularity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-        <h:outputText value="#{imageResult.circularity}" />
-    </p:column>
+                <p:column headerText="Circularity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
+                    <h:outputText value="#{imageResult.circularity}" />
+                </p:column>
 
-    <p:column headerText="Aspect Ratio" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-        <h:outputText value="#{imageResult.aspect_ratio}" />
-    </p:column>
+                <p:column headerText="Aspect Ratio" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
+                    <h:outputText value="#{imageResult.aspect_ratio}" />
+                </p:column>
 
-    <p:column headerText="Roundness" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-        <h:outputText value="#{imageResult.roundness}" />
-    </p:column>
+                <p:column headerText="Roundness" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
+                    <h:outputText value="#{imageResult.roundness}" />
+                </p:column>
 
-    <p:column headerText="Solidity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-        <h:outputText value="#{imageResult.solidity}" />
-    </p:column>
+                <p:column headerText="Solidity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
+                    <h:outputText value="#{imageResult.solidity}" />
+                </p:column>
 
-    <p:column headerText="STD_DEV" rendered="#{resultController.isStandardDeviationSelected}" width="200">
-        <h:outputText value="#{imageResult.std_dev}" />
-    </p:column>
+                <p:column headerText="STD_DEV" rendered="#{resultController.isStandardDeviationSelected}" width="200">
+                    <h:outputText value="#{imageResult.std_dev}" />
+                </p:column>
 
-    <!--Volume related Parameters-->
-    <p:column headerText="Volume" rendered="#{resultController.isVolumeSelected}" width="200">
-        <h:outputText value="#{imageResult.volume}" />
-    </p:column>
+                <!--Volume related Parameters-->
+                <p:column headerText="Volume" rendered="#{resultController.isVolumeSelected}" width="200">
+                    <h:outputText value="#{imageResult.volume}" />
+                </p:column>
 
-    <p:column headerText="Sphericity" rendered="#{resultController.isSphericitySelected}" width="200">
-        <h:outputText value="#{imageResult.sphericity}" />
-    </p:column>
+                <p:column headerText="Sphericity" rendered="#{resultController.isSphericitySelected}" width="200">
+                    <h:outputText value="#{imageResult.sphericity}" />
+                </p:column>
 
-    <p:column headerText="Volume to Surface" rendered="#{resultController.isVolumeToSurfaceSelected}" width="200">
-        <h:outputText value="#{imageResult.volumeToSurface}" />
-    </p:column>
+                <p:column headerText="Volume to Surface" rendered="#{resultController.isVolumeToSurfaceSelected}" width="200">
+                    <h:outputText value="#{imageResult.volumeToSurface}" />
+                </p:column>
 
-    <!-- Fit Ellipse Related Parameters -->
-    <p:column headerText="Angle" rendered="#{resultController.isFitEllipseSelected}" width="200">
-        <h:outputText value="#{imageResult.angle}" />
-    </p:column>
+                <!-- Fit Ellipse Related Parameters -->
+                <p:column headerText="Angle" rendered="#{resultController.isFitEllipseSelected}" width="200">
+                    <h:outputText value="#{imageResult.angle}" />
+                </p:column>
 
-    <p:column headerText="Minor" rendered="#{resultController.isFitEllipseSelected}" width="200">
-        <h:outputText value="#{imageResult.minor}" />
-    </p:column>
+                <p:column headerText="Minor" rendered="#{resultController.isFitEllipseSelected}" width="200">
+                    <h:outputText value="#{imageResult.minor}" />
+                </p:column>
 
-    <p:column headerText="Major" rendered="#{resultController.isFitEllipseSelected}" width="200">
-        <h:outputText value="#{imageResult.major}" />
-    </p:column>
+                <p:column headerText="Major" rendered="#{resultController.isFitEllipseSelected}" width="200">
+                    <h:outputText value="#{imageResult.major}" />
+                </p:column>
 
-    <p:column headerText="Skeweness" rendered="#{resultController.isSkewenessSelected}" width="200">
-        <h:outputText value="#{imageResult.skewness}" />
-    </p:column>
+                <p:column headerText="Skeweness" rendered="#{resultController.isSkewenessSelected}" width="200">
+                    <h:outputText value="#{imageResult.skewness}" />
+                </p:column>
 
-    <p:column headerText="Integrated Density" rendered="#{resultController.isIntegratedDensitySelected}" width="200">
-        <h:outputText value="#{imageResult.integrated_density}" />
-    </p:column>
+                <p:column headerText="Integrated Density" rendered="#{resultController.isIntegratedDensitySelected}" width="200">
+                    <h:outputText value="#{imageResult.integrated_density}" />
+                </p:column>
 
-    <p:column headerText="Kurtosis" rendered="#{resultController.isKurtosisSelected}" width="200">
-        <h:outputText value="#{imageResult.kurtosis}" />
-    </p:column>
+                <p:column headerText="Kurtosis" rendered="#{resultController.isKurtosisSelected}" width="200">
+                    <h:outputText value="#{imageResult.kurtosis}" />
+                </p:column>
 
-    <p:column headerText="Min Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
-        <h:outputText value="#{imageResult.min_grey_value}" />
-    </p:column>
+                <p:column headerText="Min Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
+                    <h:outputText value="#{imageResult.min_grey_value}" />
+                </p:column>
 
-    <p:column headerText="Max Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
-        <h:outputText value="#{imageResult.max_grey_value}" />
-    </p:column>
+                <p:column headerText="Max Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
+                    <h:outputText value="#{imageResult.max_grey_value}" />
+                </p:column>
 
-    <p:column headerText="Center Of Mass X" rendered="#{resultController.isCenterOfMassSelected}" width="200">
-        <h:outputText value="#{imageResult.x_center_of_mass}" />
-    </p:column>
+                <p:column headerText="Center Of Mass X" rendered="#{resultController.isCenterOfMassSelected}" width="200">
+                    <h:outputText value="#{imageResult.x_center_of_mass}" />
+                </p:column>
 
-    <p:column headerText="Center Of Mass Y" rendered="#{resultController.isCenterOfMassSelected}" width="200">
-        <h:outputText value="#{imageResult.y_center_of_mass}" />
-    </p:column>
+                <p:column headerText="Center Of Mass Y" rendered="#{resultController.isCenterOfMassSelected}" width="200">
+                    <h:outputText value="#{imageResult.y_center_of_mass}" />
+                </p:column>
 
-    <p:column headerText="Bounding Rectangle Origin X" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-        <h:outputText value="#{imageResult.bounding_rectangle_origin_x}" />
-    </p:column>
+                <p:column headerText="Bounding Rectangle Origin X" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
+                    <h:outputText value="#{imageResult.bounding_rectangle_origin_x}" />
+                </p:column>
 
-    <p:column headerText="Bounding Rectangle Origin Y" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-        <h:outputText value="#{imageResult.bounding_rectangle_origin_y}" />
-    </p:column>
+                <p:column headerText="Bounding Rectangle Origin Y" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
+                    <h:outputText value="#{imageResult.bounding_rectangle_origin_y}" />
+                </p:column>
 
-    <p:column headerText="Bounding Rectangle Width" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-        <h:outputText value="#{imageResult.bounding_rectangle_width}" />
-    </p:column>
+                <p:column headerText="Bounding Rectangle Width" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
+                    <h:outputText value="#{imageResult.bounding_rectangle_width}" />
+                </p:column>
 
-    <p:column headerText="Bounding Rectangle Height" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-        <h:outputText value="#{imageResult.bounding_rectangle_height}" />
-    </p:column>
+                <p:column headerText="Bounding Rectangle Height" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
+                    <h:outputText value="#{imageResult.bounding_rectangle_height}" />
+                </p:column>
 
-    <p:column headerText="Centroid X" rendered="#{resultController.isCentroidSelected}" width="200">
-        <h:outputText value="#{imageResult.x_centroid}" />
-    </p:column>
+                <p:column headerText="Centroid X" rendered="#{resultController.isCentroidSelected}" width="200">
+                    <h:outputText value="#{imageResult.x_centroid}" />
+                </p:column>
 
-    <p:column headerText="Centroid Y" rendered="#{resultController.isCentroidSelected}" width="200">
-        <h:outputText value="#{imageResult.y_centroid}" />
-    </p:column>
-    
-    <p:column headerText="Modal Grey Value" rendered="#{resultController.isModalGrayValueSelected}" width="200">
-        <h:outputText value="#{imageResult.modal_grey_value}" />
-    </p:column>
+                <p:column headerText="Centroid Y" rendered="#{resultController.isCentroidSelected}" width="200">
+                    <h:outputText value="#{imageResult.y_centroid}" />
+                </p:column>
 
-    <p:column headerText="Mean Grey Value" rendered="#{resultController.isMeanGrayValueSelected}" width="200">
-        <h:outputText value="#{imageResult.mean_grey_value}" />
-    </p:column>
+                <p:column headerText="Modal Grey Value" rendered="#{resultController.isModalGrayValueSelected}" width="200">
+                    <h:outputText value="#{imageResult.modal_grey_value}" />
+                </p:column>
+
+                <p:column headerText="Mean Grey Value" rendered="#{resultController.isMeanGrayValueSelected}" width="200">
+                    <h:outputText value="#{imageResult.mean_grey_value}" />
+                </p:column>
 
 
-</p:dataTable>
-</h:form>
-</h:body>
+            </p:dataTable>
+        </h:form>
+    </h:body>
 </html>
 
