@@ -5,12 +5,21 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+>
+
     <h:head>
         <title>Image analysis page</title>
+    <h:form>
+        <p:tabMenu activeIndex="0">
+            <p:menuitem value="Overview" outcome="/ui/menu/tabMenu" icon="ui-icon-star" url="index.xhtml">
+            </p:menuitem>
+            <p:menuitem value="Demos" outcome="/ui/menu/tabMenu" icon="ui-icon-search" url="ridge.xhtml">
+            </p:menuitem>
+        </p:tabMenu>
+    </h:form>
         <h:outputStylesheet library="css" name="style.css"  />
-    </h:head>
+
+</h:head>
     <h:body>
         <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
         <div class="app_title">

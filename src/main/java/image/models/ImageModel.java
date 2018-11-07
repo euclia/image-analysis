@@ -1,21 +1,16 @@
 package image.models;
 
-import image.helpers.ImageModelHelper;
-import image.helpers.ProcessHelper;
-import image.helpers.ValidationHelper;
 import ij.IJ;
 import ij.ImagePlus;
+import image.helpers.ImageModelHelper;
+import image.helpers.ValidationHelper;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class ImageModel extends ImagePlus {
 
-	public String filePath;
-	public ImagePlus imp;
+	private String filePath;
+	private ImagePlus imp;
 	public Double porosity = -1.0;
 	private int height = -1;
 	private int width = -1;

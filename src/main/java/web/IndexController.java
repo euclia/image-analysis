@@ -1,36 +1,29 @@
 package web;
 
 import ij.ImagePlus;
-
 import image.ApplicationMain;
 import image.helpers.FileMinion;
-import image.models.ParticleResult;
 import image.models.Measurement;
-
+import image.models.ParticleResult;
 import image.models.Result;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Context;
 
 @Named("indexController")
 @SessionScoped
@@ -41,8 +34,7 @@ public class IndexController implements Serializable {
     private final String IMAGEANALYSIS = "imageAnalysis";
     private final String DIR_PATH2 = "/src/main/webapp/WEB-INF/files/";
     private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
-//	private final String BLANK_IMAGE_PATH = "src/main/webapp/WEB-INF/files/blank.jpg";
-    private final String BLANK_IMAGE_PATH = "/WEB-INF/classes/blank.png";
+    private final String BLANK_IMAGE_PATH = "/resources/blank.png";
     private final int BUFFER_SIZE = 6124;
 
     //variables
@@ -51,7 +43,6 @@ public class IndexController implements Serializable {
     private List<String> measurements;
     private String[] selectedMeasurements;
     private BufferedImage bufferedImage;
-//    private String uploadedFilePath;
     private String function;
     private Result result;
     private List<ParticleResult> resultMap;
@@ -188,9 +179,5 @@ public class IndexController implements Serializable {
     public void updateThresholdType(ValueChangeEvent event) {
         event.getNewValue();
     }
-    
-    public BufferedImage getBufferedImage() {
-        return bufferedImage;
-    }
-    
+
 }

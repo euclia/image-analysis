@@ -21,7 +21,8 @@ import javax.servlet.ServletContext;
 @SessionScoped
 public class ResultController implements Serializable {
 
-    private final String BLANK_IMAGE_PATH = "/WEB-INF/classes/blank.png";
+
+    private final String BLANK_IMAGE_PATH = "/resources/blank.png";
     private Result result;
     private List<ParticleResult> particleResults;
     private HashMap<String, Boolean> selectedMeasurements;
@@ -50,11 +51,13 @@ public class ResultController implements Serializable {
     private ServletContext context;
 
     public void initialize() {
-//		this.result = (Result)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("result");
         this.result = (Result) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("result");
+        if (result.getParticleResults()!=null)
         this.particleResults = result.getParticleResults();
-        this.selectedMeasurements = result.getSelectedMeasurements();
-        this.initializeRenderedColumns(result.getSelectedMeasurements());
+        if (result.getSelectedMeasurements()!=null) {
+            this.selectedMeasurements = result.getSelectedMeasurements();
+            this.initializeRenderedColumns(result.getSelectedMeasurements());
+        }
     }
 
     public List<ParticleResult> getParticleResults() {

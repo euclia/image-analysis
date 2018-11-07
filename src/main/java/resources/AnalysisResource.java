@@ -101,5 +101,4 @@ public class AnalysisResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 }

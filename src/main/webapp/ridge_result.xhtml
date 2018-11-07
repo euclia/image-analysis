@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:metadata>
+    <f:event type="preRenderView" listener="#{result2Controller.initialize}"/>
+</f:metadata>
+<h:head>
+    <title>Detail page</title>
+</h:head>
+<h:body>
+    <p:button value="Back" outcome="ridge" />
+    <p:panel id="preview" header="Result" style="margin-bottom:20px">
+    <h:panelGrid columns="2">
+        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.initialImage)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.initialImage)}"/>
+        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.resultImage)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.resultImage)}"/>
+    </h:panelGrid>
+    </p:panel>
+    <p:panel id="histogram" header="Mean Width Histogram" style="margin-bottom:20px">
+        <h:panelGrid columns="1">
+            <p:graphicImage  value="#{result2Controller.getImgPreview(result2Controller.histogram)}" cache="false" onmouseup="{result2Controller.getImgPreview(result2Controller.histogram)}"/>
+        </h:panelGrid>
+    </p:panel>
+
+    <p:dataTable id="ridgeDetectionSummary" var="linesResult" value="#{result2Controller.ridgeLinesReport}"
+                 rows="25"
+                 paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="10,25,50">
+        <f:facet name="header">
+            Ridge Detection Summary
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="ridgeDetectionSummary" trigger="toggler" />
+
+        </f:facet>
+        <p:column headerText="Frame" width="200">
+            <h:outputText value="#{linesResult.frame}" />
+        </p:column>
+
+        <p:column headerText="Contour Id." width="200">
+            <h:outputText value="#{linesResult.contourId}" />
+        </p:column>
+
+        <p:column headerText="Length" width="200">
+            <h:outputText value="#{linesResult.length}" />
+        </p:column>
+
+        <p:column headerText="Mean Line Width" width="200">
+            <h:outputText value="#{linesResult.meanLineWidth}" />
+        </p:column>
+    </p:dataTable>
+
+    <p:dataTable id="ridgeDetectionFullResults" var="lineResult" value="#{result2Controller.ridgeLineReport}"
+                 rows="25"
+                 paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="10,25,50">
+        <f:facet name="header">
+            Ridge Detection FullResults
+            <p:commandButton id="toggle" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="ridgeDetectionFullResults" trigger="toggle" />
+
+        </f:facet>
+        <p:column headerText="Pos." width="200">
+            <h:outputText value="#{lineResult.pos}" />
+        </p:column>
+
+        <p:column headerText="ID"  width="200">
+            <h:outputText value="#{lineResult.contourId}" />
+        </p:column>
+
+        <p:column headerText="Frame" width="200">
+            <h:outputText value="#{lineResult.frame}" />
+        </p:column>
+
+        <p:column headerText="Angle of Normal" width="200">
+            <h:outputText value="#{lineResult.angleOfNormal}" />
+        </p:column>
+
+        <p:column headerText="Countour Class" width="200">
+            <h:outputText value="#{lineResult.clasS}" />
+        </p:column>
+
+        <p:column headerText="Contrast" width="200">
+            <h:outputText value="#{lineResult.contrast}" />
+        </p:column>
+
+        <p:column headerText="Asymmetry" width="200">
+            <h:outputText value="#{lineResult.asymmetry}" />
+        </p:column>
+
+        <p:column headerText="Line Width" width="200">
+            <h:outputText value="#{lineResult.lineWidth}" />
+        </p:column>
+
+        <p:column headerText="Estimated Length" width="200">
+            <h:outputText value="#{lineResult.length}" />
+        </p:column>
+
+        <p:column headerText="X coordinates" width="200">
+            <h:outputText value="#{lineResult.xCoordinates}" />
+        </p:column>
+
+        <p:column headerText="Y coordinates" width="200">
+            <h:outputText value="#{lineResult.yCoordinates}" />
+        </p:column>
+    </p:dataTable>
+</h:body>
+</html>
