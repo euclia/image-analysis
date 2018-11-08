@@ -114,4 +114,21 @@ public class RidgeLineReport {
     public void setClasS(String clasS) {
         this.clasS = clasS;
     }
+
+    @Override
+    public String toString() {
+        return "RidgeLineReport{" +
+                "frame='" + frame + '\'' +
+                ", contourId='" + contourId + '\'' +
+                ", pos='" + pos + '\'' +
+                ", xCoordinates='" + xCoordinates + '\'' +
+                ", yCoordinates='" + yCoordinates + '\'' +
+                ", length='" + length + '\'' +
+                ", contrast='" + contrast + '\'' +
+                ", asymmetry='" + asymmetry + '\'' +
+                ", lineWidth='" + lineWidth + '\'' +
+                ", angleOfNormal='" + angleOfNormal + '\'' +
+                ", clasS='" + clasS + '\'' +
+                '}';
+    }
 }

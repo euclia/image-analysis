@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <f:metadata>
@@ -24,7 +23,11 @@
             <p:graphicImage  value="#{result2Controller.getImgPreview(result2Controller.histogram)}" cache="false" onmouseup="{result2Controller.getImgPreview(result2Controller.histogram)}"/>
         </h:panelGrid>
     </p:panel>
-
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h:form>
     <p:dataTable id="ridgeDetectionSummary" var="linesResult" value="#{result2Controller.ridgeLinesReport}"
                  rows="25"
                  paginator="true"
@@ -34,79 +37,107 @@
             Ridge Detection Summary
             <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
             <p:columnToggler datasource="ridgeDetectionSummary" trigger="toggler" />
-
         </f:facet>
         <p:column headerText="Frame" width="200">
             <h:outputText value="#{linesResult.frame}" />
         </p:column>
-
         <p:column headerText="Contour Id." width="200">
             <h:outputText value="#{linesResult.contourId}" />
         </p:column>
-
         <p:column headerText="Length" width="200">
             <h:outputText value="#{linesResult.length}" />
         </p:column>
-
         <p:column headerText="Mean Line Width" width="200">
             <h:outputText value="#{linesResult.meanLineWidth}" />
         </p:column>
     </p:dataTable>
 
-    <p:dataTable id="ridgeDetectionFullResults" var="lineResult" value="#{result2Controller.ridgeLineReport}"
-                 rows="25"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="10,25,50">
-        <f:facet name="header">
-            Ridge Detection FullResults
-            <p:commandButton id="toggle" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-            <p:columnToggler datasource="ridgeDetectionFullResults" trigger="toggle" />
+    <h:commandLink>
+        <p:graphicImage name="xml.png" style="float:right" width="50"/>
+        <p:dataExporter type="xml" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+    </h:commandLink>
+    <h:commandLink>
+        <p:graphicImage name="csv.png" style="float:right" width="50"/>
+        <p:dataExporter type="csv" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+    </h:commandLink>
+    <h:commandLink>
+        <p:graphicImage name="pdf.png"  style="float:right" width="50"/>
+        <p:dataExporter type="pdf" target="ridgeDetectionSummary" fileName="ridgeLinesReport"/>
+    </h:commandLink>
+    <h:commandLink>
+        <p:graphicImage name="excel.png" style="float:right" width="50"/>
+        <p:dataExporter type="xls" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+    </h:commandLink>
+        <span style="float:right; font-size: x-large; "  >Download Ridge Detection Summary: </span>
+    </h:form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
-        </f:facet>
-        <p:column headerText="Pos." width="200">
-            <h:outputText value="#{lineResult.pos}" />
-        </p:column>
+    <h:form>
+        <p:dataTable id="ridgeDetectionFullResults" var="lineResult" value="#{result2Controller.ridgeLineReport}"
+                     rows="25"
+                     paginator="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="10,25,50">
+            <f:facet name="header">
+                Ridge Detection FullResults
+                <p:commandButton id="toggle" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                <p:columnToggler datasource="ridgeDetectionFullResults" trigger="toggle" />
+            </f:facet>
 
-        <p:column headerText="ID"  width="200">
-            <h:outputText value="#{lineResult.contourId}" />
-        </p:column>
-
-        <p:column headerText="Frame" width="200">
-            <h:outputText value="#{lineResult.frame}" />
-        </p:column>
-
-        <p:column headerText="Angle of Normal" width="200">
-            <h:outputText value="#{lineResult.angleOfNormal}" />
-        </p:column>
-
-        <p:column headerText="Countour Class" width="200">
-            <h:outputText value="#{lineResult.clasS}" />
-        </p:column>
-
-        <p:column headerText="Contrast" width="200">
-            <h:outputText value="#{lineResult.contrast}" />
-        </p:column>
-
-        <p:column headerText="Asymmetry" width="200">
-            <h:outputText value="#{lineResult.asymmetry}" />
-        </p:column>
-
-        <p:column headerText="Line Width" width="200">
-            <h:outputText value="#{lineResult.lineWidth}" />
-        </p:column>
-
-        <p:column headerText="Estimated Length" width="200">
-            <h:outputText value="#{lineResult.length}" />
-        </p:column>
-
-        <p:column headerText="X coordinates" width="200">
-            <h:outputText value="#{lineResult.xCoordinates}" />
-        </p:column>
-
-        <p:column headerText="Y coordinates" width="200">
-            <h:outputText value="#{lineResult.yCoordinates}" />
-        </p:column>
-    </p:dataTable>
+            <p:column headerText="Pos." width="200">
+                <h:outputText value="#{lineResult.pos}" />
+            </p:column>
+            <p:column headerText="ID"  width="200">
+                <h:outputText value="#{lineResult.contourId}" />
+            </p:column>
+            <p:column headerText="Frame" width="200">
+                <h:outputText value="#{lineResult.frame}" />
+            </p:column>
+            <p:column headerText="Angle of Normal" width="200">
+                <h:outputText value="#{lineResult.angleOfNormal}" />
+            </p:column>
+            <p:column headerText="Countour Class" width="200">
+                <h:outputText value="#{lineResult.clasS}" />
+            </p:column>
+            <p:column headerText="Contrast" width="200">
+                <h:outputText value="#{lineResult.contrast}" />
+            </p:column>
+            <p:column headerText="Asymmetry" width="200">
+                <h:outputText value="#{lineResult.asymmetry}" />
+            </p:column>
+            <p:column headerText="Line Width" width="200">
+                <h:outputText value="#{lineResult.lineWidth}" />
+            </p:column>
+            <p:column headerText="Estimated Length" width="200">
+                <h:outputText value="#{lineResult.length}" />
+            </p:column>
+            <p:column headerText="X coordinates" width="200">
+                <h:outputText value="#{lineResult.xCoordinates}" />
+            </p:column>
+            <p:column headerText="Y coordinates" width="200">
+                <h:outputText value="#{lineResult.yCoordinates}" />
+            </p:column>
+        </p:dataTable>
+        <h:commandLink style="float:right">
+            <p:graphicImage name="xml.png" width="50"/>
+            <p:dataExporter type="xml" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+        </h:commandLink>
+        <h:commandLink style="float:right">
+            <p:graphicImage name="csv.png" width="50"/>
+            <p:dataExporter type="csv" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+        </h:commandLink>
+        <h:commandLink style="float:right">
+            <p:graphicImage name="pdf.png" width="50"/>
+            <p:dataExporter type="pdf" target="ridgeDetectionFullResults" fileName="ridgeLineReport"/>
+        </h:commandLink>
+        <h:commandLink style="float:right">
+            <p:graphicImage name="excel.png" width="50"/>
+            <p:dataExporter type="xls" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+        </h:commandLink>
+        <span style="float:right; font-size: x-large; "  >Download Ridge Detection FullResults: </span>
+    </h:form>
 </h:body>
 </html>

@@ -1,52 +1,44 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
->
-
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Image analysis page</title>
+        <title>Spherical Particles</title>
     <h:form>
         <p:tabMenu activeIndex="0">
-            <p:menuitem value="Overview" outcome="/ui/menu/tabMenu" icon="ui-icon-star" url="index.xhtml">
+            <p:menuitem value="Spherical Particles" outcome="/ui/menu/tabMenu" icon="ui-icon-star" url="index.xhtml">
             </p:menuitem>
-            <p:menuitem value="Demos" outcome="/ui/menu/tabMenu" icon="ui-icon-search" url="ridge.xhtml">
+            <p:menuitem value="Nanotubes" outcome="/ui/menu/tabMenu" icon="ui-icon-search" url="ridge.xhtml">
             </p:menuitem>
         </p:tabMenu>
     </h:form>
         <h:outputStylesheet library="css" name="style.css"  />
-
 </h:head>
     <h:body>
         <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
         <div class="app_title">
-            <p:outputLabel value="Image Analysis Application"
-                          style="font:xx-large bold;"/>
+            <p:outputLabel value="Spherical Particles" style="font:xx-large bold;"/>
         </div>
-
         <h:form enctype="multipart/form-data">
-            
             <h:panelGrid columns="2">
-            <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
-            <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
-                <f:selectItem itemLabel="Default" itemValue="Default"/>
-                <f:selectItem itemLabel="Huang" itemValue="Huang"/>
-                <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
-                <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
-                <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
-                <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
-                <p:ajax update="basic"/>
-            </p:selectOneMenu>
-
-            <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
-            <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
-                <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
-                <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
-            </p:selectOneMenu>
-            
+                <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
+                <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
+                    <f:selectItem itemLabel="Default" itemValue="Default"/>
+                    <f:selectItem itemLabel="Huang" itemValue="Huang"/>
+                    <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
+                    <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
+                    <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
+                    <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
+                    <p:ajax update="basic"/>
+                </p:selectOneMenu>
+                <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
+                <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
+                    <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
+                    <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
+                </p:selectOneMenu>
             </h:panelGrid>
             <br/>
             

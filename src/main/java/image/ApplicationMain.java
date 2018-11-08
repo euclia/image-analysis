@@ -2,13 +2,10 @@ package image;
 
 import ij.ImagePlus;
 import image.helpers.ProcessHelper;
-import image.models.ParticleResult;
 import image.models.Measurement;
 import image.models.Result;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class ApplicationMain {
@@ -23,7 +20,6 @@ public class ApplicationMain {
 		this.selectedMeasurements = selectedMeasurements;
 		this.selectedThreshold = selectedThreshold;
 		this.measurement = new Measurement();
-
 		this.imagePlus = imagePlus;
 	}
 
@@ -58,6 +54,5 @@ public class ApplicationMain {
 			ProcessHelper processHelper = new ProcessHelper(this.imagePlus, this.filePath);
 			return processHelper.applyThreshold("Default");
 		}
-
 	}
 }

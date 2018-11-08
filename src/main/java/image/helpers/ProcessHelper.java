@@ -1,6 +1,8 @@
 package image.helpers;
 
+import ij.IJ;
 import ij.ImagePlus;
+import ij.Prefs;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
@@ -11,6 +13,8 @@ import image.models.ParticleResult;
 import image.models.Result;
 
 import javax.imageio.ImageIO;
+import java.awt.image.ColorModel;
+import java.awt.image.IndexColorModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static ij.process.ImageProcessor.BLACK_AND_WHITE_LUT;
+import static ij.process.ImageProcessor.OVER_UNDER_LUT;
+import static ij.process.ImageProcessor.RED_LUT;
 
 public class ProcessHelper {
 
@@ -71,7 +79,8 @@ public class ProcessHelper {
     public BufferedImage applyThreshold(String threshold) {
         ImagePlus temp = new ImagePlus();
         try {
-            this.imagePlus.getProcessor().setAutoThreshold(threshold);
+            this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
+            this.imagePlus.updateAndDraw();
             temp = this.imagePlus;
         } catch (Exception e) {
             System.out.println("Exception on countParticles");

@@ -1,6 +1,6 @@
 package image.models.RidgeDetection;
 
-public class RidgeLinesReport {
+public class RidgeLinesReport  {
     private String frame;
     private String contourId;
     private String length;
@@ -43,5 +43,10 @@ public class RidgeLinesReport {
 
     public void setMeanLineWidth(String meanLineWidth) {
         this.meanLineWidth = meanLineWidth;
+    }
+
+    @Override
+    public String toString() {
+        return "frame='" + frame +", contourId='" + contourId +", length='" + length + ", meanLineWidth='" + meanLineWidth;
     }
 }

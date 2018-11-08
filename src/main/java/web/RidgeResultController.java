@@ -4,14 +4,10 @@ import ij.ImagePlus;
 import image.models.RidgeDetection.RidgeLineReport;
 import image.models.RidgeDetection.RidgeLinesReport;
 import image.models.RidgeDetection.RidgeResult;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
-import org.jfree.data.xy.IntervalXYDataset;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -22,6 +18,8 @@ import javax.servlet.ServletContext;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 @Named("result2Controller")
 @SessionScoped
@@ -29,6 +27,20 @@ public class RidgeResultController implements Serializable {
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
 
     private RidgeResult ridgeResult;
+
+    public StreamedContent getReportAsCSV(ArrayList<Object> objectArrayList) throws IOException {
+          ByteArrayOutputStream out = new ByteArrayOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+            Iterator<Object> objectIterator = objectArrayList.iterator();
+                CSVPrinter csvPrinter = new CSVPrinter
+                        (writer, CSVFormat.DEFAULT.withHeader(objectIterator.next().toString()));
+            while (objectIterator.hasNext())
+                csvPrinter.printRecord(objectIterator.next().toString());
+            csvPrinter.flush();
+            csvPrinter.close();
+        DefaultStreamedContent file = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "text/csv", "report.csv");
+        return file;
+    }
 
     @Inject private ServletContext context;
 

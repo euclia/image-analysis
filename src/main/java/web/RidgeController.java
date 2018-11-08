@@ -50,9 +50,6 @@ public class RidgeController {
     private double minl =0.0D;
     private double maxl = 0.0D;
 
-
-
-
     @PostConstruct
     public void init() {
         this.ridgeOptions = new RidgeOptions();
@@ -77,18 +74,6 @@ public class RidgeController {
             ridgeResult.setResultImage(imp2);
             ridgeResult.setInitialImage(imp);
 
-            //Create histogram with mean Datas
-            ArrayList<Double> meanDatas = ridgeHelper.retrieveMeanData();
-            HistogramDataset dataset = new HistogramDataset();
-            dataset.setType(HistogramType.FREQUENCY);
-            dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),75);
-            JFreeChart barChart = ChartFactory.createHistogram(
-                    "Mean Line Width",
-                    "Mean Line Width", "Occurrence",
-                    dataset, PlotOrientation.VERTICAL,
-                    true, true, false);
-            ridgeResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
-
             //Create report tables
             ArrayList<RidgeLineReport> ridgeLineReports = new ArrayList<>();
             ArrayList<RidgeLinesReport> ridgeLinesReports = new ArrayList<>();
@@ -96,6 +81,17 @@ public class RidgeController {
             ridgeResult.setRidgeLineReport(ridgeLineReports);
             ridgeResult.setRidgeLinesReport(ridgeLinesReports);
 
+            //Create histogram with mean Datas
+            ArrayList<Double> meanDatas = ridgeHelper.retrieveMeanData();
+            HistogramDataset dataset = new HistogramDataset();
+            dataset.setType(HistogramType.FREQUENCY);
+            dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),200);
+            JFreeChart barChart = ChartFactory.createHistogram(
+                    "Mean Line Width",
+                    "Mean Line Width", "Occurrence",
+                    dataset, PlotOrientation.VERTICAL,
+                    true, true, false);
+            ridgeResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,8 +133,7 @@ public class RidgeController {
         DefaultStreamedContent imgPreview;
         if (bufferedImage != null) {
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
-            ApplicationMain applicationMain = new ApplicationMain(imagePlus);
-            BufferedImage temp = applicationMain.applyThreshold(this.thresholdType);
+            BufferedImage temp = imagePlus.getBufferedImage();
             int newWidth = new Double(temp.getWidth() * 0.5).intValue();
             int newHeight = new Double(temp.getHeight() * 0.5).intValue();
             BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);

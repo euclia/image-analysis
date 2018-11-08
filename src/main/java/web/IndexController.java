@@ -105,7 +105,7 @@ public class IndexController implements Serializable {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
         
         return new DefaultStreamedContent(is);
-        
+
     }
     
     public void selectAllMeasurements() {
@@ -154,6 +154,7 @@ public class IndexController implements Serializable {
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
             ApplicationMain applicationMain = new ApplicationMain(imagePlus);
             BufferedImage temp = applicationMain.applyThreshold(this.thresholdType);
+
             int newWidth = new Double(temp.getWidth() * 0.5).intValue();
             int newHeight = new Double(temp.getHeight() * 0.5).intValue();
             BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
@@ -169,6 +170,7 @@ public class IndexController implements Serializable {
             byte[] data = bas.toByteArray();
             InputStream is = new ByteArrayInputStream(data);
             imgPreview = new DefaultStreamedContent(is);
+
         } else {
             imgPreview = this.getBlankImage();
         }

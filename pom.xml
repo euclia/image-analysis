@@ -34,32 +34,26 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/de.biomedical-imaging.imagej/ij_ridge_detect -->
         <dependency>
             <groupId>de.biomedical-imaging.imagej</groupId>
             <artifactId>ij_ridge_detect</artifactId>
             <version>1.4.1</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/net.imagej/ij -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
-            <version>1.52h</version>
+            <version>1.52b</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>net.imagej</groupId>-->
-        <!--<artifactId>ij1-patcher</artifactId>-->
-        <!--<version>0.1.0</version>-->
-        <!--</dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.5</version>
+        </dependency>
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.5.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -70,6 +64,21 @@
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>3.0.2</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>

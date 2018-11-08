@@ -58,6 +58,7 @@ public class RidgeHelper {
                 for (int i = 0; i < c.getNumber(); ++i) {
                     j += (double) (c.getLineWidthL()[i] + c.getLineWidthR()[i]);
                 }
+                if(j>=1.0D)
                 meanData.add(j / (double) c.getNumber() * cal.pixelWidth);
             }
         }
@@ -68,13 +69,16 @@ public class RidgeHelper {
         if(lines.size()==0) return;
         Calibration cal = imp.getCalibration();
         Iterator rt2 = lines.iterator();
-
+        double totalMeanWidth=0.0D;
+        double totalMeanLength=0.0D;
+        int totalNonZero=0;
         while (rt2.hasNext()) {
             Lines contours = (Lines) rt2.next();
             Iterator junctions = contours.iterator();
             while (junctions.hasNext()) {
                 Line c = (Line) junctions.next();
                 double j = 0.0D;
+
                 for (int i = 0; i < c.getNumber(); ++i) {
                     ridgeLineReports.add(new RidgeLineReport(
                             String.valueOf(contours.getFrame()),
@@ -90,13 +94,24 @@ public class RidgeHelper {
                             String.valueOf(c.getContourClass().toString().substring(5))));
                     j += (double) (c.getLineWidthL()[i] + c.getLineWidthR()[i]);
                 }
-                ridgeLinesReports.add(new RidgeLinesReport(
-                        String.valueOf(contours.getFrame()),
-                        String.valueOf(c.getID()),
-                        String.valueOf( c.estimateLength() * cal.pixelWidth),
-                        String.valueOf(j / (double) c.getNumber() * cal.pixelWidth)));
+                //here we exclude lines with width == 0; //noise
+                if (j/(double)c.getNumber()*cal.pixelWidth!=0) {
+                    ridgeLinesReports.add(new RidgeLinesReport(
+                            String.valueOf(contours.getFrame()),
+                            String.valueOf(c.getID()),
+                            String.valueOf(c.estimateLength() * cal.pixelWidth),
+                            String.valueOf(j / (double) c.getNumber() * cal.pixelWidth)));
+                    totalNonZero++;
+                }
+                totalMeanLength+=c.estimateLength() * cal.pixelWidth;
+                totalMeanWidth+=j / (double) c.getNumber() * cal.pixelWidth;
             }
         }
+        ridgeLinesReports.add(0,new RidgeLinesReport(
+                "Average",
+                "Average",
+                String.valueOf(totalMeanLength/totalNonZero),
+                String.valueOf(totalMeanWidth/totalNonZero)));
     }
 
     public ImagePlus makeBinary() {
