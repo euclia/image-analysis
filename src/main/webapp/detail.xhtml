@@ -9,9 +9,12 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{resultController.initialize}"/>
     </f:metadata>
-    <h:head>
+<!--    <h:head>
         <title>Detail page</title>
-    </h:head>
+    </h:head>-->
+    <ui:insert name="header" >
+        <ui:include src="header.html" />
+    </ui:insert>
     <h:body>
         <h:form enctype="multipart/form-data">
             <p:button value="Back" outcome="index" />

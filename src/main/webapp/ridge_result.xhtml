@@ -8,9 +8,12 @@
 <f:metadata>
     <f:event type="preRenderView" listener="#{result2Controller.initialize}"/>
 </f:metadata>
-<h:head>
+<!--<h:head>
     <title>Detail page</title>
-</h:head>
+</h:head>-->
+<ui:insert name="header" >
+    <ui:include src="header.html" />
+</ui:insert>
 <h:body>
     <p:button value="Back" outcome="ridge" />
     <p:panel id="preview" header="Result" style="margin-bottom:20px">

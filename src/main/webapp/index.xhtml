@@ -7,16 +7,12 @@
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Spherical Particles</title>
-    <h:form>
-        <p:tabMenu activeIndex="0">
-            <p:menuitem value="Spherical Particles" outcome="/ui/menu/tabMenu" icon="ui-icon-star" url="index.xhtml">
-            </p:menuitem>
-            <p:menuitem value="Nanotubes" outcome="/ui/menu/tabMenu" icon="ui-icon-search" url="ridge.xhtml">
-            </p:menuitem>
-        </p:tabMenu>
-    </h:form>
         <h:outputStylesheet library="css" name="style.css"  />
 </h:head>
+    <ui:insert name="header" >
+    <ui:include src="header.html" />
+</ui:insert>
+
     <h:body>
         <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
         <div class="app_title">
@@ -84,5 +80,8 @@
                 <ui:include src="footer.xhtml" />
             </ui:insert>
         </div>
+        <script src="site/js/main.js" type=""/>
+        <script src="site/js/jquery-2.1.3.min.js" type=""/>
+
     </h:body>
 </html>
