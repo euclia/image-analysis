@@ -15,13 +15,13 @@
     <p:button value="Back" outcome="ridge" />
     <p:panel id="preview" header="Result" style="margin-bottom:20px">
     <h:panelGrid columns="2">
-        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.initialImage)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.initialImage)}"/>
-        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.resultImage)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.resultImage)}"/>
+        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.initialImage,true)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.initialImage,true)}"/>
+        <p:graphicImage value="#{result2Controller.getImgPreview(result2Controller.resultImage,true)}" cache="false" onmouseup="#{result2Controller.getImgPreview(result2Controller.resultImage,true)}"/>
     </h:panelGrid>
     </p:panel>
     <p:panel id="histogram" header="Mean Width Histogram" style="margin-bottom:20px">
         <h:panelGrid columns="1">
-            <p:graphicImage  value="#{result2Controller.getImgPreview(result2Controller.histogram)}" cache="false" onmouseup="{result2Controller.getImgPreview(result2Controller.histogram)}"/>
+            <p:graphicImage  value="#{result2Controller.getImgPreview(result2Controller.histogram,false)}" cache="false" onmouseup="{result2Controller.getImgPreview(result2Controller.histogram,false)}"/>
         </h:panelGrid>
     </p:panel>
     <br/>

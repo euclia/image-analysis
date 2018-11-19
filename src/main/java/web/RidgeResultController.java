@@ -28,36 +28,31 @@ public class RidgeResultController implements Serializable {
 
     private RidgeResult ridgeResult;
 
-    public StreamedContent getReportAsCSV(ArrayList<Object> objectArrayList) throws IOException {
-          ByteArrayOutputStream out = new ByteArrayOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-            Iterator<Object> objectIterator = objectArrayList.iterator();
-                CSVPrinter csvPrinter = new CSVPrinter
-                        (writer, CSVFormat.DEFAULT.withHeader(objectIterator.next().toString()));
-            while (objectIterator.hasNext())
-                csvPrinter.printRecord(objectIterator.next().toString());
-            csvPrinter.flush();
-            csvPrinter.close();
-        DefaultStreamedContent file = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "text/csv", "report.csv");
-        return file;
-    }
-
     @Inject private ServletContext context;
 
     public void initialize() {
         this.ridgeResult = (RidgeResult) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ridgeresult");
     }
 
-    public DefaultStreamedContent getImgPreview(ImagePlus imagePlus) {
+    public DefaultStreamedContent getImgPreview(ImagePlus imagePlus, boolean halfResize) {
         DefaultStreamedContent imgPreview;
         if (imagePlus != null) {
             BufferedImage temp = imagePlus.getBufferedImage();
-            int newWidth = new Double(temp.getWidth() * 0.5).intValue();
-            int newHeight = new Double(temp.getHeight() * 0.5).intValue();
-            BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = newImage.createGraphics();
-            g.drawImage(temp, 0, 0, newWidth, newHeight, null);
-            g.dispose();
+            BufferedImage newImage;
+            if(halfResize) {
+                int newWidth = new Double(temp.getWidth() * 0.5).intValue();
+                int newHeight = new Double(temp.getHeight() * 0.5).intValue();
+                newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = newImage.createGraphics();
+                g.drawImage(temp, 0, 0, newWidth, newHeight, null);
+                g.dispose();
+            }
+            else {
+                newImage = new BufferedImage(temp.getWidth(), temp.getHeight(), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = newImage.createGraphics();
+                g.drawImage(temp, 0, 0, temp.getWidth(), temp.getHeight(), null);
+                g.dispose();
+            }
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
             try {
                 ImageIO.write(newImage, "png", bas);
