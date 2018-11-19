@@ -91,7 +91,7 @@ public class RidgeController {
                     "Mean Line Width", "Occurrence",
                     dataset, PlotOrientation.VERTICAL,
                     true, true, false);
-            ridgeResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
+            ridgeResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(2*1200,2*600)));
         } catch (Exception e) {
             e.printStackTrace();
         }

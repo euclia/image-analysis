@@ -4,7 +4,7 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Spherical Particles</title>
     <h:form>
@@ -79,10 +79,10 @@
                 </p:outputPanel>
             </p:dialog>
         </h:form>
-        <!--<div id="footer" class="footer_center">-->
-        <!--<ui:insert name="footer" >-->
-        <!--<ui:include src="footer.xhtml" />-->
-        <!--</ui:insert>-->
-        <!--</div>-->
+        <div class="p-col-12">
+            <ui:insert name="footer" >
+                <ui:include src="footer.xhtml" />
+            </ui:insert>
+        </div>
     </h:body>
 </html>

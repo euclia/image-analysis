@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:metadata>
     <f:event type="preRenderView" listener="#{result2Controller.initialize}"/>
 </f:metadata>
@@ -139,5 +140,14 @@
         </h:commandLink>
         <span style="float:right; font-size: x-large; "  >Download Ridge Detection FullResults: </span>
     </h:form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 </h:body>
+<div class="p-col-12">
+    <ui:insert name="footer" >
+        <ui:include src="footer.xhtml" />
+    </ui:insert>
+</div>
 </html>

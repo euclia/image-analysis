@@ -52,9 +52,11 @@ public class RidgeResultController implements Serializable {
         DefaultStreamedContent imgPreview;
         if (imagePlus != null) {
             BufferedImage temp = imagePlus.getBufferedImage();
-            BufferedImage newImage = new BufferedImage(temp.getWidth(), temp.getHeight(), BufferedImage.TYPE_INT_RGB);
+            int newWidth = new Double(temp.getWidth() * 0.5).intValue();
+            int newHeight = new Double(temp.getHeight() * 0.5).intValue();
+            BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = newImage.createGraphics();
-            g.drawImage(temp, 0, 0, temp.getWidth(), temp.getHeight(), null);
+            g.drawImage(temp, 0, 0, newWidth, newHeight, null);
             g.dispose();
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
             try {
