@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Spherical Particles</title>
+        <link rel="stylesheet" href="resources/css/style.css"/>
+</h:head>
+    <ui:insert name="header" >
+    <ui:include src="header.html" />
+</ui:insert>
+
+    <h:body>
+        <div class="app_title">
+            <p:outputLabel value="Spherical Particles" style="font:xx-large bold;"/>
+        </div>
+        <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="2">
+                <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
+                <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
+                    <f:selectItem itemLabel="Default" itemValue="Default"/>
+                    <f:selectItem itemLabel="Huang" itemValue="Huang"/>
+                    <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
+                    <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
+                    <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
+                    <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
+                    <p:ajax update="basic"/>
+                </p:selectOneMenu>
+                <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
+                <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
+                    <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
+                    <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <br/>
+            
+            <h:outputText value="Select Descriptors:" style="font-size: x-large"/>
+            <br/>
+            <p:commandButton id="selectAll" value="Select All" action="#{indexController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+            <p:commandButton id="deselectAll" value="Deselect All" action="#{indexController.deselectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+            <br/>
+            <p:selectManyCheckbox id="grid" value="#{indexController.selectedMeasurements}" layout="grid" columns="6">
+                <f:selectItems value="#{indexController.measurements}" var="measurement" itemLabel="#{measurement}"
+                itemValue="#{measurement}"/>
+            </p:selectManyCheckbox>
+            <br/>
+
+            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:graphicImage value="#{indexController.imgPreview}" cache="false" onmouseup="#{indexController.imgPreview}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:fileUpload fileUploadListener="#{indexController.handleFileUpload}"
+                          mode="advanced"
+                          update="messages,basic"
+                          multiple="true"
+                          label="Choose a file or drag and drop it here"
+                          sizeLimit="10485760"
+                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
+                          invalidFileMessage="You are allowed to upload only images !"/>
+            <p:growl id="messages" showDetail="true" life="5000"/>
+
+            <br/>
+            <p:commandButton id="submit" value="Submit" action="#{indexController.submitForm}" icon="ui-icon-check"/>
+            <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
+                <p:outputPanel id="display">
+                    <p:dataList value="#{indexController.selectedMeasurements}" var="measurement">
+                        #{measurement}
+                    </p:dataList>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <div class="p-col-12">
+            <ui:insert name="footer" >
+                <ui:include src="footer.xhtml" />
+            </ui:insert>
+        </div>
+
+    </h:body>
+</html>

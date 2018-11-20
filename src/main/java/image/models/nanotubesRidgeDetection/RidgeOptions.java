@@ -1,4 +1,4 @@
-package image.models.RidgeDetection;
+package image.models.nanotubesRidgeDetection;
 
 /**
  * Created by root on 2/11/2018.

@@ -32,7 +32,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.codec.binary.Base64;
-import web.IndexController;
+import web.SphericalController;
 
 /**
  *
@@ -43,7 +43,7 @@ import web.IndexController;
 public class AnalysisResource {
 
     @Inject
-    IndexController indexController;
+    SphericalController sphericalController;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

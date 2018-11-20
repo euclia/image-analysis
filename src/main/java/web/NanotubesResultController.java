@@ -1,13 +1,10 @@
 package web;
 
 import ij.ImagePlus;
-import image.models.RidgeDetection.RidgeLineReport;
-import image.models.RidgeDetection.RidgeLinesReport;
-import image.models.RidgeDetection.RidgeResult;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import image.models.nanotubesRidgeDetection.RidgeLineReport;
+import image.models.nanotubesRidgeDetection.RidgeLinesReport;
+import image.models.nanotubesRidgeDetection.RidgeResult;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -18,12 +15,10 @@ import javax.servlet.ServletContext;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 @Named("result2Controller")
 @SessionScoped
-public class RidgeResultController implements Serializable {
+public class NanotubesResultController implements Serializable {
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
 
     private RidgeResult ridgeResult;

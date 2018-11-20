@@ -1,87 +1,106 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>Spherical Particles</title>
-        <h:outputStylesheet library="css" name="style.css"  />
-</h:head>
-    <ui:insert name="header" >
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <title>Image Descriptor Calculator</title>
+ 
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="resources/css/main.css"/>
+
+    <style type="text/css" media="screen">
+        #styles {
+            background: white;
+            padding-top: 12rem;
+            padding-bottom: 12rem;
+        }
+    </style>
+
+    <!-- script
+    ================================================== -->
+    <script src="resources/js/modernizr.js" type=""/>
+    <script src="resources/js/pace.min.js" type=""/>
+
+    <!-- favicons
+     ================================================== -->
+<!--    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>-->
+
+</head>
+
+<body id="top">
+
+<!-- header
+================================================== -->
+<ui:insert name="header" >
     <ui:include src="header.html" />
 </ui:insert>
 
-    <h:body>
-        <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
-        <div class="app_title">
-            <p:outputLabel value="Spherical Particles" style="font:xx-large bold;"/>
-        </div>
-        <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="2">
-                <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
-                <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
-                    <f:selectItem itemLabel="Default" itemValue="Default"/>
-                    <f:selectItem itemLabel="Huang" itemValue="Huang"/>
-                    <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
-                    <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
-                    <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
-                    <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
-                    <p:ajax update="basic"/>
-                </p:selectOneMenu>
-                <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
-                <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
-                    <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
-                    <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
-                </p:selectOneMenu>
-            </h:panelGrid>
-            <br/>
-            
-            <h:outputText value="Select Descriptors:" style="font-size: x-large"/>
-            <br/>
-            <p:commandButton id="selectAll" value="Select All" action="#{indexController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
-            <p:commandButton id="deselectAll" value="Deselect All" action="#{indexController.deselectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
-            <br/>
-            <p:selectManyCheckbox id="grid" value="#{indexController.selectedMeasurements}" layout="grid" columns="6">
-                <f:selectItems value="#{indexController.measurements}" var="measurement" itemLabel="#{measurement}"
-                               itemValue="#{measurement}"/>
-            </p:selectManyCheckbox>
-            <br/>
 
-            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:graphicImage value="#{indexController.imgPreview}" cache="false" onmouseup="#{indexController.imgPreview}"/>
-                </h:panelGrid>
-            </p:panel>
-            <p:fileUpload fileUploadListener="#{indexController.handleFileUpload}"
-                          mode="advanced"
-                          update="messages,basic"
-                          multiple="true"
-                          label="Choose a file or drag and drop it here"
-                          sizeLimit="10485760"
-                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
-                          invalidFileMessage="You are allowed to upload only images !"/>
-            <p:growl id="messages" showDetail="true" life="5000"/>
+<!-- home
+================================================== -->
 
-            <br/>
-            <p:commandButton id="submit" value="Submit" action="#{indexController.submitForm}" icon="ui-icon-check"/>
-            <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
-                <p:outputPanel id="display">
-                    <p:dataList value="#{indexController.selectedMeasurements}" var="measurement">
-                        #{measurement}
-                    </p:dataList>
-                </p:outputPanel>
-            </p:dialog>
-        </h:form>
-        <div class="p-col-12">
-            <ui:insert name="footer" >
-                <ui:include src="footer.xhtml" />
-            </ui:insert>
-        </div>
-        <script src="site/js/main.js" type=""/>
-        <script src="site/js/jquery-2.1.3.min.js" type=""/>
+<div id="home">
 
-    </h:body>
+    <div class="overlay"/>
+
+    <div class="home-content-table">
+        <div class="home-content-tablecell">
+            <div class="row">
+                <div class="col-twelve">
+
+                    <h3 class="animate-intro">Image Descriptor Calculator</h3>
+                    <h1 class="animate-intro">
+                        Extracting data   <br/>
+                        from microscopy images
+                    </h1>
+
+                    <div class="more animate-intro">
+                        <a class="smoothscroll button stroke" href="#styles">
+                            Learn More
+                        </a>
+                    </div>
+
+                </div> <!-- end col-twelve -->
+            </div> <!-- end row -->
+        </div> <!-- end home-content-tablecell -->
+    </div> <!-- end home-content-table -->
+
+    <ul class="home-social-list">
+        <li class="animate-intro">
+            <a href="#"><i class="fa fa-github"></i></a>
+        </li>
+        <li class="animate-intro">
+            <a href="#"><i class="fa fa-envelope"></i></a>
+        </li>
+        <li class="animate-intro">
+            <a href="#"><i class="fa fa-globe"></i></a>
+        </li>
+    </ul> <!-- end home-social-list -->
+</div>
+ <!-- end home -->
+<div id="preloader">
+    <div id="loader"/>
+</div>
+
+<!-- Java Script
+================================================== -->
+<script src="resources/js/jquery-2.1.3.min.js" type=""/>
+<script src="resources/js/plugins.js" type=""/>
+<script src="resources/js/main.js" type=""/>
+
+</body>
+
 </html>

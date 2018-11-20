@@ -1,4 +1,4 @@
-package image.models.RidgeDetection;
+package image.models.nanotubesRidgeDetection;
 
 public class RidgeLinesReport  {
     private String frame;

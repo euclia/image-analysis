@@ -2,13 +2,12 @@ package web;
 
 import ij.ImagePlus;
 import ij.gui.Overlay;
-import image.ApplicationMain;
 import image.helpers.FileMinion;
 import image.helpers.RidgeHelper;
-import image.models.RidgeDetection.RidgeLineReport;
-import image.models.RidgeDetection.RidgeLinesReport;
-import image.models.RidgeDetection.RidgeOptions;
-import image.models.RidgeDetection.RidgeResult;
+import image.models.nanotubesRidgeDetection.RidgeLineReport;
+import image.models.nanotubesRidgeDetection.RidgeLinesReport;
+import image.models.nanotubesRidgeDetection.RidgeOptions;
+import image.models.nanotubesRidgeDetection.RidgeResult;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -32,7 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class RidgeController {
+public class NanotubesController {
     @Inject
     private ServletContext context;
 
@@ -97,7 +96,7 @@ public class RidgeController {
         }
         fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.ridgeResult);
-        return "ridge_result?faces-redirect=true";
+        return "nanotubes_result?faces-redirect=true";
     }
 
     public void handleFileUpload(FileUploadEvent event) {

@@ -13,8 +13,8 @@ import ij.gui.PolygonRoi;
 import ij.measure.Calibration;
 import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
-import image.models.RidgeDetection.RidgeLineReport;
-import image.models.RidgeDetection.RidgeLinesReport;
+import image.models.nanotubesRidgeDetection.RidgeLineReport;
+import image.models.nanotubesRidgeDetection.RidgeLinesReport;
 
 import java.awt.*;
 import java.util.ArrayList;

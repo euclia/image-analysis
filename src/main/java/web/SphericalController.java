@@ -27,7 +27,7 @@ import java.util.List;
 
 @Named("indexController")
 @SessionScoped
-public class IndexController implements Serializable {
+public class SphericalController implements Serializable {
 
     //constants
     private final String FORM_SUBMITTED = "The form submitted successfully!";
@@ -75,7 +75,7 @@ public class IndexController implements Serializable {
         }
         fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("result", this.result);
-        return "detail?faces-redirect=true";
+        return "spherical_result?faces-redirect=true";
     }
     
     public void handleFileUpload(FileUploadEvent event) {
@@ -103,9 +103,7 @@ public class IndexController implements Serializable {
     
     private DefaultStreamedContent getBlankImage() {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
-        
         return new DefaultStreamedContent(is);
-
     }
     
     public void selectAllMeasurements() {

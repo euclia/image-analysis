@@ -1,9 +1,8 @@
-package image.models.RidgeDetection;
+package image.models.nanotubesRidgeDetection;
 
 import de.biomedical_imaging.ij.steger.Junctions;
 import de.biomedical_imaging.ij.steger.Lines;
 import ij.ImagePlus;
-import org.jfree.chart.JFreeChart;
 
 import java.util.ArrayList;
 
