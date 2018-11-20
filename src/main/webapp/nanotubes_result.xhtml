@@ -10,16 +10,17 @@
 </f:metadata>
 <h:head>
     <title>Detail page</title>
-    <link rel="stylesheet" href="resources/css/style.css"/>
+    <h:outputStylesheet library="css" name="style.css"  />
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
 </h:head>
+
 <ui:insert name="header" >
-    <ui:include src="header.html" />
+    <ui:include src="header.html">
+        <ui:param name = "Title" value = "Nanotubes Report" />
+    </ui:include>
 </ui:insert>
+
 <h:body>
-    <div class="app_title">
-        <p:outputLabel value="Nanotubes Report" style="font:xx-large bold;"/>
-    </div>
     <p:button class="back_button"  value="Back" outcome="nanotubes" />
     <p:panel id="preview" header="Result" style="margin-bottom:20px">
     <h:panelGrid columns="2">

@@ -7,17 +7,20 @@
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Spherical Particles</title>
-        <link rel="stylesheet" href="resources/css/style.css"/>
+        <h:outputStylesheet library="css" name="style.css"  />
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
     </h:head>
+
     <ui:insert name="header" >
-        <ui:include src="header.html" />
+        <ui:include src="header.html">
+            <ui:param name = "Title" value = "Spherical Particles" />
+        </ui:include>
     </ui:insert>
 
     <h:body>
-        <div class="app_title">
+        <!--<div class="app_title">
             <p:outputLabel value="Spherical Particles" style="font:xx-large bold;"/>
-        </div>
+        </div>-->
         <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
         <h:form enctype="multipart/form-data">
             <h:panelGrid columns="2">

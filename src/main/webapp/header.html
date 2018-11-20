@@ -7,6 +7,11 @@
 <body>
 <ui:composition>
 <header>
+    <div class="img-container">
+        <h3 class="title">
+            #{Title}
+        </h3>
+    </div>
 
     <a id="header-menu-trigger" href="#0">
         <span class="header-menu-text">Menu</span>
@@ -23,7 +28,7 @@
 
         <p class="sponsor-text">
         <div style="text-align: center;"><p style="content: 'center';">Copyright © 2018 Jaqpot. <br/> All rights reserved.</p></div>
-        <div style="text-align: center;"><p:graphicImage value="${pageContext.request.contextPath}/resources/NTUA.png" cache="true" style="width:50px;"/></div>
+        <div style="text-align: center;"><p:graphicImage class='ntualogo' value="${pageContext.request.contextPath}/resources/NTUA.png" cache="true" style="width:50px;"/></div>
         <div style="text-align: center;"><p style="content: 'center';"><span style="font-size:8pt;font-weight: normal;line-height:10px;">Unit of Process Control and Informatics</span></p></div>
         </p>
 

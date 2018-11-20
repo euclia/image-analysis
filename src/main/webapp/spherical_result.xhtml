@@ -11,16 +11,17 @@
     </f:metadata>
   <h:head>
         <title>Detail page</title>
-        <link rel="stylesheet" href="resources/css/style.css"/>
+        <h:outputStylesheet library="css" name="style.css"  />
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
   </h:head>
+
     <ui:insert name="header" >
-        <ui:include src="header.html" />
+        <ui:include src="header.html">
+            <ui:param name = "Title" value = "Spherical Particles Report" />
+        </ui:include>
     </ui:insert>
+
     <h:body>
-        <div class="app_title">
-            <p:outputLabel value="Spherical Particles Report" style="font:xx-large bold;"/>
-        </div>
         <p:button class="back_button" value="Back" outcome="spherical" />
         <h:form enctype="multipart/form-data">
             <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
