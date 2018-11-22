@@ -45,16 +45,20 @@
             <p:columnToggler datasource="ridgeDetectionSummary" trigger="toggler" />
         </f:facet>
         <p:column headerText="Frame" width="200">
-            <h:outputText value="#{linesResult.frame}" />
+            <h:outputText value="#{linesResult.frame}"/>
         </p:column>
         <p:column headerText="Contour Id." width="200">
             <h:outputText value="#{linesResult.contourId}" />
         </p:column>
         <p:column headerText="Length" width="200">
-            <h:outputText value="#{linesResult.length}" />
+            <h:outputText value="#{linesResult.length}">
+                <f:convertNumber minFractionDigits="3" />
+            </h:outputText>
         </p:column>
         <p:column headerText="Mean Line Width" width="200">
-            <h:outputText value="#{linesResult.meanLineWidth}" />
+            <h:outputText value="#{linesResult.meanLineWidth}">
+                <f:convertNumber minFractionDigits="3" />
+            </h:outputText>
         </p:column>
     </p:dataTable>
         <div class="dataTableExports">
@@ -101,28 +105,42 @@
                 <h:outputText value="#{lineResult.frame}" />
             </p:column>
             <p:column headerText="Angle of Normal" width="200">
-                <h:outputText value="#{lineResult.angleOfNormal}" />
+                <h:outputText value="#{lineResult.angleOfNormal}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Countour Class" width="200">
                 <h:outputText value="#{lineResult.clasS}" />
             </p:column>
             <p:column headerText="Contrast" width="200">
-                <h:outputText value="#{lineResult.contrast}" />
+                <h:outputText value="#{lineResult.contrast}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Asymmetry" width="200">
-                <h:outputText value="#{lineResult.asymmetry}" />
+                <h:outputText value="#{lineResult.asymmetry}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Line Width" width="200">
-                <h:outputText value="#{lineResult.lineWidth}" />
+                <h:outputText value="#{lineResult.lineWidth}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Estimated Length" width="200">
-                <h:outputText value="#{lineResult.length}" />
+                <h:outputText value="#{lineResult.length}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="X coordinates" width="200">
-                <h:outputText value="#{lineResult.xCoordinates}" />
+                <h:outputText value="#{lineResult.xCoordinates}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
             <p:column headerText="Y coordinates" width="200">
-                <h:outputText value="#{lineResult.yCoordinates}" />
+                <h:outputText value="#{lineResult.yCoordinates}">
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
             </p:column>
         </p:dataTable>
         <div class="dataTableExports">

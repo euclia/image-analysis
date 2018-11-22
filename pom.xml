@@ -8,7 +8,7 @@
     <artifactId>ImageNanoAnalysis</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
-    <name>imageAnalysis</name>
+    <name>nanoImage</name>
 
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -103,7 +103,7 @@
     </dependencies>
 
     <build>
-        <finalName>imageAnalysis</finalName>
+        <finalName>nanoImage</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

@@ -37,6 +37,8 @@ public class NanotubesController {
 
     private BufferedImage bufferedImage;
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
+    private final String NANOTUBE_IMAGE_PATH = "/resources/nanotube.jpg";
+
     private String thresholdType;
     private FileMinion fileMinion;
     private RidgeOptions ridgeOptions;
@@ -97,6 +99,14 @@ public class NanotubesController {
         fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.ridgeResult);
         return "nanotubes_result?faces-redirect=true";
+    }
+
+    public void useExample(){
+        try {
+            bufferedImage = ImageIO.read(context.getResourceAsStream(NANOTUBE_IMAGE_PATH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleFileUpload(FileUploadEvent event) {

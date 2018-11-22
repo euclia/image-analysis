@@ -29,16 +29,16 @@ public class RidgeLinesReport  {
         this.contourId = contourId;
     }
 
-    public String getLength() {
-        return length;
+    public Double getLength() {
+        return Double.valueOf(length);
     }
 
     public void setLength(String length) {
         this.length = length;
     }
 
-    public String getMeanLineWidth() {
-        return meanLineWidth;
+    public Double getMeanLineWidth() {
+        return Double.valueOf(meanLineWidth);
     }
 
     public void setMeanLineWidth(String meanLineWidth) {

@@ -18,66 +18,78 @@
     </ui:insert>
 
     <h:body>
-        <!--<div class="app_title">
-            <p:outputLabel value="Spherical Particles" style="font:xx-large bold;"/>
-        </div>-->
-        <p:messages id="theMessages" showDetail="true" autoUpdate="true" closable="true"/>
         <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="2">
-                <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
-                <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
-                    <f:selectItem itemLabel="Default" itemValue="Default"/>
-                    <f:selectItem itemLabel="Huang" itemValue="Huang"/>
-                    <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
-                    <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
-                    <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
-                    <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
-                    <p:ajax update="basic"/>
-                </p:selectOneMenu>
-                <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
-                <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
-                    <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
-                    <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
-                </p:selectOneMenu>
-            </h:panelGrid>
-            <br/>
-            
-            <h:outputText value="Select Descriptors:" style="font-size: x-large"/>
-            <br/>
-            <p:commandButton id="selectAll" value="Select All" action="#{indexController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
-            <p:commandButton id="deselectAll" value="Deselect All" action="#{indexController.deselectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
-            <br/>
-            <p:selectManyCheckbox id="grid" value="#{indexController.selectedMeasurements}" layout="grid" columns="6">
-                <f:selectItems value="#{indexController.measurements}" var="measurement" itemLabel="#{measurement}"
-                itemValue="#{measurement}"/>
-            </p:selectManyCheckbox>
-            <br/>
+        <p:growl id="growl" />
+        <p:panel id ="spherical" style="margin-bottom:20px">
+            <p:panel id="imgPreview" header="Image Preview" style="margin-bottom:20px">
 
-            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:graphicImage value="#{indexController.imgPreview}" cache="false" onmouseup="#{indexController.imgPreview}"/>
+                <h:panelGrid columns="1" cellpadding="10">
+                    <p:row>
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{indexController.handleFileUpload}"
+                                          mode="advanced"
+                                          update="messages,imgPreview"
+                                          multiple="true"
+                                          label="Choose a file from your system"
+                                          sizeLimit="10485760"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
+                                          invalidFileMessage="You are allowed to upload only images !"
+                            >
+                            </p:fileUpload>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:commandButton  update="nanotubes,messages"
+                                              value="Or use an example Spherical Image"
+                                              action="#{indexController.useExample}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:graphicImage value="#{indexController.imgPreview}"
+                                            cache="false"
+                                            onmouseup="#{indexController.imgPreview}"/>
+                        </p:column>
+                    </p:row>
+                    <p:growl id="messages" showDetail="true" life="5000"/>
                 </h:panelGrid>
             </p:panel>
-            <p:fileUpload fileUploadListener="#{indexController.handleFileUpload}"
-                          mode="advanced"
-                          update="messages,basic"
-                          multiple="true"
-                          label="Choose a file or drag and drop it here"
-                          sizeLimit="10485760"
-                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
-                          invalidFileMessage="You are allowed to upload only images !"/>
-            <p:growl id="messages" showDetail="true" life="5000"/>
-
             <br/>
+            <p:panel id="parameters" header="Parameters" style="margin-bottom:20px">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="thresholdType" value="Select filter type:" style="font-size: x-large"/>
+                    <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
+                        <f:selectItem itemLabel="Default" itemValue="Default"/>
+                        <f:selectItem itemLabel="Huang" itemValue="Huang"/>
+                        <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
+                        <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
+                        <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
+                        <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
+                        <p:ajax update="spherical"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel for="function" value="Select function type:" style="font-size: x-large"/>
+                    <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
+                        <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
+                        <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <br/>
+
+                <h:outputText value="Select Descriptors:" style="font-size: x-large"/>
+                <br/>
+                <p:commandButton id="selectAll" value="Select All" action="#{indexController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+                <p:commandButton id="deselectAll" value="Deselect All" action="#{indexController.deselectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+                <br/>
+                <p:selectManyCheckbox id="grid" value="#{indexController.selectedMeasurements}" layout="grid" columns="6">
+                    <f:selectItems value="#{indexController.measurements}" var="measurement" itemLabel="#{measurement}"
+                                   itemValue="#{measurement}"/>
+                </p:selectManyCheckbox>
+                <br/>
+            </p:panel>
             <p:commandButton id="submit" value="Submit" action="#{indexController.submitForm}" icon="ui-icon-check"/>
-            <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
-                <p:outputPanel id="display">
-                    <p:dataList value="#{indexController.selectedMeasurements}" var="measurement">
-                        #{measurement}
-                    </p:dataList>
-                </p:outputPanel>
-            </p:dialog>
+        </p:panel>
         </h:form>
         <div class="p-col-12">
             <ui:insert name="footer" >

@@ -51,56 +51,56 @@ public class RidgeLineReport {
         this.pos = pos;
     }
 
-    public String getxCoordinates() {
-        return xCoordinates;
+    public Double getxCoordinates() {
+        return Double.valueOf(xCoordinates);
     }
 
     public void setxCoordinates(String xCoordinates) {
         this.xCoordinates = xCoordinates;
     }
 
-    public String getyCoordinates() {
-        return yCoordinates;
+    public Double getyCoordinates() {
+        return Double.valueOf(yCoordinates);
     }
 
     public void setyCoordinates(String yCoordinates) {
         this.yCoordinates = yCoordinates;
     }
 
-    public String getLength() {
-        return length;
+    public Double getLength() {
+        return Double.valueOf(length);
     }
 
     public void setLength(String length) {
         this.length = length;
     }
 
-    public String getContrast() {
-        return contrast;
+    public Double getContrast() {
+        return Double.valueOf(contrast);
     }
 
     public void setContrast(String contrast) {
         this.contrast = contrast;
     }
 
-    public String getAsymmetry() {
-        return asymmetry;
+    public Double getAsymmetry() {
+        return Double.valueOf(asymmetry);
     }
 
     public void setAsymmetry(String asymmetry) {
         this.asymmetry = asymmetry;
     }
 
-    public String getLineWidth() {
-        return lineWidth;
+    public Double getLineWidth() {
+        return Double.valueOf(lineWidth);
     }
 
     public void setLineWidth(String lineWidth) {
         this.lineWidth = lineWidth;
     }
 
-    public String getAngleOfNormal() {
-        return angleOfNormal;
+    public Double getAngleOfNormal() {
+        return Double.valueOf(angleOfNormal);
     }
 
     public void setAngleOfNormal(String angleOfNormal) {

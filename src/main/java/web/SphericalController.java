@@ -35,6 +35,8 @@ public class SphericalController implements Serializable {
     private final String DIR_PATH2 = "/src/main/webapp/WEB-INF/files/";
     private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
+    private final String SPHERICAL_IMAGE_PATH = "/resources/spherical.jpg";
+
     private final int BUFFER_SIZE = 6124;
 
     //variables
@@ -174,6 +176,14 @@ public class SphericalController implements Serializable {
         }
         return imgPreview;
         
+    }
+
+    public void useExample(){
+        try {
+            bufferedImage = ImageIO.read(context.getResourceAsStream(SPHERICAL_IMAGE_PATH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public void updateThresholdType(ValueChangeEvent event) {

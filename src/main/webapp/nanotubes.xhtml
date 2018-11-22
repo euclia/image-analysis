@@ -3,72 +3,88 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Nanotubes</title>
     <h:outputStylesheet library="css" name="style.css"  />
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
 </h:head>
-
     <ui:insert name="header" >
         <ui:include src="header.html">
             <ui:param name = "Title" value = "Nanotubes" />
         </ui:include>
     </ui:insert>
-
-
     <h:body>
         <h:form enctype="multipart/form-data">
             <p:growl id="growl" />
-            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
-                <p:row>
-                <p:column>
-                    <p:graphicImage value="#{ridgeController.imgPreview}" cache="false" onmouseup="#{ridgeController.imgPreview}"/>
-                </p:column>
-                </p:row>
-            <p:fileUpload fileUploadListener="#{ridgeController.handleFileUpload}"
-                          mode="advanced"
-                          update="messages,basic"
-                          multiple="true"
-                          label="Choose a file or drag and drop it here"
-                          sizeLimit="10485760"
-                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
-                          invalidFileMessage="You are allowed to upload only images !"/>
-            <p:growl id="messages" showDetail="true" life="5000"/>
+            <p:panel id ="nanotubes" style="margin-bottom:20px">
+                <p:panel id="imgPreview" header="Image Preview" style="margin-bottom:20px">
 
-            <br/>
-            <p:panel id="parameters" header="Parameters" style="margin-bottom:20px">
-            <h:panelGrid columns="1" cellpadding="10">
+                    <h:panelGrid columns="1" cellpadding="10">
                     <p:row>
                         <p:column>
-                            Sigma: <p:inputNumber id="Sigma" value="#{ridgeController.sigma}"/>
+                            <p:fileUpload fileUploadListener="#{ridgeController.handleFileUpload}"
+                              mode="advanced"
+                              update="messages,imgPreview"
+                              multiple="true"
+                              label="Choose a file from your system"
+                              sizeLimit="10485760"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
+                              invalidFileMessage="You are allowed to upload only images !"
+                            >
+                            </p:fileUpload>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            Lower Threshold: <p:inputNumber id="LowerThreshold" value="#{ridgeController.lowt}"/>
+                            <h:commandButton  update="nanotubes,messages"
+                                    value="Or use an example Nanotube Image"
+                                    action="#{ridgeController.useExample}"/>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            Upper Threshold: <p:inputNumber id="UpperThreshold" value="#{ridgeController.uppt}"/>
+                            <p:graphicImage value="#{ridgeController.imgPreview}"
+                                            cache="false"
+                                            onmouseup="#{ridgeController.imgPreview}"/>
                         </p:column>
                     </p:row>
-                </h:panelGrid>
+                <p:growl id="messages" showDetail="true" life="5000"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:panel id="parameters" header="Parameters" style="margin-bottom:20px">
+                <h:panelGrid columns="1" cellpadding="10">
+                        <p:row>
+                            <p:column>
+                                Sigma: <p:inputNumber id="Sigma" value="#{ridgeController.sigma}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                Lower Threshold: <p:inputNumber id="LowerThreshold" value="#{ridgeController.lowt}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                Upper Threshold: <p:inputNumber id="UpperThreshold" value="#{ridgeController.uppt}"/>
+                            </p:column>
+                        </p:row>
+                    </h:panelGrid>
+                </p:panel>
+                <p:commandButton id="submit" value="Process" action="#{ridgeController.submitForm}"  update="growl"  icon="ui-icon-check"/>
             </p:panel>
-            <p:commandButton id="submit" value="Process" action="#{ridgeController.submitForm}"  update="growl"  icon="ui-icon-check"/>
 
-            <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
-                <p:outputPanel id="display">
-                </p:outputPanel>
-            </p:dialog>
-                <p:blockUI block="basic" trigger="submit">
-                    LOADING<br />
-                    <p:graphicImage name="ajaxloadingbar.gif"/>
-                </p:blockUI>
-            </p:panel>
-        </h:form>
+                    <p:blockUI block="nanotubes" trigger="submit">
+                        LOADING<br />
+                        <p:graphicImage name="ajaxloadingbar.gif"/>
+                    </p:blockUI>
+
+            </h:form>
+
         <div class="p-col-12">
             <ui:insert name="footer" >
                 <ui:include src="footer.xhtml" />
