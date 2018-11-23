@@ -29,7 +29,7 @@ EXPOSE 8080 9990
 ENV JBOSS_HOME /opt/jboss/wildfly
 
 ADD ./standalone/standalone.xml /opt/jboss/wildfly/standalone/configuration/standalone.xml
-ADD ./target/imageAnalysis.war /opt/jboss/wildfly/standalone/deployments/nanoImage.war
+ADD ./target/nanoImage.war /opt/jboss/wildfly/standalone/deployments/nanoImage.war
 #ADD ./packages/imageAnalysis/target/imageAnalysis.war /opt/jboss/wildfly/standalone/deployments/imageAnalysis.war
 
 #RUN /opt/jboss/wildfly/bin/add-user.sh admin pass --silent
