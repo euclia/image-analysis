@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Spherical Particles</title>
-        <h:outputStylesheet library="css" name="style.css"  />
+        <h:outputStylesheet library="css" name="style.css"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
     </h:head>
 
@@ -19,9 +19,17 @@
 
     <h:body>
         <h:form enctype="multipart/form-data">
+
+        <div  id="info_button">
+            <p:commandButton icon="pi pi-question"  id="iconOnly"  title="Icon Only" style="margin-right:20px; float:right"/>
+        </div>
+
         <p:growl id="growl" />
-        <p:panel id ="spherical" style="margin-bottom:20px">
-            <p:panel id="imgPreview" header="Image Preview" style="margin-bottom:20px">
+
+            <p:panel id ="spherical"  style="margin-bottom:20px">
+
+
+                <p:panel id="imgPreview" header="Image Preview" style="margin-bottom:20px">
 
                 <h:panelGrid columns="1" cellpadding="10">
                     <p:row>

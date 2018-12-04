@@ -41,11 +41,11 @@ public class ParticleResult {
     private String x_centroid;
     private String y_center_of_mass;
     private String y_centroid;
-    private String volume = "";
-    private String sphericity = "";
-    private String surfaceDiameter = "";
-    private String volumeDiameter = "";
-    private String volumeToSurface = "";
+    private Double volume;
+    private Double sphericity;
+    private Double surfaceDiameter;
+    private Double volumeDiameter;
+    private Double volumeToSurface;
 
     public ParticleResult(HashMap<String, String> map) {
         this.id = map.get("id");
@@ -97,11 +97,11 @@ public class ParticleResult {
             double sphericity = analysisHelper.getSphericity(volume, Double.parseDouble(this.area));
             double volumeDiameter = analysisHelper.getVolumeDiameter(volume);
             double volumeToSurface = analysisHelper.getVolumeToSurface(volume, Double.parseDouble(this.area));
-            this.volume = Double.toString(volume);
-            this.surfaceDiameter = Double.toString(surfaceDiameter);
-            this.sphericity = Double.toString(sphericity);
-            this.volumeDiameter = Double.toString(volumeDiameter);
-            this.volumeToSurface = Double.toString(volumeToSurface);
+            this.volume = volume;
+            this.surfaceDiameter = surfaceDiameter;
+            this.sphericity = sphericity;
+            this.volumeDiameter = volumeDiameter;
+            this.volumeToSurface = volumeToSurface;
         }
     }
 
@@ -378,43 +378,43 @@ public class ParticleResult {
         this.y_centroid = y_centroid;
     }
 
-    public String getVolume() {
+    public Double getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(Double volume) {
         this.volume = volume;
     }
 
-    public String getSphericity() {
+    public Double getSphericity() {
         return sphericity;
     }
 
-    public void setSphericity(String sphericity) {
+    public void setSphericity(Double sphericity) {
         this.sphericity = sphericity;
     }
 
-    public String getSurfaceDiameter() {
+    public Double getSurfaceDiameter() {
         return surfaceDiameter;
     }
 
-    public void setSurfaceDiameter(String surfaceDiameter) {
+    public void setSurfaceDiameter(Double surfaceDiameter) {
         this.surfaceDiameter = surfaceDiameter;
     }
 
-    public String getVolumeDiameter() {
+    public Double getVolumeDiameter() {
         return volumeDiameter;
     }
 
-    public void setVolumeDiameter(String volumeDiameter) {
+    public void setVolumeDiameter(Double volumeDiameter) {
         this.volumeDiameter = volumeDiameter;
     }
 
-    public String getVolumeToSurface() {
+    public Double getVolumeToSurface() {
         return volumeToSurface;
     }
 
-    public void setVolumeToSurface(String volumeToSurface) {
+    public void setVolumeToSurface(Double volumeToSurface) {
         this.volumeToSurface = volumeToSurface;
     }
 

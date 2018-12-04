@@ -1,5 +1,7 @@
 package web;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
 import image.helpers.Constants;
 import image.models.ParticleResult;
 import image.models.Result;
@@ -209,4 +211,9 @@ public class SphericalResultController implements Serializable {
         return isKurtosisSelected;
     }
 
+    public void preProcessPDF(Object document){
+        Document pdf = (Document) document;
+        pdf.setMargins(0.2f,0.2f,0.2f,0.2f);
+        pdf.setPageSize(PageSize.A3.rotate());
+    }
 }

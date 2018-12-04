@@ -24,7 +24,7 @@ public class Measurement {
 		this.measurementList = new ArrayList<>();
 		this.measurementList.add(Constants.AREA);
 		this.measurementList.add(Constants.AREA_FRACTION);
-		this.measurementList.add(Constants.BOUNDING_PREFERENCES);
+		//this.measurementList.add(Constants.BOUNDING_PREFERENCES);
 		this.measurementList.add(Constants.CENTER_OF_MASS);
 		this.measurementList.add(Constants.CENTROID);
 		this.measurementList.add(Constants.FERET);
@@ -51,7 +51,7 @@ public class Measurement {
 		this.measurementMap = new HashMap<>();
 		this.measurementMap.put(Constants.AREA, Measurements.AREA);
 		this.measurementMap.put(Constants.AREA_FRACTION, Measurements.AREA_FRACTION);
-		this.measurementMap.put(Constants.BOUNDING_PREFERENCES, Measurements.LIMIT);
+		//this.measurementMap.put(Constants.BOUNDING_PREFERENCES, Measurements.LIMIT);
 		this.measurementMap.put(Constants.CENTER_OF_MASS, Measurements.CENTER_OF_MASS);
 		this.measurementMap.put(Constants.CENTROID, Measurements.CENTROID);
 		this.measurementMap.put(Constants.FERET, Measurements.FERET);

@@ -11,7 +11,7 @@
     </f:metadata>
   <h:head>
         <title>Detail page</title>
-        <h:outputStylesheet library="css" name="style.css"  />
+      <h:outputStylesheet library="css" name="style.css"  />
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
   </h:head>
 
@@ -43,105 +43,151 @@
                     <h:outputText value="#{imageResult.id}"/>
                 </p:column>
                 <p:column headerText="Min Feret" rendered="#{resultController.isFeretSelected}" width="200">
-                    <h:outputText value="#{imageResult.min_feret}" />
+                    <h:outputText value="#{imageResult.min_feret}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Feret Angle" rendered="#{resultController.isFeretSelected}" width="200">
-                    <h:outputText value="#{imageResult.feret_angle}" />
+                    <h:outputText value="#{imageResult.feret_angle}">
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Feret X" rendered="#{resultController.isFeretSelected}" width="200">
-                    <h:outputText value="#{imageResult.feret_x}" />
+                    <h:outputText value="#{imageResult.feret_x}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Feret Y" rendered="#{resultController.isFeretSelected}" width="200">
-                    <h:outputText value="#{imageResult.feret_y}" />
+                    <h:outputText value="#{imageResult.feret_y}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
-                    <h:outputText value="#{imageResult.area}" />
+                    <h:outputText value="#{imageResult.area}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Porosity" rendered="#{resultController.isPorositySelected}" width="200">
-                    <h:outputText value="#{imageResult.area_fraction}" />
+                    <h:outputText value="#{imageResult.area_fraction}">
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Perimeter" rendered="#{resultController.isPerimeterSelected}" width="200">
-                    <h:outputText value="#{imageResult.perimeter}" />
+                    <h:outputText value="#{imageResult.perimeter}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Circularity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-                    <h:outputText value="#{imageResult.circularity}" />
+                    <h:outputText value="#{imageResult.circularity}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Aspect Ratio" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-                    <h:outputText value="#{imageResult.aspect_ratio}" />
+                    <h:outputText value="#{imageResult.aspect_ratio}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Roundness" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-                    <h:outputText value="#{imageResult.roundness}" />
+                    <h:outputText value="#{imageResult.roundness}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Solidity" rendered="#{resultController.isShapeDescriptorsSelected}" width="200">
-                    <h:outputText value="#{imageResult.solidity}" />
+                    <h:outputText value="#{imageResult.solidity}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="STD_DEV" rendered="#{resultController.isStandardDeviationSelected}" width="200">
-                    <h:outputText value="#{imageResult.std_dev}" />
+                    <h:outputText value="#{imageResult.std_dev}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <!--Volume related Parameters-->
                 <p:column headerText="Volume" rendered="#{resultController.isVolumeSelected}" width="200">
-                    <h:outputText value="#{imageResult.volume}" />
+                    <h:outputText value="#{imageResult.volume}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Sphericity" rendered="#{resultController.isSphericitySelected}" width="200">
-                    <h:outputText value="#{imageResult.sphericity}" />
+                    <h:outputText value="#{imageResult.sphericity}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Volume to Surface" rendered="#{resultController.isVolumeToSurfaceSelected}" width="200">
-                    <h:outputText value="#{imageResult.volumeToSurface}" />
+                    <h:outputText value="#{imageResult.volumeToSurface}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <!-- Fit Ellipse Related Parameters -->
                 <p:column headerText="Angle" rendered="#{resultController.isFitEllipseSelected}" width="200">
-                    <h:outputText value="#{imageResult.angle}" />
+                    <h:outputText value="#{imageResult.angle}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Minor" rendered="#{resultController.isFitEllipseSelected}" width="200">
-                    <h:outputText value="#{imageResult.minor}" />
+                    <h:outputText value="#{imageResult.minor}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Major" rendered="#{resultController.isFitEllipseSelected}" width="200">
-                    <h:outputText value="#{imageResult.major}" />
+                    <h:outputText value="#{imageResult.major}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Skeweness" rendered="#{resultController.isSkewenessSelected}" width="200">
-                    <h:outputText value="#{imageResult.skewness}" />
+                    <h:outputText value="#{imageResult.skewness}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Integrated Density" rendered="#{resultController.isIntegratedDensitySelected}" width="200">
-                    <h:outputText value="#{imageResult.integrated_density}" />
+                    <h:outputText value="#{imageResult.integrated_density}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Kurtosis" rendered="#{resultController.isKurtosisSelected}" width="200">
-                    <h:outputText value="#{imageResult.kurtosis}" />
+                    <h:outputText value="#{imageResult.kurtosis}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Min Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
-                    <h:outputText value="#{imageResult.min_grey_value}" />
+                    <h:outputText value="#{imageResult.min_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Max Grey Value" rendered="#{resultController.isMinMaxSelected}" width="200">
-                    <h:outputText value="#{imageResult.max_grey_value}" />
+                    <h:outputText value="#{imageResult.max_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Center Of Mass X" rendered="#{resultController.isCenterOfMassSelected}" width="200">
-                    <h:outputText value="#{imageResult.x_center_of_mass}" />
+                    <h:outputText value="#{imageResult.x_center_of_mass}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Center Of Mass Y" rendered="#{resultController.isCenterOfMassSelected}" width="200">
-                    <h:outputText value="#{imageResult.y_center_of_mass}" />
-                </p:column>
-                <p:column headerText="Bounding Rectangle Origin X" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-                    <h:outputText value="#{imageResult.bounding_rectangle_origin_x}" />
-                </p:column>
-                <p:column headerText="Bounding Rectangle Origin Y" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-                    <h:outputText value="#{imageResult.bounding_rectangle_origin_y}" />
-                </p:column>
-                <p:column headerText="Bounding Rectangle Width" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-                    <h:outputText value="#{imageResult.bounding_rectangle_width}" />
-                </p:column>
-                <p:column headerText="Bounding Rectangle Height" rendered="#{resultController.isBoundingPrefsSelected}" width="200">
-                    <h:outputText value="#{imageResult.bounding_rectangle_height}" />
+                    <h:outputText value="#{imageResult.y_center_of_mass}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Centroid X" rendered="#{resultController.isCentroidSelected}" width="200">
-                    <h:outputText value="#{imageResult.x_centroid}" />
+                    <h:outputText value="#{imageResult.x_centroid}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Centroid Y" rendered="#{resultController.isCentroidSelected}" width="200">
-                    <h:outputText value="#{imageResult.y_centroid}" />
+                    <h:outputText value="#{imageResult.y_centroid}">
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Modal Grey Value" rendered="#{resultController.isModalGrayValueSelected}" width="200">
-                    <h:outputText value="#{imageResult.modal_grey_value}" />
+                    <h:outputText value="#{imageResult.modal_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Mean Grey Value" rendered="#{resultController.isMeanGrayValueSelected}" width="200">
-                    <h:outputText value="#{imageResult.mean_grey_value}" />
+                    <h:outputText value="#{imageResult.mean_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
                 </p:column>
             </p:dataTable>
             <div class="dataTableExports">
@@ -155,7 +201,7 @@
                 </h:commandLink>
                 <h:commandLink style="float:right">
                     <p:graphicImage name="pdf.png" width="50px"/>
-                    <p:dataExporter type="pdf" target="imageResults" fileName="sphericalReport"/>
+                    <p:dataExporter type="pdf" target="imageResults" fileName="sphericalReport" preProcessor="#{resultController.preProcessPDF}"/>
                 </h:commandLink>
                 <h:commandLink style="float:right">
                     <p:graphicImage name="excel.png" width="50px"/>

@@ -40,7 +40,7 @@
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  rowsPerPageTemplate="10,25,50">
         <f:facet name="header">
-            Ridge Detection Summary
+            Summary per Nanotube
             <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
             <p:columnToggler datasource="ridgeDetectionSummary" trigger="toggler" />
         </f:facet>
@@ -75,7 +75,7 @@
         <p:graphicImage name="excel.png"  width="50px"/>
         <p:dataExporter type="xls" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
     </h:commandLink>
-        <span style="font-size:2vw; float:right" >Download Ridge Detection Summary: </span>
+        <span style="font-size:2vw; float:right" >Download Summary per Nanotube: </span>
         </div>
     </h:form>
 
@@ -87,7 +87,7 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="10,25,50">
             <f:facet name="header">
-                Ridge Detection FullResults
+                Measurements along nanotubes
                 <p:commandButton id="toggle" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
                 <p:columnToggler datasource="ridgeDetectionFullResults" trigger="toggle" />
             </f:facet>
@@ -154,7 +154,7 @@
             <p:graphicImage name="excel.png" width="50px"/>
             <p:dataExporter type="xls" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
         </h:commandLink>
-            <span style="font-size:2vw; float:right"  >Download Ridge Detection FullResults: </span>
+            <span style="font-size:2vw; float:right"  >Download Measurements along nanotubes: </span>
         </div>
     </h:form>
 
