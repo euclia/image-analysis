@@ -44,9 +44,6 @@
             <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
             <p:columnToggler datasource="ridgeDetectionSummary" trigger="toggler" />
         </f:facet>
-        <p:column headerText="Frame" width="200">
-            <h:outputText value="#{linesResult.frame}"/>
-        </p:column>
         <p:column headerText="Contour Id." width="200">
             <h:outputText value="#{linesResult.contourId}" />
         </p:column>
@@ -100,9 +97,6 @@
             </p:column>
             <p:column headerText="ID"  width="200">
                 <h:outputText value="#{lineResult.contourId}" />
-            </p:column>
-            <p:column headerText="Frame" width="200">
-                <h:outputText value="#{lineResult.frame}" />
             </p:column>
             <p:column headerText="Angle of Normal" width="200">
                 <h:outputText value="#{lineResult.angleOfNormal}">

@@ -50,6 +50,7 @@ public class NanotubesController {
     private double uppt= 0.17D;
     private double minl =0.0D;
     private double maxl = 0.0D;
+    private double scaleF = 0.3D;
 
     @PostConstruct
     public void init() {
@@ -191,6 +192,14 @@ public class NanotubesController {
 
     public double getUppt() {
         return uppt;
+    }
+
+    public double getScaleFactor() {
+        return scaleF;
+    }
+
+    public void setScaleFactor(double scaleF){
+        this.scaleF=scaleF;
     }
 
     public void setUppt(double uppt) {

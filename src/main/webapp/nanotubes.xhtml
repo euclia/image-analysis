@@ -73,6 +73,11 @@
                                 Upper Threshold: <p:inputNumber id="UpperThreshold" value="#{ridgeController.uppt}"/>
                             </p:column>
                         </p:row>
+                        <p:row>
+                            <p:column>
+                                Pixel to Nanometer Scale(0-1): <p:inputNumber  minValue="0.000" maxValue="1.000" id="ScaleFactor" value="#{ridgeController.scaleFactor}"/>
+                            </p:column>
+                        </p:row>
                     </h:panelGrid>
                 </p:panel>
                 <p:commandButton id="submit" value="Process" action="#{ridgeController.submitForm}"  update="growl"  icon="ui-icon-check"/>

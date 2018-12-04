@@ -48,7 +48,7 @@ public class SphericalController implements Serializable {
     private String function;
     private Result result;
     private List<ParticleResult> resultMap;
-    
+    private Double scaleFactor = 0.3;
     @Inject
     private ServletContext context;
     
@@ -147,7 +147,15 @@ public class SphericalController implements Serializable {
     public void setFunction(String function) {
         this.function = function;
     }
-    
+
+    public Double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(Double scaleFactor) {
+        this.scaleFactor=scaleFactor;
+    }
+
     public DefaultStreamedContent getImgPreview() {
         DefaultStreamedContent imgPreview;
         if (bufferedImage != null) {
