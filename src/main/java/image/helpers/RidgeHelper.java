@@ -109,7 +109,7 @@ public class RidgeHelper {
         }
         ridgeLinesReports.add(0,new RidgeLinesReport(
                 "Average",
-                "Average Nanotube",
+                "Average",
                 String.valueOf(totalMeanLength/totalNonZero),
                 String.valueOf(totalMeanWidth/totalNonZero)));
     }

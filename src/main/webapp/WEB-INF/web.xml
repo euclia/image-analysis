@@ -47,6 +47,7 @@
 
 	<!-- Map these files with JSF -->
 
+
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
@@ -56,4 +57,14 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.ico</url-pattern>
 	</servlet-mapping>
+
+	<mime-mapping>
+		<extension>woff2</extension>
+		<mime-type>application/x-font-woff2</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>ico</extension>
+		<mime-type>image/x-icon</mime-type>
+	</mime-mapping>
 </web-app>
