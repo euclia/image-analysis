@@ -1,9 +1,12 @@
 package image.models;
 
+import dto.dataset.FeatureInfo;
 import ij.measure.Measurements;
 
+import ij.plugin.MeasurementsWriter;
 import image.helpers.Constants;
 
+import javax.ws.rs.core.Feature;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,5 +124,14 @@ public class Measurement {
 
 	public List<String> getMeasurementList() {
 		return measurementList;
+	}
+
+	public void getFeatureList(List<FeatureInfo> featureInfoList){
+
+		for (String measurement: measurementList){
+			FeatureInfo featureInfo = new FeatureInfo();
+			featureInfo.setName(measurement);
+			
+		}
 	}
 }

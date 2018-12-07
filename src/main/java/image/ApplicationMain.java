@@ -37,7 +37,7 @@ public class ApplicationMain {
 		return theResult;
 	}
 
-	public Result  countParticles() {
+	public Result countParticles() {
 		Result theResult;
 		ProcessHelper processHelper = new ProcessHelper(this.imagePlus, this.filePath);
 		int measurements = this.measurement.convertMeasurementListToInt(this.selectedMeasurements);
@@ -55,4 +55,6 @@ public class ApplicationMain {
 			return processHelper.applyThreshold("Default");
 		}
 	}
+
+
 }

@@ -5,95 +5,101 @@
  */
 package resources;
 
+import dto.dataset.DataEntry;
+import dto.dataset.Dataset;
+import dto.jpdi.DescriptorRequest;
 import ij.ImagePlus;
 import image.ApplicationMain;
 import image.models.Measurement;
 import image.models.Result;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.codec.binary.Base64;
+import web.SphericalController;
+
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.apache.commons.codec.binary.Base64;
-import web.SphericalController;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author hampos
  */
-@Path("analyze")
-@Named
+@Path("spherical")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class AnalysisResource {
+    private static final Logger LOG = Logger.getLogger(AnalysisResource.class.getName());
 
     @Inject
     SphericalController sphericalController;
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response analyze(@FormParam("image") String image,
-            @FormParam("filter") String filter,
-            @FormParam("type") String type) {
-        try {
-            if (filter == null || filter.isEmpty()) {
-                filter = "Default";
-            }
-            System.out.println(image);
-            String fileName = UUID.randomUUID().toString();
-            java.nio.file.Path path = FileSystems.getDefault().getPath("tmp", fileName);
-            if (!path.toFile().getParentFile().exists()) {
-                path.toFile().mkdirs();
-            }
-            path.toFile().createNewFile();
+    @Path("calculate")
+    public Response calculate(DescriptorRequest descriptorRequest) {
 
-            BufferedImage bufferedImage = null;
-            if (image.startsWith("data:image")) {
-                String base64Image = image.split(",")[1];
-                byte[] decoded = Base64.decodeBase64(base64Image.getBytes());
-                bufferedImage = ImageIO.read(new ByteArrayInputStream(decoded));
-            } else {
-                URL website = new URL(image);
-                Files.copy(website.openStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                bufferedImage = ImageIO.read(new FileInputStream(path.toFile()));
-            }
+try{
+        Map<String, Object> parameters = descriptorRequest.getParameters() != null ? descriptorRequest.getParameters() : new HashMap<>();
+        String filter = (String) parameters.getOrDefault("filter", "Default");
+        String type = (String) parameters.getOrDefault("type", "Default");
 
-            ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
+        Dataset responseDataset = new Dataset();
+        //for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()){
+        DataEntry dataEntry = descriptorRequest.getDataset().getDataEntry().get(0);
+        BufferedImage bufferedImage = null;
 
-            Measurement measurementModel = new Measurement();
-            List<String> selectedMeasurements = measurementModel.getMeasurementList();
-            ApplicationMain applicationMain = new ApplicationMain(
-                    selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
+        String imageEncoded = "";
+        Double scale = 1d;
 
-            Result result = null;
-            if (type == null || type.isEmpty() || type.equals("Analyze")) {
-                result = applicationMain.analyseImage();
-            } else if (type.equals("Count")) {
-                result = applicationMain.countParticles();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
-            }
+        if (dataEntry.getValues().size() > 2)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
 
-            Logger.getLogger(AnalysisResource.class.getName()).log(Level.INFO, "Deleting tmp file:{0}", fileName);
-            path.toFile().delete();
-            System.out.println("Number of ParticleResults:" + result.getParticleResults().size());
-            return Response.ok(result.getParticleResults()).build();
-        } catch (MalformedURLException ex) {
+
+        for (Object value : dataEntry.getValues().values()) {
+            if (String.valueOf(value).startsWith("data:image"))
+                imageEncoded = String.valueOf(value);
+            else
+                scale = Double.valueOf(value.toString());
+        }
+
+        String base64Image = imageEncoded.split(",")[1];
+        byte[] decoded = Base64.decodeBase64(base64Image.getBytes());
+        bufferedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+
+        ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
+
+        Measurement measurementModel = new Measurement();
+        List<String> selectedMeasurements = measurementModel.getMeasurementList();
+
+        ApplicationMain applicationMain = new ApplicationMain(
+                selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
+
+        Result result = null;
+        if (type == null || type.isEmpty() || type.equals("Analyze")) {
+            result = applicationMain.analyseImage();
+        } else if (type.equals("Count")) {
+            result = applicationMain.countParticles();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
+        }
+
+        System.out.println("Number of ParticleResults:" + result.getParticleResults().size());
+        return Response.ok(result.getParticleResults()).build();
+    } catch (MalformedURLException ex) {
             Logger.getLogger(AnalysisResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.BAD_REQUEST).entity("bad uri provided").build();
         } catch (IOException ex) {

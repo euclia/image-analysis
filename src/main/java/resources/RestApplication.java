@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
  *
  * @author hampos
  */
-@ApplicationPath("/service")
+@ApplicationPath("/descriptors")
 public class RestApplication extends Application {
 
     @Override
