@@ -1483,7 +1483,7 @@ header .header-logo {
 
 #home {
     background-color: #151515;
-    background-image: url(../../resources/images/hero-bg.jpg);
+    background-image: url(../images/hero-bg.jpg);
     background-repeat: no-repeat;
     background-position: center 30%;
     -webkit-background-size: cover;
@@ -1678,7 +1678,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
         font-size: 1.8rem
     }
     #home {
-        background-image: url(../../resources/images/hero-bg-small.jpg)
+        background-image: url(../images/hero-bg-small.jpg)
     }
     .home-content-tablecell h1 {
         font-size: 5.2rem
@@ -1729,7 +1729,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
         font-size: 4.2rem
     }
     #home {
-        background-image: url(../../resources/images/hero-bg-small.jpg)
+        background-image: url(../images/hero-bg-small.jpg)
     }
     .home-social-list {
         left: 30px;
@@ -1743,7 +1743,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
 
 @media only screen and (max-width:400px) {
     #home {
-        background-image: url(../../resources/images/hero-bg-small.jpg);
+        background-image: url(../images/hero-bg-small.jpg);
         min-height: 654px
     }
     .home-content-tablecell .row {
@@ -1774,7 +1774,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
  *
  * ------------------------------------------------------------------- */
 #services {
-    background-color: #19191b;
+    background-color: rgba(5, 5, 5, 0.7);
     background-image: url(../images/services-bg.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -1786,14 +1786,14 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
     padding: 15rem 0 15rem;
     color: rgba(255, 255, 255, 0.3);
 }
-#services .overlay {
+/*#services .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(5, 5, 5, 0.7);
-}
+}*/
 #services .gradient-overlay {
     position: absolute;
     top: 0;
@@ -1823,6 +1823,20 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
     margin-top: 1.2rem;
     text-align: center;
 }
+.services-list.with-bottom-sep {
+    padding-bottom: 4.2rem;
+    position: relative
+}
+
+.services-list.with-bottom-sep::after {
+    display: inline-block;
+    height: 1px;
+    width: 200px;
+    background-color: rgba(242, 242, 242, .1);
+    text-align: center
+}
+
+
 #services .services-list .service-item {
     margin-bottom: 3rem;
     padding: 0 50px;
@@ -1832,6 +1846,8 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
 }
 #services .services-list .icon {
     display: inline-block;
+    width: 50%;
+    max-width: 300px;
     margin-bottom: 1.5rem;
 }
 #services .services-list .icon i {
@@ -1844,6 +1860,11 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
     color: #FFFFFF;
     margin-bottom: 3rem;
 }
+
+#services .services-list .h05 a:hover{
+    color: #FFFFFF;
+}
+
 
 /* -------------------------------------------------------------------
  * responsive:
@@ -1885,4 +1906,43 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
     #services .services-list .service-item {
         padding: 0;
     }
+}
+
+
+#go-top {
+    position: fixed;
+    bottom: 42px;
+    right: 30px;
+    z-index: 700;
+    display: none;
+}
+#go-top a {
+    text-decoration: none;
+    border: 0 none;
+    display: block;
+    height: 63px;
+    width: 60px;
+    line-height: 63px;
+    text-align: center;
+    background-color: #000000;
+    color: #888;
+    text-align: center;
+    text-transform: uppercase;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+#go-top a i {
+    font-size: 1.7rem;
+    line-height: inherit;
+}
+#go-top a:visited {
+    background: #000000;
+    color: #888;
+}
+#go-top a:hover, #go-top a:focus {
+    background: #000000;
+    color: #FFFFFF;
 }
