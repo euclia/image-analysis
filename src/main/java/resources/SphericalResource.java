@@ -7,52 +7,60 @@ package resources;
 
 import dto.dataset.DataEntry;
 import dto.dataset.Dataset;
+import dto.dataset.FeatureInfo;
 import dto.jpdi.DescriptorRequest;
+import dto.jpdi.DescriptorResponse;
 import ij.ImagePlus;
 import image.ApplicationMain;
 import image.models.Measurement;
 import image.models.Result;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
 import web.SphericalController;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author hampos
- */
 @Path("spherical")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class AnalysisResource {
-    private static final Logger LOG = Logger.getLogger(AnalysisResource.class.getName());
+public class SphericalResource {
+    private static final Logger LOG = Logger.getLogger(SphericalResource.class.getName());
 
     @Inject
     SphericalController sphericalController;
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("calculate")
-    public Response calculate(DescriptorRequest descriptorRequest) {
+    @Operation(summary = "Calculate spherical descriptors",
+            tags = {"spherical"},
+            description = "Returns a DescriptorResponse containing the derived spherical descriptors from input images",
+            responses = {
+                    @ApiResponse(description = "Descriptor Response", content = @Content(
+                            schema = @Schema(implementation = DescriptorResponse.class)
+                    ))
+            })
+    public Response calculate(@Parameter(description = "Descriptor Request") DescriptorRequest descriptorRequest) {
 
-try{
+    try{
         Map<String, Object> parameters = descriptorRequest.getParameters() != null ? descriptorRequest.getParameters() : new HashMap<>();
         String filter = (String) parameters.getOrDefault("filter", "Default");
         String type = (String) parameters.getOrDefault("type", "Default");
@@ -96,14 +104,16 @@ try{
         } else {
             return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
         }
+        Set<FeatureInfo> featureInfoList = new HashSet<>();
+        result.getFeatureList(featureInfoList);
 
         System.out.println("Number of ParticleResults:" + result.getParticleResults().size());
         return Response.ok(result.getParticleResults()).build();
     } catch (MalformedURLException ex) {
-            Logger.getLogger(AnalysisResource.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SphericalResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.BAD_REQUEST).entity("bad uri provided").build();
         } catch (IOException ex) {
-            Logger.getLogger(AnalysisResource.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SphericalResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

@@ -126,12 +126,5 @@ public class Measurement {
 		return measurementList;
 	}
 
-	public void getFeatureList(List<FeatureInfo> featureInfoList){
 
-		for (String measurement: measurementList){
-			FeatureInfo featureInfo = new FeatureInfo();
-			featureInfo.setName(measurement);
-			
-		}
-	}
 }

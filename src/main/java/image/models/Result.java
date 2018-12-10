@@ -1,9 +1,12 @@
 package image.models;
 
+import dto.dataset.FeatureInfo;
+
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Result implements Serializable{
 
@@ -51,6 +54,15 @@ public class Result implements Serializable{
 
 	private void makeStatisticCalculations() {
 
+	}
+
+	public void getFeatureList(Set<FeatureInfo> featureInfoList){
+		for (String measurement: selectedMeasurements.keySet()){
+			FeatureInfo featureInfo = new FeatureInfo();
+			featureInfo.setName("Identifies the "+measurement +" of the spherical entity");
+			featureInfo.setURI(measurement);
+			featureInfoList.add(featureInfo);
+		}
 	}
 
 }

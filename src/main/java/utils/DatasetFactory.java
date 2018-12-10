@@ -1,14 +1,15 @@
 package utils;
+import dto.dataset.DataEntry;
+import dto.dataset.Dataset;
+import dto.dataset.EntryId;
+import dto.dataset.FeatureInfo;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.jaqpot.descriptors.dto.dataset.DataEntry;
-import org.jaqpot.descriptors.dto.dataset.Dataset;
-import org.jaqpot.descriptors.dto.dataset.EntryId;
-import org.jaqpot.descriptors.dto.dataset.FeatureInfo;
+
 
 import java.io.InputStream;
 import java.util.*;
 
-import static org.jaqpot.descriptors.utils.CSVUtils.parseLine;
+import static utils.CSVUtils.parseLine;
 
 
 public class DatasetFactory {
