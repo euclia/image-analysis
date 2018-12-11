@@ -1,4 +1,4 @@
-package image.models.nanotubesRidgeDetection;
+package image.models.nanotubes;
 
 import de.biomedical_imaging.ij.steger.Junctions;
 import de.biomedical_imaging.ij.steger.Lines;
@@ -6,23 +6,23 @@ import ij.ImagePlus;
 
 import java.util.ArrayList;
 
-public class RidgeResult {
+public class NanoResult {
 
     private ArrayList<Lines> resultLines;
     private ArrayList<Junctions> resultJunction;
-    private ArrayList<RidgeLineReport> ridgeLineReport;
-    private ArrayList<RidgeLinesReport> ridgeLinesReport;
+    private ArrayList<NanoFullReport> nanoFullReport;
+    private ArrayList<NanoSummaryReports> nanoSummaryReports;
     private ImagePlus resultImage;
     private ImagePlus initialImage;
     private ImagePlus histogram;
-    public RidgeResult() {
+    public NanoResult() {
         resultLines= new ArrayList<>();
         resultJunction = new ArrayList<>();
-        ridgeLineReport = new ArrayList<>();
-        ridgeLinesReport = new ArrayList<>();
+        nanoFullReport = new ArrayList<>();
+        nanoSummaryReports = new ArrayList<>();
     }
 
-    public RidgeResult(ArrayList<Lines> resultLines, ArrayList<Junctions> resultJunction, ImagePlus resultImage) {
+    public NanoResult(ArrayList<Lines> resultLines, ArrayList<Junctions> resultJunction, ImagePlus resultImage) {
         this.resultLines = resultLines;
         this.resultJunction = resultJunction;
         this.resultImage = resultImage;
@@ -36,20 +36,20 @@ public class RidgeResult {
         this.histogram = histogram;
     }
 
-    public ArrayList<RidgeLineReport> getRidgeLineReport() {
-        return ridgeLineReport;
+    public ArrayList<NanoFullReport> getNanoFullReport() {
+        return nanoFullReport;
     }
 
-    public void setRidgeLineReport(ArrayList<RidgeLineReport> ridgeLineReport) {
-        this.ridgeLineReport = ridgeLineReport;
+    public void setNanoFullReport(ArrayList<NanoFullReport> nanoFullReport) {
+        this.nanoFullReport = nanoFullReport;
     }
 
-    public ArrayList<RidgeLinesReport> getRidgeLinesReport() {
-        return ridgeLinesReport;
+    public ArrayList<NanoSummaryReports> getNanoSummaryReports() {
+        return nanoSummaryReports;
     }
 
-    public void setRidgeLinesReport(ArrayList<RidgeLinesReport> ridgeLinesReport) {
-        this.ridgeLinesReport = ridgeLinesReport;
+    public void setNanoSummaryReports(ArrayList<NanoSummaryReports> nanoSummaryReports) {
+        this.nanoSummaryReports = nanoSummaryReports;
     }
 
     public ArrayList<Lines> getResultLines() {

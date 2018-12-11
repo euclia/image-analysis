@@ -1,4 +1,4 @@
-package image.models;
+package image.models.spherical;
 
 import image.helpers.AnalysisHelper;
 
@@ -424,5 +424,6 @@ public class ParticleResult {
     public void setModal_grey_value(String modal_grey_value) {
         this.modal_grey_value = modal_grey_value;
     }
-    
+
+
 }

@@ -6,6 +6,7 @@
 package resources;
 
 import com.google.common.collect.Lists;
+import image.helpers.DatasetMakerHelper;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
@@ -35,14 +36,15 @@ public class RestApplication extends Application {
         super();
         OpenAPI oas = new OpenAPI();
         Info info = new Info()
-                .title("Swagger Sample App bootstrap code")
-                .description("This is a sample server Petstore server.  You can find out more about Swagger " +
-                        "at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, " +
-                        "you can use the api key `special-key` to test the authorization filters.")
-                .termsOfService("http://swagger.io/terms/")
+                .title("NanoImage API")
+                .description("NanoImage, part of the Jaqpot Platform, offers tools for analysis of electron microscopy " +
+                        "images, allowing the user to derive descriptors for the materials directly from the images, " +
+                        "offering distinct advantage over manual procedures, in terms of speed and ability to represent " +
+                        "the whole sample. It is not up to the microscope operator to capture measurements that express " +
+                        "the frequency of occurrence of materials with certain dimensions/shapes or the presence of " +
+                        "materials with outlier dimensions/shapes.")
                 .contact(new Contact()
-                        .email("apiteam@swagger.io"))
-
+                        .email("ang.valsamis@gmail.com"))
                 .license(new License()
                         .name("Apache 2.0")
                         .url("http://www.apache.org/licenses/LICENSE-2.0.html"));
@@ -58,7 +60,6 @@ public class RestApplication extends Application {
                 .openAPI(oas)
                 .prettyPrint(true)
                 .resourcePackages(Stream.of("main.java.resources").collect(Collectors.toSet()));
-
         try {
             new JaxrsOpenApiContextBuilder()
                     .servletConfig(servletConfig)
@@ -68,7 +69,6 @@ public class RestApplication extends Application {
         } catch (OpenApiConfigurationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-
     }
 
     @Override
@@ -76,6 +76,7 @@ public class RestApplication extends Application {
         Set<Class<?>> resources = new HashSet();
         resources.add(SphericalResource.class);
         resources.add(NanotubesResource.class);
+        resources.add(DatasetMakerHelper.class);
         resources.add(OpenApiResource.class);
         resources.add(AcceptHeaderOpenApiResource.class);
         return resources;

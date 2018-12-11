@@ -3,8 +3,8 @@ package web;
 import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
 import image.helpers.Constants;
-import image.models.ParticleResult;
-import image.models.Result;
+import image.models.spherical.ParticleResult;
+import image.models.spherical.SphericalReport;
 import org.primefaces.model.DefaultStreamedContent;
 
 import javax.enterprise.context.SessionScoped;
@@ -25,7 +25,7 @@ public class SphericalResultController implements Serializable {
 
 
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
-    private Result result;
+    private SphericalReport result;
     private List<ParticleResult> particleResults;
     private HashMap<String, Boolean> selectedMeasurements;
     private Boolean isAreaSelected = false;
@@ -53,7 +53,7 @@ public class SphericalResultController implements Serializable {
     private ServletContext context;
 
     public void initialize() {
-        this.result = (Result) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("result");
+        this.result = (SphericalReport) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("result");
         if (result.getParticleResults()!=null)
         this.particleResults = result.getParticleResults();
         if (result.getSelectedMeasurements()!=null) {

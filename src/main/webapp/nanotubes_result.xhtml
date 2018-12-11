@@ -34,7 +34,7 @@
         </h:panelGrid>
     </p:panel>
     <h:form>
-    <p:dataTable class="dataTable" id="ridgeDetectionSummary" var="linesResult" value="#{result2Controller.ridgeLinesReport}"
+    <p:dataTable class="dataTable" id="ridgeDetectionSummary" var="linesResult" value="#{result2Controller.nanoSummaryReports}"
                  rows="25"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -61,19 +61,19 @@
         <div class="dataTableExports">
     <h:commandLink style="float:right">
         <p:graphicImage name="xml.png"  width="50px"/>
-        <p:dataExporter type="xml" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+        <p:dataExporter type="xml" target="ridgeDetectionSummary" fileName="nanoSummaryReports" />
     </h:commandLink>
     <h:commandLink style="float:right">
         <p:graphicImage name="csv.png"  width="50px"/>
-        <p:dataExporter type="csv" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+        <p:dataExporter type="csv" target="ridgeDetectionSummary" fileName="nanoSummaryReports" />
     </h:commandLink>
     <h:commandLink  style="float:right">
         <p:graphicImage name="pdf.png"  width="50px"/>
-        <p:dataExporter type="pdf" target="ridgeDetectionSummary" fileName="ridgeLinesReport"/>
+        <p:dataExporter type="pdf" target="ridgeDetectionSummary" fileName="nanoSummaryReports"/>
     </h:commandLink>
     <h:commandLink style="float:right">
         <p:graphicImage name="excel.png"  width="50px"/>
-        <p:dataExporter type="xls" target="ridgeDetectionSummary" fileName="ridgeLinesReport" />
+        <p:dataExporter type="xls" target="ridgeDetectionSummary" fileName="nanoSummaryReports" />
     </h:commandLink>
         <span style="font-size:2vw; float:right" >Download Summary per Nanotube: </span>
         </div>
@@ -81,7 +81,7 @@
 
 
     <h:form>
-        <p:dataTable class="dataTable" id="ridgeDetectionFullResults" var="lineResult" value="#{result2Controller.ridgeLineReport}"
+        <p:dataTable class="dataTable" id="ridgeDetectionFullResults" var="lineResult" value="#{result2Controller.nanoFullReport}"
                      rows="25"
                      paginator="true"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -140,19 +140,19 @@
         <div class="dataTableExports">
         <h:commandLink style="float:right">
             <p:graphicImage name="xml.png" width="50px"/>
-            <p:dataExporter type="xml" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+            <p:dataExporter type="xml" target="ridgeDetectionFullResults" fileName="nanoFullReport" />
         </h:commandLink>
         <h:commandLink style="float:right">
             <p:graphicImage name="csv.png" width="50px"/>
-            <p:dataExporter type="csv" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+            <p:dataExporter type="csv" target="ridgeDetectionFullResults" fileName="nanoFullReport" />
         </h:commandLink>
         <h:commandLink style="float:right">
             <p:graphicImage name="pdf.png" width="50px"/>
-            <p:dataExporter type="pdf" target="ridgeDetectionFullResults" fileName="ridgeLineReport"/>
+            <p:dataExporter type="pdf" target="ridgeDetectionFullResults" fileName="nanoFullReport"/>
         </h:commandLink>
         <h:commandLink style="float:right">
             <p:graphicImage name="excel.png" width="50px"/>
-            <p:dataExporter type="xls" target="ridgeDetectionFullResults" fileName="ridgeLineReport" />
+            <p:dataExporter type="xls" target="ridgeDetectionFullResults" fileName="nanoFullReport" />
         </h:commandLink>
             <span style="font-size:2vw; float:right"  >Download Measurements along nanotubes: </span>
         </div>

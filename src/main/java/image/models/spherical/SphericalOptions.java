@@ -1,4 +1,4 @@
-package image.models;
+package image.models.spherical;
 
 import dto.dataset.FeatureInfo;
 import ij.measure.Measurements;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Measurement {
+public class SphericalOptions {
 
 	private List<String> measurementList;
 	public HashMap<String, Integer> measurementMap;
 	public HashMap<String, Boolean> selectedMeasurementsMap = new HashMap<>();
 
 
-	public Measurement(){
+	public SphericalOptions(){
 		this.populateMeasurementList();
 		this.matchingMeasurementsWithName();
 	}

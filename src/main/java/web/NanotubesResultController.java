@@ -1,9 +1,9 @@
 package web;
 
 import ij.ImagePlus;
-import image.models.nanotubesRidgeDetection.RidgeLineReport;
-import image.models.nanotubesRidgeDetection.RidgeLinesReport;
-import image.models.nanotubesRidgeDetection.RidgeResult;
+import image.models.nanotubes.NanoFullReport;
+import image.models.nanotubes.NanoSummaryReports;
+import image.models.nanotubes.NanoResult;
 import org.primefaces.model.DefaultStreamedContent;
 
 import javax.enterprise.context.SessionScoped;
@@ -21,12 +21,12 @@ import java.io.*;
 public class NanotubesResultController implements Serializable {
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
 
-    private RidgeResult ridgeResult;
+    private NanoResult nanoResult;
 
     @Inject private ServletContext context;
 
     public void initialize() {
-        this.ridgeResult = (RidgeResult) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ridgeresult");
+        this.nanoResult = (NanoResult) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ridgeresult");
     }
 
     public DefaultStreamedContent getImgPreview(ImagePlus imagePlus, boolean halfResize) {
@@ -67,22 +67,22 @@ public class NanotubesResultController implements Serializable {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
         return new DefaultStreamedContent(is);
     }
-    public java.util.List<RidgeLinesReport> getRidgeLinesReport() {
-        return  ridgeResult.getRidgeLinesReport();
+    public java.util.List<NanoSummaryReports> getRidgeLinesReport() {
+        return  nanoResult.getNanoSummaryReports();
     }
-    public java.util.List<RidgeLineReport> getRidgeLineReport() {
-        return  ridgeResult.getRidgeLineReport();
+    public java.util.List<NanoFullReport> getRidgeLineReport() {
+        return  nanoResult.getNanoFullReport();
     }
 
     public ImagePlus getInitialImage (){
-        return ridgeResult.getInitialImage();
+        return nanoResult.getInitialImage();
     }
 
     public ImagePlus getResultImage(){
-        return  ridgeResult.getResultImage();
+        return  nanoResult.getResultImage();
     }
 
     public ImagePlus getHistogram(){
-        return ridgeResult.getHistogram();
+        return nanoResult.getHistogram();
     }
 }

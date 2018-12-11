@@ -2,8 +2,8 @@ package image;
 
 import ij.ImagePlus;
 import image.helpers.ProcessHelper;
-import image.models.Measurement;
-import image.models.Result;
+import image.models.spherical.SphericalOptions;
+import image.models.spherical.SphericalReport;
 
 import java.awt.image.BufferedImage;
 
@@ -12,38 +12,37 @@ public class ApplicationMain {
 
 	private String[] selectedMeasurements;
 	private String selectedThreshold;
-	private Measurement measurement;
+	private SphericalOptions sphericalOptions;
 	private String filePath;
 	private ImagePlus imagePlus;
 
 	public ApplicationMain(String[] selectedMeasurements, String selectedThreshold, ImagePlus imagePlus){
 		this.selectedMeasurements = selectedMeasurements;
 		this.selectedThreshold = selectedThreshold;
-		this.measurement = new Measurement();
+		this.sphericalOptions = new SphericalOptions();
 		this.imagePlus = imagePlus;
 	}
 
 	public ApplicationMain(ImagePlus imagePlus){
 		this.imagePlus = imagePlus;
-//		this.filePath = uploadedFilePath;
 	}
 
-	public Result analyseImage(){
-		Result theResult;
+	public SphericalReport analyseImage(){
+		SphericalReport theSphericalReport;
 		ProcessHelper processHelper = new ProcessHelper(this.imagePlus, this.filePath);
-		int measurements = this.measurement.convertMeasurementListToInt(this.selectedMeasurements);
-		theResult = processHelper.analyseImage(measurements, this.selectedThreshold);
-		theResult.setSelectedMeasurements(this.measurement.selectedMeasurementsMap);
-		return theResult;
+		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
+		theSphericalReport = processHelper.analyseImage(measurements, this.selectedThreshold);
+		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
+		return theSphericalReport;
 	}
 
-	public Result countParticles() {
-		Result theResult;
+	public SphericalReport countParticles() {
+		SphericalReport theSphericalReport;
 		ProcessHelper processHelper = new ProcessHelper(this.imagePlus, this.filePath);
-		int measurements = this.measurement.convertMeasurementListToInt(this.selectedMeasurements);
-		theResult =  processHelper.countParticles(this.selectedThreshold, measurements);
-		theResult.setSelectedMeasurements(this.measurement.selectedMeasurementsMap);
-		return theResult;
+		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
+		theSphericalReport =  processHelper.countParticles(this.selectedThreshold, measurements);
+		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
+		return theSphericalReport;
 	}
 
 	public BufferedImage applyThreshold(String selectedThreshold){
@@ -55,6 +54,4 @@ public class ApplicationMain {
 			return processHelper.applyThreshold("Default");
 		}
 	}
-
-
 }

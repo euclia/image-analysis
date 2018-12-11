@@ -3,9 +3,9 @@ package web;
 import ij.ImagePlus;
 import image.ApplicationMain;
 import image.helpers.FileMinion;
-import image.models.Measurement;
-import image.models.ParticleResult;
-import image.models.Result;
+import image.models.spherical.SphericalOptions;
+import image.models.spherical.ParticleResult;
+import image.models.spherical.SphericalReport;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 
@@ -46,7 +46,7 @@ public class SphericalController implements Serializable {
     private String[] selectedMeasurements;
     private BufferedImage bufferedImage;
     private String function;
-    private Result result;
+    private SphericalReport result;
     private List<ParticleResult> resultMap;
     private Double scaleFactor = 0.3;
     @Inject
@@ -54,8 +54,8 @@ public class SphericalController implements Serializable {
     
     @PostConstruct
     public void init() {
-        Measurement measurementModel = new Measurement();
-        this.measurements = measurementModel.getMeasurementList();
+        SphericalOptions sphericalOptionsModel = new SphericalOptions();
+        this.measurements = sphericalOptionsModel.getMeasurementList();
         this.fileMinion = new FileMinion();
     }
     

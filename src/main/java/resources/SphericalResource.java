@@ -12,9 +12,9 @@ import dto.jpdi.DescriptorRequest;
 import dto.jpdi.DescriptorResponse;
 import ij.ImagePlus;
 import image.ApplicationMain;
-import image.models.Measurement;
-import image.models.Result;
-
+import image.helpers.DatasetMakerHelper;
+import image.models.spherical.SphericalOptions;
+import image.models.spherical.SphericalReport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,9 +23,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
 import web.SphericalController;
 
+import javax.ejb.EJB;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.awt.image.BufferedImage;
@@ -43,8 +47,10 @@ public class SphericalResource {
     private static final Logger LOG = Logger.getLogger(SphericalResource.class.getName());
 
     @Inject
-    SphericalController sphericalController;
+    DatasetMakerHelper datasetMakerHelper;
 
+    @Inject
+    SphericalController sphericalController;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -63,52 +69,63 @@ public class SphericalResource {
     try{
         Map<String, Object> parameters = descriptorRequest.getParameters() != null ? descriptorRequest.getParameters() : new HashMap<>();
         String filter = (String) parameters.getOrDefault("filter", "Default");
-        String type = (String) parameters.getOrDefault("type", "Default");
+        String type = (String) parameters.getOrDefault("type", "Count");
 
         Dataset responseDataset = new Dataset();
-        //for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()){
-        DataEntry dataEntry = descriptorRequest.getDataset().getDataEntry().get(0);
-        BufferedImage bufferedImage = null;
-
-        String imageEncoded = "";
-        Double scale = 1d;
-
-        if (dataEntry.getValues().size() > 2)
-            return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
-
-
-        for (Object value : dataEntry.getValues().values()) {
-            if (String.valueOf(value).startsWith("data:image"))
-                imageEncoded = String.valueOf(value);
-            else
-                scale = Double.valueOf(value.toString());
-        }
-
-        String base64Image = imageEncoded.split(",")[1];
-        byte[] decoded = Base64.decodeBase64(base64Image.getBytes());
-        bufferedImage = ImageIO.read(new ByteArrayInputStream(decoded));
-
-        ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
-
-        Measurement measurementModel = new Measurement();
-        List<String> selectedMeasurements = measurementModel.getMeasurementList();
-
-        ApplicationMain applicationMain = new ApplicationMain(
-                selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
-
-        Result result = null;
-        if (type == null || type.isEmpty() || type.equals("Analyze")) {
-            result = applicationMain.analyseImage();
-        } else if (type.equals("Count")) {
-            result = applicationMain.countParticles();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
-        }
         Set<FeatureInfo> featureInfoList = new HashSet<>();
-        result.getFeatureList(featureInfoList);
+        List<DataEntry> dataEntryList = new LinkedList<>();
 
-        System.out.println("Number of ParticleResults:" + result.getParticleResults().size());
-        return Response.ok(result.getParticleResults()).build();
+        for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()) {
+
+            BufferedImage bufferedImage = null;
+
+            String imageEncoded = "";
+            Double scale = 1d;
+
+            if (dataEntry.getValues().size() > 2)
+                return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
+
+
+            for (Object value : dataEntry.getValues().values()) {
+                if (String.valueOf(value).startsWith("data:image"))
+                    imageEncoded = String.valueOf(value);
+                else
+                    scale = Double.valueOf(value.toString());
+            }
+
+            String base64Image = imageEncoded.split(",")[1];
+            byte[] decoded = Base64.decodeBase64(base64Image.getBytes());
+            bufferedImage = ImageIO.read(new ByteArrayInputStream(decoded));
+
+            ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
+
+            SphericalOptions sphericalOptionsModel = new SphericalOptions();
+            List<String> selectedMeasurements = sphericalOptionsModel.getMeasurementList();
+
+            ApplicationMain applicationMain = new ApplicationMain(
+                    selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
+
+            SphericalReport sphericalReport = null;
+            if (type == null || type.isEmpty() || type.equals("Analyze")) {
+                sphericalReport = applicationMain.analyseImage();
+            } else if (type.equals("Count")) {
+                sphericalReport = applicationMain.countParticles();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
+            }
+
+            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, dataEntryList, sphericalReport.getParticleResultsHash());
+        }
+        datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, ((LinkedList<DataEntry>) dataEntryList).getFirst());
+
+        responseDataset.setDataEntry(dataEntryList);
+        responseDataset.setFeatures(featureInfoList);
+
+        DescriptorResponse descriptorResponse = new DescriptorResponse();
+        descriptorResponse.setResponseDataset(responseDataset);
+
+
+        return Response.ok(descriptorResponse).build();
     } catch (MalformedURLException ex) {
             Logger.getLogger(SphericalResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.BAD_REQUEST).entity("bad uri provided").build();

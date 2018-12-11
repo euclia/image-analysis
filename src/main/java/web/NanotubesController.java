@@ -4,10 +4,10 @@ import ij.ImagePlus;
 import ij.gui.Overlay;
 import image.helpers.FileMinion;
 import image.helpers.RidgeHelper;
-import image.models.nanotubesRidgeDetection.RidgeLineReport;
-import image.models.nanotubesRidgeDetection.RidgeLinesReport;
-import image.models.nanotubesRidgeDetection.RidgeOptions;
-import image.models.nanotubesRidgeDetection.RidgeResult;
+import image.models.nanotubes.NanoSummaryReports;
+import image.models.nanotubes.NanoFullReport;
+import image.models.nanotubes.NanoParameters;
+import image.models.nanotubes.NanoResult;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -41,8 +41,8 @@ public class NanotubesController {
 
     private String thresholdType;
     private FileMinion fileMinion;
-    private RidgeOptions ridgeOptions;
-    private RidgeResult ridgeResult;
+    private NanoParameters nanoParameters;
+    private NanoResult nanoResult;
     private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
 
     private double sigma = 8.58D;
@@ -54,34 +54,34 @@ public class NanotubesController {
 
     @PostConstruct
     public void init() {
-        this.ridgeOptions = new RidgeOptions();
+        this.nanoParameters = new NanoParameters();
         this.fileMinion = new FileMinion();
     }
 
     public String submitForm() {
         try {
 
-            this.ridgeResult = new RidgeResult();
+            this.nanoResult = new NanoResult();
             final ImagePlus imp = new ImagePlus("theTitle", bufferedImage);
 
             //Run ridge detection
             RidgeHelper ridgeHelper = new RidgeHelper(imp);
             ridgeHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
-            ridgeResult.setResultLines(ridgeHelper.getLines());
+            nanoResult.setResultLines(ridgeHelper.getLines());
 
             //Create Green Overlay image
             Overlay overlay = ridgeHelper.displayContours();
             imp.setOverlay(overlay);
             ImagePlus imp2 = imp.flatten();
-            ridgeResult.setResultImage(imp2);
-            ridgeResult.setInitialImage(imp);
+            nanoResult.setResultImage(imp2);
+            nanoResult.setInitialImage(imp);
 
             //Create report tables
-            ArrayList<RidgeLineReport> ridgeLineReports = new ArrayList<>();
-            ArrayList<RidgeLinesReport> ridgeLinesReports = new ArrayList<>();
-            ridgeHelper.createResultsTable(ridgeLineReports, ridgeLinesReports);
-            ridgeResult.setRidgeLineReport(ridgeLineReports);
-            ridgeResult.setRidgeLinesReport(ridgeLinesReports);
+            ArrayList<NanoFullReport> nanoSummaryReports = new ArrayList<>();
+            ArrayList<NanoSummaryReports> nanoFullReports = new ArrayList<>();
+            ridgeHelper.createResultsTable(nanoSummaryReports, nanoFullReports);
+            nanoResult.setNanoFullReport(nanoSummaryReports);
+            nanoResult.setNanoSummaryReports(nanoFullReports);
 
             //Create histogram with mean Datas
             ArrayList<Double> meanDatas = ridgeHelper.retrieveMeanData();
@@ -93,12 +93,12 @@ public class NanotubesController {
                     "Mean Line Width", "Occurrence",
                     dataset, PlotOrientation.VERTICAL,
                     true, true, false);
-            ridgeResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
+            nanoResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
         } catch (Exception e) {
             e.printStackTrace();
         }
         fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.ridgeResult);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.nanoResult);
         return "nanotubes_result?faces-redirect=true";
     }
 
@@ -170,8 +170,8 @@ public class NanotubesController {
         return bufferedImage;
     }
 
-    public RidgeOptions getRidgeOptions() {
-        return ridgeOptions;
+    public NanoParameters getNanoParameters() {
+        return nanoParameters;
     }
 
     public double getSigma() {

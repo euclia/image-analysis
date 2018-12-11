@@ -1,27 +1,27 @@
-package image.models;
-
-import dto.dataset.FeatureInfo;
+package image.models.spherical;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
-public class Result implements Serializable{
+public class SphericalReport implements Serializable{
 
 	public List<ParticleResult> particleResults;
+	public List<HashMap<String,String>> particleResultsHash;
 	public ParticleResult staticParticle;
 	private HashMap<String, Boolean> selectedMeasurements;
 	private BufferedImage processedImage;
 	public  HashMap<String, String> averageMap;
 
-	public Result(List<ParticleResult> theParticleResults, BufferedImage theImage) {
+	public SphericalReport(List<ParticleResult> theParticleResults, BufferedImage theImage) {
+		this.particleResultsHash = new ArrayList<>();
 		this.particleResults = theParticleResults;
 		this.processedImage = theImage;
 	}
 
-	public Result(){
+	public SphericalReport(){
 		this.particleResults = null;
 		this.processedImage = null;
 	}
@@ -29,6 +29,23 @@ public class Result implements Serializable{
 	//Getters and Setters//
 	public List<ParticleResult> getParticleResults() {
 		return particleResults;
+	}
+
+
+	public List<HashMap<String, String>> getParticleResultsHash() {
+		return particleResultsHash;
+	}
+
+	public void setParticleResultsHash(List<HashMap<String, String>> particleResultsHash) {
+		this.particleResultsHash = particleResultsHash;
+	}
+
+	public ParticleResult getStaticParticle() {
+		return staticParticle;
+	}
+
+	public void setStaticParticle(ParticleResult staticParticle) {
+		this.staticParticle = staticParticle;
 	}
 
 	public BufferedImage getProcessedImage() {
@@ -49,20 +66,6 @@ public class Result implements Serializable{
 
 	public HashMap<String, Boolean> getSelectedMeasurements() {
 		return selectedMeasurements;
-	}
-
-
-	private void makeStatisticCalculations() {
-
-	}
-
-	public void getFeatureList(Set<FeatureInfo> featureInfoList){
-		for (String measurement: selectedMeasurements.keySet()){
-			FeatureInfo featureInfo = new FeatureInfo();
-			featureInfo.setName("Identifies the "+measurement +" of the spherical entity");
-			featureInfo.setURI(measurement);
-			featureInfoList.add(featureInfo);
-		}
 	}
 
 }

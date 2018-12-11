@@ -13,8 +13,8 @@ import ij.gui.PolygonRoi;
 import ij.measure.Calibration;
 import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
-import image.models.nanotubesRidgeDetection.RidgeLineReport;
-import image.models.nanotubesRidgeDetection.RidgeLinesReport;
+import image.models.nanotubes.NanoSummaryReports;
+import image.models.nanotubes.NanoFullReport;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class RidgeHelper {
         return meanData;
     }
 
-    public void createResultsTable(ArrayList<RidgeLineReport> ridgeLineReports, ArrayList<RidgeLinesReport> ridgeLinesReports) {
+    public void createResultsTable(ArrayList<NanoFullReport> nanoSummaryReports, ArrayList<NanoSummaryReports> nanoFullReports) {
         if(lines.size()==0) return;
         Calibration cal = imp.getCalibration();
         Iterator rt2 = lines.iterator();
@@ -80,7 +80,7 @@ public class RidgeHelper {
                 double j = 0.0D;
 
                 for (int i = 0; i < c.getNumber(); ++i) {
-                    ridgeLineReports.add(new RidgeLineReport(
+                    nanoSummaryReports.add(new NanoFullReport(
                             String.valueOf(contours.getFrame()),
                             String.valueOf(c.getID()),
                             String.valueOf(i + 1),
@@ -96,7 +96,7 @@ public class RidgeHelper {
                 }
                 //here we exclude lines with width == 0; //noise
                 if (j/(double)c.getNumber()*cal.pixelWidth!=0) {
-                    ridgeLinesReports.add(new RidgeLinesReport(
+                    nanoFullReports.add(new NanoSummaryReports(
                             String.valueOf(contours.getFrame()),
                             String.valueOf(c.getID()),
                             String.valueOf(c.estimateLength() * cal.pixelWidth),
@@ -107,7 +107,7 @@ public class RidgeHelper {
                 totalMeanWidth+=j / (double) c.getNumber() * cal.pixelWidth;
             }
         }
-        ridgeLinesReports.add(0,new RidgeLinesReport(
+        nanoFullReports.add(0,new NanoSummaryReports(
                 "Average",
                 "Average",
                 String.valueOf(totalMeanLength/totalNonZero),

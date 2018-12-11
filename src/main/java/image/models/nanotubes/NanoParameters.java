@@ -1,9 +1,9 @@
-package image.models.nanotubesRidgeDetection;
+package image.models.nanotubes;
 
 /**
  * Created by root on 2/11/2018.
  */
-public class RidgeOptions {
+public class NanoParameters {
     double lineWidth = 3.5D;
     double contrastHigh = 230.0D;
     double contrastLow = 87.0D;
@@ -24,7 +24,7 @@ public class RidgeOptions {
     static final double maxLengthDefault = 0.0D;
     static final boolean isDarkLineDefault = false;
 
-    public RidgeOptions(double lineWidth, double contrastHigh, double contrastLow, double sigma, double lowerThresh, double upperThresh, double minLength, double maxLength, boolean isDarkLine) {
+    public NanoParameters(double lineWidth, double contrastHigh, double contrastLow, double sigma, double lowerThresh, double upperThresh, double minLength, double maxLength, boolean isDarkLine) {
         this.lineWidth = lineWidth;
         this.contrastHigh = contrastHigh;
         this.contrastLow = contrastLow;
@@ -36,7 +36,7 @@ public class RidgeOptions {
         this.isDarkLine = isDarkLine;
     }
 
-    public RidgeOptions() {
+    public NanoParameters() {
     }
 
     public double getLineWidthDefault() {

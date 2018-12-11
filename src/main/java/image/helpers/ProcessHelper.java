@@ -1,20 +1,16 @@
 package image.helpers;
 
-import ij.IJ;
 import ij.ImagePlus;
-import ij.Prefs;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ParticleAnalyzer;
 import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
-import image.models.ParticleResult;
-import image.models.Result;
+import image.models.spherical.ParticleResult;
+import image.models.spherical.SphericalReport;
 
 import javax.imageio.ImageIO;
-import java.awt.image.ColorModel;
-import java.awt.image.IndexColorModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,26 +19,22 @@ import java.io.File;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static ij.process.ImageProcessor.BLACK_AND_WHITE_LUT;
-import static ij.process.ImageProcessor.OVER_UNDER_LUT;
 import static ij.process.ImageProcessor.RED_LUT;
 
 public class ProcessHelper {
 
     private ImagePlus imagePlus;
     private ImageConverter imageConverter;
-    //private String resultCsvPath;
 
     public ProcessHelper(ImagePlus imagePlus, String theFilePathName) {
         this.imagePlus = imagePlus;
-        //	this.resultCsvPath = theFilePathName+"_result.csv";
         this.imageConverter = new ImageConverter(this.imagePlus);
         this.imageConverter.convertToGray8();
     }
 
-    public Result analyseImage(int measurements, String threshold) throws NullPointerException {
+    public SphericalReport analyseImage(int measurements, String threshold) throws NullPointerException {
         List<ParticleResult> resultsMap = new ArrayList<>();
-        Result theResult;
+        SphericalReport theResult;
         try {
             this.imagePlus.getProcessor().setAutoThreshold(threshold);
             ResultsTable rt = new ResultsTable();
@@ -63,14 +55,14 @@ public class ProcessHelper {
             ReaderCSV readerCSV = new ReaderCSV(sb);
             resultsMap = readerCSV.read();
             //makeExtraCalculations(resultsMap);
-            theResult = new Result(resultsMap, this.applyThreshold(threshold));
+            theResult = new SphericalReport(resultsMap, this.applyThreshold(threshold));
             theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.staticParticle.setId("Average Particle");
-
+            theResult.particleResultsHash.add(0,calculateAverageModel(rt, readerCSV.headersArray));
             theResult.particleResults.add(0, theResult.staticParticle);
             rt.reset();
         } catch (Exception e) {
-            theResult = new Result();
+            theResult = new SphericalReport();
             e.printStackTrace();
         }
         return theResult;
@@ -90,9 +82,9 @@ public class ProcessHelper {
 
     }
 
-    public Result countParticles(String thresholdType, int measurements) {
+    public SphericalReport countParticles(String thresholdType, int measurements) {
         List<ParticleResult> resultsMap = new ArrayList<>();
-        Result theResult;
+        SphericalReport theResult;
         try {
             this.imagePlus.getProcessor().setAutoThreshold(thresholdType);
             ResultsTable rt = new ResultsTable();
@@ -113,13 +105,14 @@ public class ProcessHelper {
             ReaderCSV readerCSV = new ReaderCSV(sb);
             resultsMap = readerCSV.read();
 
-            theResult = new Result(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
+            theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
             theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.staticParticle.setId("Average Particle");
+            theResult.particleResultsHash.add(0,this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.particleResults.add(0, theResult.staticParticle);
             rt.reset();
         } catch (Exception e) {
-            theResult = new Result();
+            theResult = new SphericalReport();
             System.out.println("Exception on countParticles");
             e.printStackTrace();
         }

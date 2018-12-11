@@ -1,12 +1,12 @@
-package image.models.nanotubesRidgeDetection;
+package image.models.nanotubes;
 
-public class RidgeLinesReport  {
+public class NanoSummaryReports {
     private String frame;
     private String contourId;
     private String length;
     private String meanLineWidth;
 
-    public RidgeLinesReport(String frame, String contourId, String length, String meanLineWidth) {
+    public NanoSummaryReports(String frame, String contourId, String length, String meanLineWidth) {
         this.frame = frame;
         this.contourId = contourId;
         this.length = length;

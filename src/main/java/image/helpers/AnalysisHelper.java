@@ -1,9 +1,5 @@
 package image.helpers;
 
-import image.models.ParticleResult;
-
-import java.util.List;
-
 public class AnalysisHelper {
 
 	final double PI = 3.14;

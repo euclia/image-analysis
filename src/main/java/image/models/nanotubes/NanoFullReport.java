@@ -1,6 +1,6 @@
-package image.models.nanotubesRidgeDetection;
+package image.models.nanotubes;
 
-public class RidgeLineReport {
+public class NanoFullReport {
     private String frame;
     private String contourId;
     private String pos;
@@ -13,7 +13,7 @@ public class RidgeLineReport {
     private String angleOfNormal;
     private String clasS;
 
-    public RidgeLineReport(String frame, String contourId, String pos, String xCoordinates, String yCoordinates, String length, String contrast, String asymmetry, String lineWidth, String angleOfNormal, String clasS) {
+    public NanoFullReport(String frame, String contourId, String pos, String xCoordinates, String yCoordinates, String length, String contrast, String asymmetry, String lineWidth, String angleOfNormal, String clasS) {
         this.frame = frame;
         this.contourId = contourId;
         this.pos = pos;
@@ -117,7 +117,7 @@ public class RidgeLineReport {
 
     @Override
     public String toString() {
-        return "RidgeLineReport{" +
+        return "NanoFullReport{" +
                 "frame='" + frame + '\'' +
                 ", contourId='" + contourId + '\'' +
                 ", pos='" + pos + '\'' +
