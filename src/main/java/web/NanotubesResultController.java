@@ -67,10 +67,10 @@ public class NanotubesResultController implements Serializable {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
         return new DefaultStreamedContent(is);
     }
-    public java.util.List<NanoSummaryReports> getRidgeLinesReport() {
+    public java.util.List<NanoSummaryReports> getNanoSummaryReports() {
         return  nanoResult.getNanoSummaryReports();
     }
-    public java.util.List<NanoFullReport> getRidgeLineReport() {
+    public java.util.List<NanoFullReport> getNanoFullReport() {
         return  nanoResult.getNanoFullReport();
     }
 

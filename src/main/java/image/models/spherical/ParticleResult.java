@@ -86,6 +86,43 @@ public class ParticleResult {
         this.calculateExtraParameters();
     }
 
+    public HashMap<String,Object> getParticleResult(){
+        HashMap<String,Object> particleResult = new HashMap<>();
+        particleResult.put("Angle",Double.parseDouble(this.angle));
+        particleResult.put("Area",Double.parseDouble(this.area));
+        particleResult.put("StdDev",Double.parseDouble(this.std_dev));
+        particleResult.put("Circularity",Double.parseDouble(this.circularity));
+        particleResult.put("Porosity",Double.parseDouble(this.area_fraction));
+        particleResult.put("Solidity",Double.parseDouble(this.solidity));
+        particleResult.put("XM",Double.parseDouble(this.x_center_of_mass));
+        particleResult.put("YM",Double.parseDouble(this.y_center_of_mass));
+        particleResult.put("Modal grey value",Double.parseDouble(this.modal_grey_value));
+        particleResult.put("Min grey value",Double.parseDouble(this.min_grey_value));
+        particleResult.put("Max grey value",Double.parseDouble(this.max_grey_value));
+        particleResult.put("Aspect ratio",Double.parseDouble(this.aspect_ratio));
+        particleResult.put("Roundness",Double.parseDouble(this.solidity));
+        particleResult.put("Integrated Density",Double.parseDouble(this.integrated_density));
+        particleResult.put("Raw Integrated Density",Double.parseDouble(this.raw_integrated_density));
+        particleResult.put("Skewness",Double.parseDouble(this.skewness));
+        particleResult.put("Kurtosis",Double.parseDouble(this.kurtosis));
+        particleResult.put("Feret",Double.parseDouble(this.feret));
+        particleResult.put("FeretAngle",Double.parseDouble(this.feret_angle));
+        particleResult.put("FeretX",Double.parseDouble(this.feret_x));
+        particleResult.put("FeretY",Double.parseDouble(this.feret_y));
+        particleResult.put("MinFeret",Double.parseDouble(this.min_feret));
+        particleResult.put("Center of mass X",Double.parseDouble(this.x_centroid));
+        particleResult.put("Center of mass Y",Double.parseDouble(this.x_centroid));
+        particleResult.put("Major",Double.parseDouble(this.x_centroid));
+        particleResult.put("Minor",Double.parseDouble(this.x_centroid));
+        particleResult.put("Perimeter",Double.parseDouble(this.perimeter));
+        particleResult.put("Volume",this.volume);
+        particleResult.put("Surface Diameter",this.surfaceDiameter);
+        particleResult.put("Sphericity",this.sphericity);
+        particleResult.put("Volume Diameter",this.volumeDiameter);
+        particleResult.put("Volume To Surface",this.volumeToSurface);
+        return particleResult;
+    }
+
     private void calculateExtraParameters() {
         if (!this.area.isEmpty() && !this.circularity.isEmpty() && !this.feret.isEmpty()) {
             AnalysisHelper analysisHelper = new AnalysisHelper();

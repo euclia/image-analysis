@@ -8,6 +8,7 @@ import dto.dataset.Dataset;
 import java.util.Map;
 
 public class DescriptorRequest {
+
     private Dataset dataset;
     private Map<String, Object> parameters;
 

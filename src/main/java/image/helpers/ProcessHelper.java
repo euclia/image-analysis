@@ -26,7 +26,7 @@ public class ProcessHelper {
     private ImagePlus imagePlus;
     private ImageConverter imageConverter;
 
-    public ProcessHelper(ImagePlus imagePlus, String theFilePathName) {
+    public ProcessHelper(ImagePlus imagePlus) {
         this.imagePlus = imagePlus;
         this.imageConverter = new ImageConverter(this.imagePlus);
         this.imageConverter.convertToGray8();
@@ -36,7 +36,8 @@ public class ProcessHelper {
         List<ParticleResult> resultsMap = new ArrayList<>();
         SphericalReport theResult;
         try {
-            this.imagePlus.getProcessor().setAutoThreshold(threshold);
+            this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
+            this.imagePlus.updateAndDraw();
             ResultsTable rt = new ResultsTable();
             Analyzer analyzer = new Analyzer(this.imagePlus, measurements, rt);
 
@@ -58,7 +59,6 @@ public class ProcessHelper {
             theResult = new SphericalReport(resultsMap, this.applyThreshold(threshold));
             theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.staticParticle.setId("Average Particle");
-            theResult.particleResultsHash.add(0,calculateAverageModel(rt, readerCSV.headersArray));
             theResult.particleResults.add(0, theResult.staticParticle);
             rt.reset();
         } catch (Exception e) {
@@ -73,6 +73,7 @@ public class ProcessHelper {
         try {
             this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
             this.imagePlus.updateAndDraw();
+
             temp = this.imagePlus;
         } catch (Exception e) {
             System.out.println("Exception on countParticles");
@@ -86,7 +87,10 @@ public class ProcessHelper {
         List<ParticleResult> resultsMap = new ArrayList<>();
         SphericalReport theResult;
         try {
-            this.imagePlus.getProcessor().setAutoThreshold(thresholdType);
+
+            this.imagePlus.getProcessor().setAutoThreshold(thresholdType,false,RED_LUT);
+            this.imagePlus.updateAndDraw();
+
             ResultsTable rt = new ResultsTable();
             ParticleAnalyzer particleAnalyzer = new ParticleAnalyzer(ParticleAnalyzer.SHOW_OUTLINES, measurements, rt, 10, 99999);
             particleAnalyzer.setHideOutputImage(true);
@@ -108,7 +112,6 @@ public class ProcessHelper {
             theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
             theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.staticParticle.setId("Average Particle");
-            theResult.particleResultsHash.add(0,this.calculateAverageModel(rt, readerCSV.headersArray));
             theResult.particleResults.add(0, theResult.staticParticle);
             rt.reset();
         } catch (Exception e) {

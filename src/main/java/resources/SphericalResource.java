@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
 import web.SphericalController;
 
-import javax.ejb.EJB;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -56,6 +55,7 @@ public class SphericalResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("calculate")
+
     @Operation(summary = "Calculate spherical descriptors",
             tags = {"spherical"},
             description = "Returns a DescriptorResponse containing the derived spherical descriptors from input images",
@@ -69,11 +69,10 @@ public class SphericalResource {
     try{
         Map<String, Object> parameters = descriptorRequest.getParameters() != null ? descriptorRequest.getParameters() : new HashMap<>();
         String filter = (String) parameters.getOrDefault("filter", "Default");
-        String type = (String) parameters.getOrDefault("type", "Count");
 
         Dataset responseDataset = new Dataset();
         Set<FeatureInfo> featureInfoList = new HashSet<>();
-        List<DataEntry> dataEntryList = new LinkedList<>();
+        LinkedList<DataEntry> dataEntryList = new LinkedList<>();
 
         for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()) {
 
@@ -102,21 +101,14 @@ public class SphericalResource {
             SphericalOptions sphericalOptionsModel = new SphericalOptions();
             List<String> selectedMeasurements = sphericalOptionsModel.getMeasurementList();
 
-            ApplicationMain applicationMain = new ApplicationMain(
-                    selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
-
+            ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
             SphericalReport sphericalReport = null;
-            if (type == null || type.isEmpty() || type.equals("Analyze")) {
-                sphericalReport = applicationMain.analyseImage();
-            } else if (type.equals("Count")) {
-                sphericalReport = applicationMain.countParticles();
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).entity("bad type provided").build();
-            }
 
-            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, dataEntryList, sphericalReport.getParticleResultsHash());
+            sphericalReport = applicationMain.countParticles();
+
+            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
         }
-        datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, ((LinkedList<DataEntry>) dataEntryList).getFirst());
+        datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, dataEntryList.getFirst());
 
         responseDataset.setDataEntry(dataEntryList);
         responseDataset.setFeatures(featureInfoList);

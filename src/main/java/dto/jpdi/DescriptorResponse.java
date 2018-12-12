@@ -5,7 +5,7 @@ import dto.dataset.Dataset;
 
 public class DescriptorResponse {
 
-    Dataset responseDataset;
+    private Dataset responseDataset;
 
     public Dataset getResponseDataset() {
         return responseDataset;

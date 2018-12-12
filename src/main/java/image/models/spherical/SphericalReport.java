@@ -2,21 +2,18 @@ package image.models.spherical;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SphericalReport implements Serializable{
 
 	public List<ParticleResult> particleResults;
-	public List<HashMap<String,String>> particleResultsHash;
 	public ParticleResult staticParticle;
 	private HashMap<String, Boolean> selectedMeasurements;
 	private BufferedImage processedImage;
 	public  HashMap<String, String> averageMap;
 
 	public SphericalReport(List<ParticleResult> theParticleResults, BufferedImage theImage) {
-		this.particleResultsHash = new ArrayList<>();
 		this.particleResults = theParticleResults;
 		this.processedImage = theImage;
 	}
@@ -31,14 +28,6 @@ public class SphericalReport implements Serializable{
 		return particleResults;
 	}
 
-
-	public List<HashMap<String, String>> getParticleResultsHash() {
-		return particleResultsHash;
-	}
-
-	public void setParticleResultsHash(List<HashMap<String, String>> particleResultsHash) {
-		this.particleResultsHash = particleResultsHash;
-	}
 
 	public ParticleResult getStaticParticle() {
 		return staticParticle;

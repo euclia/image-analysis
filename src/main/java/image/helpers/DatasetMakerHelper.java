@@ -29,9 +29,8 @@ public class DatasetMakerHelper {
         }
     }
 
-    public void getEntryList(Particle particleEnum, List<DataEntry> dataEntryList, HashMap<String,String> resultList){
+    public void getEntryList(Particle particleEnum, List<DataEntry> dataEntryList, HashMap<String,Object> resultList){
         String particle = particleEnum.equals(Particle.SPHERICAL) ? "spherical" : "nanotubes";
-
             DataEntry dataEntry = new DataEntry();
             EntryId entryId= new EntryId();
             entryId.setName(particle);
@@ -39,6 +38,5 @@ public class DatasetMakerHelper {
             TreeMap<String, Object> entries = new TreeMap<String, Object>(resultList);
             dataEntry.setValues(entries);
             dataEntryList.add(dataEntry);
-
     }
 }
