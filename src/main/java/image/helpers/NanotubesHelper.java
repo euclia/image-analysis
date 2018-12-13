@@ -13,19 +13,19 @@ import ij.gui.PolygonRoi;
 import ij.measure.Calibration;
 import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
-import image.models.nanotubes.NanoSummaryReports;
+import image.models.nanotubes.NanoResult;
 import image.models.nanotubes.NanoFullReport;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RidgeHelper {
+public class NanotubesHelper {
 
     private ImagePlus imp;
     private ArrayList<Lines> lines;
 
-    public RidgeHelper(ImagePlus imp){
+    public NanotubesHelper(ImagePlus imp){
         this.imp=imp;
         this.lines=new ArrayList<>();
     }
@@ -65,7 +65,7 @@ public class RidgeHelper {
         return meanData;
     }
 
-    public void createResultsTable(ArrayList<NanoFullReport> nanoSummaryReports, ArrayList<NanoSummaryReports> nanoFullReports) {
+    public void createResultsTable(ArrayList<NanoFullReport> nanoSummaryReports, ArrayList<NanoResult> nanoFullReports) {
         if(lines.size()==0) return;
         Calibration cal = imp.getCalibration();
         Iterator rt2 = lines.iterator();
@@ -96,7 +96,7 @@ public class RidgeHelper {
                 }
                 //here we exclude lines with width == 0; //noise
                 if (j/(double)c.getNumber()*cal.pixelWidth!=0) {
-                    nanoFullReports.add(new NanoSummaryReports(
+                    nanoFullReports.add(new NanoResult(
                             String.valueOf(contours.getFrame()),
                             String.valueOf(c.getID()),
                             String.valueOf(c.estimateLength() * cal.pixelWidth),
@@ -107,7 +107,7 @@ public class RidgeHelper {
                 totalMeanWidth+=j / (double) c.getNumber() * cal.pixelWidth;
             }
         }
-        nanoFullReports.add(0,new NanoSummaryReports(
+        nanoFullReports.add(0,new NanoResult(
                 "Average",
                 "Average",
                 String.valueOf(totalMeanLength/totalNonZero),

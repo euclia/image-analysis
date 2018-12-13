@@ -2,8 +2,8 @@ package web;
 
 import ij.ImagePlus;
 import image.models.nanotubes.NanoFullReport;
-import image.models.nanotubes.NanoSummaryReports;
 import image.models.nanotubes.NanoResult;
+import image.models.nanotubes.NanoReport;
 import org.primefaces.model.DefaultStreamedContent;
 
 import javax.enterprise.context.SessionScoped;
@@ -21,12 +21,12 @@ import java.io.*;
 public class NanotubesResultController implements Serializable {
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
 
-    private NanoResult nanoResult;
+    private NanoReport nanoReport;
 
     @Inject private ServletContext context;
 
     public void initialize() {
-        this.nanoResult = (NanoResult) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ridgeresult");
+        this.nanoReport = (NanoReport) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("ridgeresult");
     }
 
     public DefaultStreamedContent getImgPreview(ImagePlus imagePlus, boolean halfResize) {
@@ -67,22 +67,22 @@ public class NanotubesResultController implements Serializable {
         InputStream is = context.getResourceAsStream(BLANK_IMAGE_PATH);
         return new DefaultStreamedContent(is);
     }
-    public java.util.List<NanoSummaryReports> getNanoSummaryReports() {
-        return  nanoResult.getNanoSummaryReports();
+    public java.util.List<NanoResult> getNanoSummaryReports() {
+        return  nanoReport.getNanoSummaryReports();
     }
     public java.util.List<NanoFullReport> getNanoFullReport() {
-        return  nanoResult.getNanoFullReport();
+        return  nanoReport.getNanoFullReport();
     }
 
     public ImagePlus getInitialImage (){
-        return nanoResult.getInitialImage();
+        return nanoReport.getInitialImage();
     }
 
     public ImagePlus getResultImage(){
-        return  nanoResult.getResultImage();
+        return  nanoReport.getResultImage();
     }
 
     public ImagePlus getHistogram(){
-        return nanoResult.getHistogram();
+        return nanoReport.getHistogram();
     }
 }

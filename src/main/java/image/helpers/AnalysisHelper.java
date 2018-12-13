@@ -2,11 +2,11 @@ package image.helpers;
 
 public class AnalysisHelper {
 
-	final double PI = 3.14;
-	private double volume = 0.0;
+	private final double PI = 3.14;
 
 	public double findApproximateVolume(double circularity, double feretDiameter, double length)
 	{
+		double volume = 0.0;
 		if (circularity > 0.750){
 			volume = this.getEqualSphericalVolume(feretDiameter);
 		} else {

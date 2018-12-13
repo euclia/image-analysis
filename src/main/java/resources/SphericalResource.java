@@ -73,7 +73,7 @@ public class SphericalResource {
         Dataset responseDataset = new Dataset();
         Set<FeatureInfo> featureInfoList = new HashSet<>();
         LinkedList<DataEntry> dataEntryList = new LinkedList<>();
-
+        int entryId=0;
         for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()) {
 
             BufferedImage bufferedImage = null;
@@ -106,7 +106,7 @@ public class SphericalResource {
 
             sphericalReport = applicationMain.countParticles();
 
-            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
+            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, entryId++, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
         }
         datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, dataEntryList.getFirst());
 

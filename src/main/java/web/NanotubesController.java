@@ -3,11 +3,11 @@ package web;
 import ij.ImagePlus;
 import ij.gui.Overlay;
 import image.helpers.FileMinion;
-import image.helpers.RidgeHelper;
-import image.models.nanotubes.NanoSummaryReports;
+import image.helpers.NanotubesHelper;
+import image.models.nanotubes.NanoResult;
 import image.models.nanotubes.NanoFullReport;
 import image.models.nanotubes.NanoParameters;
-import image.models.nanotubes.NanoResult;
+import image.models.nanotubes.NanoReport;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -42,7 +42,7 @@ public class NanotubesController {
     private String thresholdType;
     private FileMinion fileMinion;
     private NanoParameters nanoParameters;
-    private NanoResult nanoResult;
+    private NanoReport nanoReport;
     private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
 
     private double sigma = 8.58D;
@@ -61,30 +61,30 @@ public class NanotubesController {
     public String submitForm() {
         try {
 
-            this.nanoResult = new NanoResult();
+            this.nanoReport = new NanoReport();
             final ImagePlus imp = new ImagePlus("theTitle", bufferedImage);
 
             //Run ridge detection
-            RidgeHelper ridgeHelper = new RidgeHelper(imp);
-            ridgeHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
-            nanoResult.setResultLines(ridgeHelper.getLines());
+            NanotubesHelper nanotubesHelper = new NanotubesHelper(imp);
+            nanotubesHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
+            nanoReport.setResultLines(nanotubesHelper.getLines());
 
             //Create Green Overlay image
-            Overlay overlay = ridgeHelper.displayContours();
+            Overlay overlay = nanotubesHelper.displayContours();
             imp.setOverlay(overlay);
             ImagePlus imp2 = imp.flatten();
-            nanoResult.setResultImage(imp2);
-            nanoResult.setInitialImage(imp);
+            nanoReport.setResultImage(imp2);
+            nanoReport.setInitialImage(imp);
 
             //Create report tables
             ArrayList<NanoFullReport> nanoSummaryReports = new ArrayList<>();
-            ArrayList<NanoSummaryReports> nanoFullReports = new ArrayList<>();
-            ridgeHelper.createResultsTable(nanoSummaryReports, nanoFullReports);
-            nanoResult.setNanoFullReport(nanoSummaryReports);
-            nanoResult.setNanoSummaryReports(nanoFullReports);
+            ArrayList<NanoResult> nanoFullReports = new ArrayList<>();
+            nanotubesHelper.createResultsTable(nanoSummaryReports, nanoFullReports);
+            nanoReport.setNanoFullReport(nanoSummaryReports);
+            nanoReport.setNanoSummaryReports(nanoFullReports);
 
             //Create histogram with mean Datas
-            ArrayList<Double> meanDatas = ridgeHelper.retrieveMeanData();
+            ArrayList<Double> meanDatas = nanotubesHelper.retrieveMeanData();
             HistogramDataset dataset = new HistogramDataset();
             dataset.setType(HistogramType.FREQUENCY);
             dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),200);
@@ -93,12 +93,12 @@ public class NanotubesController {
                     "Mean Line Width", "Occurrence",
                     dataset, PlotOrientation.VERTICAL,
                     true, true, false);
-            nanoResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
+            nanoReport.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
         } catch (Exception e) {
             e.printStackTrace();
         }
         fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.nanoResult);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.nanoReport);
         return "nanotubes_result?faces-redirect=true";
     }
 
