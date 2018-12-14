@@ -76,7 +76,7 @@ public class SphericalResource {
             BufferedImage bufferedImage = null;
 
             String imageEncoded = "";
-            Double scale = 1d;
+            Double scale = 1.0D;
 
             if (dataEntry.getValues().size() > 2)
                 return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();

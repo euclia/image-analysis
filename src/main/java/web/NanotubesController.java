@@ -39,7 +39,7 @@ public class NanotubesController {
     private double uppt= 0.17D;
     private double minl =0.0D;
     private double maxl = 0.0D;
-    private double scaleFactor = 0.3;
+    private double scaleFactor = 1.0D;
 
     @PostConstruct
     public void init() {

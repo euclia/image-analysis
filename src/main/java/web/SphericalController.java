@@ -45,8 +45,7 @@ public class SphericalController implements Serializable {
     private BufferedImage bufferedImage;
     private String function;
     private SphericalReport result;
-    private List<ParticleResult> resultMap;
-    private Double scaleFactor = 0.3;
+    private Double scaleFactor =  1.0D;
     @Inject
     private ServletContext context;
     
@@ -61,7 +60,7 @@ public class SphericalController implements Serializable {
             String msg = FORM_SUBMITTED;
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
             ApplicationMain applicationMain = new ApplicationMain(this.selectedMeasurements, this.thresholdType, imagePlus,scaleFactor);
-            this.resultMap = new ArrayList<>();
+            List<ParticleResult> resultMap = new ArrayList<>();
             if (this.function.equals(IMAGEANALYSIS)) {
                 this.result = applicationMain.analyseImage();
             } else {
