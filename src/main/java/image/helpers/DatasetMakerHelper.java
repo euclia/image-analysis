@@ -23,17 +23,17 @@ public class DatasetMakerHelper {
         String particle = particleEnum.equals(Particle.SPHERICAL) ? "spherical" : "nanotubes";
         for (String s : dataEntry.getValues().keySet()) {
             FeatureInfo featureInfo = new FeatureInfo();
-            featureInfo.setName("Identifies the " + s + " of the " + particle + " entity");
+            featureInfo.setName("Identifies the " + s + " of the " + particle + " entities)");
             featureInfo.setURI(s);
             featureInfoList.add(featureInfo);
         }
     }
 
-    public void getEntryList(Particle particleEnum, List<DataEntry> dataEntryList, HashMap<String,Object> resultList){
-        String particle = particleEnum.equals(Particle.SPHERICAL) ? "spherical" : "nanotubes";
+    public void getEntryList(Particle particleEnum, Integer imageCount, List<DataEntry> dataEntryList, HashMap<String,Object> resultList){
+        String particle = particleEnum.equals(Particle.SPHERICAL) ? "Spherical" : "Nanotubes";
             DataEntry dataEntry = new DataEntry();
             EntryId entryId= new EntryId();
-            entryId.setName(particle);
+            entryId.setName(particle +" image: "+imageCount);
             dataEntry.setEntryId(entryId);
             TreeMap<String, Object> entries = new TreeMap<String, Object>(resultList);
             dataEntry.setValues(entries);

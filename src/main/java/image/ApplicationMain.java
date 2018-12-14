@@ -1,7 +1,7 @@
 package image;
 
 import ij.ImagePlus;
-import image.helpers.ProcessHelper;
+import image.helpers.SphericalHelper;
 import image.models.spherical.SphericalOptions;
 import image.models.spherical.SphericalReport;
 
@@ -28,29 +28,29 @@ public class ApplicationMain{
 
 	public SphericalReport analyseImage(){
 		SphericalReport theSphericalReport;
-		ProcessHelper processHelper = new ProcessHelper(this.imagePlus);
+		SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus);
 		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
-		theSphericalReport = processHelper.analyseImage(measurements, this.selectedThreshold);
+		theSphericalReport = sphericalHelper.analyseImage(measurements, this.selectedThreshold);
 		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
 		return theSphericalReport;
 	}
 
 	public SphericalReport countParticles(){
 		SphericalReport theSphericalReport;
-		ProcessHelper processHelper = new ProcessHelper(this.imagePlus);
+		SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus);
 		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
-		theSphericalReport =  processHelper.countParticles(this.selectedThreshold, measurements);
+		theSphericalReport =  sphericalHelper.countParticles(this.selectedThreshold, measurements);
 		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
 		return theSphericalReport;
 	}
 
 	public BufferedImage applyThreshold(String selectedThreshold){
 		if (selectedThreshold != null){
-			ProcessHelper processHelper = new ProcessHelper(this.imagePlus);
-			return processHelper.applyThreshold(selectedThreshold);
+			SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus);
+			return sphericalHelper.applyThreshold(selectedThreshold);
 		} else {
-			ProcessHelper processHelper = new ProcessHelper(this.imagePlus);
-			return processHelper.applyThreshold("Default");
+			SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus);
+			return sphericalHelper.applyThreshold("Default");
 		}
 	}
 }

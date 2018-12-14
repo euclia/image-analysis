@@ -13,26 +13,61 @@ import ij.gui.PolygonRoi;
 import ij.measure.Calibration;
 import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
+import image.models.nanotubes.NanoResult;
 import image.models.nanotubes.NanoSummaryReports;
 import image.models.nanotubes.NanoFullReport;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RidgeHelper {
+public class NanotubesHelper {
 
     private ImagePlus imp;
     private ArrayList<Lines> lines;
 
-    public RidgeHelper(ImagePlus imp){
+    public NanotubesHelper(ImagePlus imp){
         this.imp=imp;
         this.lines=new ArrayList<>();
     }
 
-    public void runRidgeDetection(double sigma, double upperThresh, double lowerThresh, double minLength, double maxLength) {
+    public NanoResult runRidgeDetection(double sigma, double upperThresh, double lowerThresh, double minLength, double maxLength) {
+        NanoResult nanoResult = new NanoResult();
         LineDetector detect = new LineDetector();
         lines.add(detect.detectLines(imp.getChannelProcessor(), sigma, upperThresh, lowerThresh, minLength, maxLength, false, true, true, true, OverlapOption.SLOPE));
+        nanoResult.setResultLines(this.getLines());
+
+        //Create Green Overlay image
+        Overlay overlay = this.displayContours();
+        imp.setOverlay(overlay);
+        ImagePlus imp2 = imp.flatten();
+        nanoResult.setResultImage(imp2);
+        nanoResult.setInitialImage(imp);
+
+        //Create report tables
+        ArrayList<NanoFullReport> nanoSummaryReports = new ArrayList<>();
+        ArrayList<NanoSummaryReports> nanoFullReports = new ArrayList<>();
+        this.createResultsTable(nanoSummaryReports, nanoFullReports);
+        nanoResult.setNanoFullReport(nanoSummaryReports);
+        nanoResult.setNanoSummaryReports(nanoFullReports);
+
+        //Create histogram with mean Datas
+        ArrayList<Double> meanDatas = this.retrieveMeanData();
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.FREQUENCY);
+        dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),200);
+        JFreeChart barChart = ChartFactory.createHistogram(
+                "Mean Line Width",
+                "Mean Line Width", "Occurrence",
+                dataset, PlotOrientation.VERTICAL,
+                true, true, false);
+        nanoResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
+        return  nanoResult;
     }
 
     public ImagePlus getImp() {

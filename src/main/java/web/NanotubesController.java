@@ -3,7 +3,7 @@ package web;
 import ij.ImagePlus;
 import ij.gui.Overlay;
 import image.helpers.FileMinion;
-import image.helpers.RidgeHelper;
+import image.helpers.NanotubesHelper;
 import image.models.nanotubes.NanoSummaryReports;
 import image.models.nanotubes.NanoFullReport;
 import image.models.nanotubes.NanoParameters;
@@ -64,36 +64,13 @@ public class NanotubesController {
             this.nanoResult = new NanoResult();
             final ImagePlus imp = new ImagePlus("theTitle", bufferedImage);
 
+
+
             //Run ridge detection
-            RidgeHelper ridgeHelper = new RidgeHelper(imp);
-            ridgeHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
-            nanoResult.setResultLines(ridgeHelper.getLines());
+            NanotubesHelper nanotubesHelper = new NanotubesHelper(imp);
 
-            //Create Green Overlay image
-            Overlay overlay = ridgeHelper.displayContours();
-            imp.setOverlay(overlay);
-            ImagePlus imp2 = imp.flatten();
-            nanoResult.setResultImage(imp2);
-            nanoResult.setInitialImage(imp);
+            nanoResult = nanotubesHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
 
-            //Create report tables
-            ArrayList<NanoFullReport> nanoSummaryReports = new ArrayList<>();
-            ArrayList<NanoSummaryReports> nanoFullReports = new ArrayList<>();
-            ridgeHelper.createResultsTable(nanoSummaryReports, nanoFullReports);
-            nanoResult.setNanoFullReport(nanoSummaryReports);
-            nanoResult.setNanoSummaryReports(nanoFullReports);
-
-            //Create histogram with mean Datas
-            ArrayList<Double> meanDatas = ridgeHelper.retrieveMeanData();
-            HistogramDataset dataset = new HistogramDataset();
-            dataset.setType(HistogramType.FREQUENCY);
-            dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),200);
-            JFreeChart barChart = ChartFactory.createHistogram(
-                    "Mean Line Width",
-                    "Mean Line Width", "Occurrence",
-                    dataset, PlotOrientation.VERTICAL,
-                    true, true, false);
-            nanoResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
         } catch (Exception e) {
             e.printStackTrace();
         }

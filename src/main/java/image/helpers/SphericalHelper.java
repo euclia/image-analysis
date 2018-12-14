@@ -21,12 +21,12 @@ import java.util.stream.IntStream;
 
 import static ij.process.ImageProcessor.RED_LUT;
 
-public class ProcessHelper {
+public class SphericalHelper {
 
     private ImagePlus imagePlus;
     private ImageConverter imageConverter;
 
-    public ProcessHelper(ImagePlus imagePlus) {
+    public SphericalHelper(ImagePlus imagePlus) {
         this.imagePlus = imagePlus;
         this.imageConverter = new ImageConverter(this.imagePlus);
         this.imageConverter.convertToGray8();

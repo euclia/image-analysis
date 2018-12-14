@@ -1,5 +1,7 @@
 package image.models.nanotubes;
 
+import java.util.HashMap;
+
 public class NanoSummaryReports {
     private String frame;
     private String contourId;
@@ -11,6 +13,13 @@ public class NanoSummaryReports {
         this.contourId = contourId;
         this.length = length;
         this.meanLineWidth = meanLineWidth;
+    }
+
+    public HashMap<String,Object> getSummaryReport(){
+        HashMap<String,Object> summaryResult = new HashMap<>();
+        summaryResult.put("Length",Double.parseDouble(this.length));
+        summaryResult.put("Mean Line Width",Double.parseDouble(this.meanLineWidth));
+        return summaryResult;
     }
 
     public String getFrame() {
