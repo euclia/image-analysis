@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
-import web.SphericalController;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -99,10 +98,8 @@ public class SphericalResource {
             SphericalOptions sphericalOptionsModel = new SphericalOptions();
             List<String> selectedMeasurements = sphericalOptionsModel.getMeasurementList();
 
-            ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
-            SphericalReport sphericalReport = null;
-
-            sphericalReport = applicationMain.countParticles();
+            ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus, scale);
+            SphericalReport sphericalReport = applicationMain.countParticles();
 
             datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, imageCount, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
         }

@@ -1,18 +1,9 @@
 package web;
 
 import ij.ImagePlus;
-import ij.gui.Overlay;
-import image.helpers.FileMinion;
 import image.helpers.NanotubesHelper;
-import image.models.nanotubes.NanoSummaryReports;
-import image.models.nanotubes.NanoFullReport;
 import image.models.nanotubes.NanoParameters;
 import image.models.nanotubes.NanoResult;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 
@@ -29,7 +20,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class NanotubesController {
     @Inject
@@ -40,7 +30,6 @@ public class NanotubesController {
     private final String NANOTUBE_IMAGE_PATH = "/resources/nanotube.jpg";
 
     private String thresholdType;
-    private FileMinion fileMinion;
     private NanoParameters nanoParameters;
     private NanoResult nanoResult;
     private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
@@ -50,31 +39,24 @@ public class NanotubesController {
     private double uppt= 0.17D;
     private double minl =0.0D;
     private double maxl = 0.0D;
-    private double scaleF = 0.3D;
+    private double scaleFactor = 0.3;
 
     @PostConstruct
     public void init() {
         this.nanoParameters = new NanoParameters();
-        this.fileMinion = new FileMinion();
     }
 
     public String submitForm() {
         try {
-
             this.nanoResult = new NanoResult();
             final ImagePlus imp = new ImagePlus("theTitle", bufferedImage);
 
-
-
             //Run ridge detection
             NanotubesHelper nanotubesHelper = new NanotubesHelper(imp);
-
-            nanoResult = nanotubesHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl);
-
+            nanoResult = nanotubesHelper.runRidgeDetection(sigma,uppt,lowt,minl,maxl,scaleFactor);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ridgeresult", this.nanoResult);
         return "nanotubes_result?faces-redirect=true";
     }
@@ -172,11 +154,11 @@ public class NanotubesController {
     }
 
     public double getScaleFactor() {
-        return scaleF;
+        return scaleFactor;
     }
 
-    public void setScaleFactor(double scaleF){
-        this.scaleF=scaleF;
+    public void setScaleFactor(double scaleFactor){
+        this.scaleFactor=scaleFactor;
     }
 
     public void setUppt(double uppt) {

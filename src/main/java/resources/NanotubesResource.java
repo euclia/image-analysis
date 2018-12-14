@@ -94,7 +94,7 @@ public class NanotubesResource {
 
                 NanotubesHelper nanotubesHelper = new NanotubesHelper(imagePlus);
 
-                NanoResult nanoResult = nanotubesHelper.runRidgeDetection(sigma, uppt, lowt, 0.00D, 0.00D);
+                NanoResult nanoResult = nanotubesHelper.runRidgeDetection(sigma, uppt, lowt, 0.00D, 0.00D, scale);
 
                 datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.NANOTUBES, imageCount++, dataEntryList, nanoResult.getNanoSummaryReports().get(0).getSummaryReport());
             }
