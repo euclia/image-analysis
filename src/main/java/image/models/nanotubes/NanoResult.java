@@ -1,60 +1,86 @@
 package image.models.nanotubes;
 
-import java.util.HashMap;
+import de.biomedical_imaging.ij.steger.Junctions;
+import de.biomedical_imaging.ij.steger.Lines;
+import ij.ImagePlus;
+
+import java.util.ArrayList;
 
 public class NanoResult {
-    private String frame;
-    private String contourId;
-    private String length;
-    private String meanLineWidth;
 
-    public HashMap<String,Object> getNanoResult(){
-        HashMap<String,Object> nanoResult = new HashMap<>();
-        nanoResult.put("Length",this.length);
-        nanoResult.put("Mean Line Width",this.meanLineWidth);
-        return nanoResult;
-    }
-    public NanoResult(String frame, String contourId, String length, String meanLineWidth) {
-        this.frame = frame;
-        this.contourId = contourId;
-        this.length = length;
-        this.meanLineWidth = meanLineWidth;
+    private ArrayList<Lines> resultLines;
+    private ArrayList<Junctions> resultJunction;
+    private ArrayList<NanoFullReport> nanoFullReport;
+    private ArrayList<NanoSummaryReports> nanoSummaryReports;
+    private ImagePlus resultImage;
+    private ImagePlus initialImage;
+    private ImagePlus histogram;
+    public NanoResult() {
+        resultLines= new ArrayList<>();
+        resultJunction = new ArrayList<>();
+        nanoFullReport = new ArrayList<>();
+        nanoSummaryReports = new ArrayList<>();
     }
 
-    public String getFrame() {
-        return frame;
+    public NanoResult(ArrayList<Lines> resultLines, ArrayList<Junctions> resultJunction, ImagePlus resultImage) {
+        this.resultLines = resultLines;
+        this.resultJunction = resultJunction;
+        this.resultImage = resultImage;
     }
 
-    public void setFrame(String frame) {
-        this.frame = frame;
+    public ImagePlus getHistogram() {
+        return histogram;
     }
 
-    public String getContourId() {
-        return contourId;
+    public void setHistogram(ImagePlus histogram) {
+        this.histogram = histogram;
     }
 
-    public void setContourId(String contourId) {
-        this.contourId = contourId;
+    public ArrayList<NanoFullReport> getNanoFullReport() {
+        return nanoFullReport;
     }
 
-    public Double getLength() {
-        return Double.valueOf(length);
+    public void setNanoFullReport(ArrayList<NanoFullReport> nanoFullReport) {
+        this.nanoFullReport = nanoFullReport;
     }
 
-    public void setLength(String length) {
-        this.length = length;
+    public ArrayList<NanoSummaryReports> getNanoSummaryReports() {
+        return nanoSummaryReports;
     }
 
-    public Double getMeanLineWidth() {
-        return Double.valueOf(meanLineWidth);
+    public void setNanoSummaryReports(ArrayList<NanoSummaryReports> nanoSummaryReports) {
+        this.nanoSummaryReports = nanoSummaryReports;
     }
 
-    public void setMeanLineWidth(String meanLineWidth) {
-        this.meanLineWidth = meanLineWidth;
+    public ArrayList<Lines> getResultLines() {
+        return resultLines;
     }
 
-    @Override
-    public String toString() {
-        return "frame='" + frame +", contourId='" + contourId +", length='" + length + ", meanLineWidth='" + meanLineWidth;
+    public void setResultLines(ArrayList<Lines> resultLines) {
+        this.resultLines = resultLines;
+    }
+
+    public ArrayList<Junctions> getResultJunction() {
+        return resultJunction;
+    }
+
+    public void setResultJunction(ArrayList<Junctions> resultJunction) {
+        this.resultJunction = resultJunction;
+    }
+
+    public ImagePlus getResultImage() {
+        return resultImage;
+    }
+
+    public void setResultImage(ImagePlus resultImage) {
+        this.resultImage = resultImage;
+    }
+
+    public ImagePlus getInitialImage() {
+        return initialImage;
+    }
+
+    public void setInitialImage(ImagePlus initialImage) {
+        this.initialImage = initialImage;
     }
 }
