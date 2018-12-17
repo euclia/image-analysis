@@ -14,7 +14,13 @@ import ij.measure.Calibration;
 import ij.process.FloatPolygon;
 import ij.process.ImageProcessor;
 import image.models.nanotubes.NanoResult;
+import image.models.nanotubes.NanoSummaryReports;
 import image.models.nanotubes.NanoFullReport;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -30,9 +36,41 @@ public class NanotubesHelper {
         this.lines=new ArrayList<>();
     }
 
-    public void runRidgeDetection(double sigma, double upperThresh, double lowerThresh, double minLength, double maxLength) {
+    public NanoResult runRidgeDetection(double sigma, double upperThresh, double lowerThresh, double minLength, double maxLength, double scale) {
+        NanoResult nanoResult = new NanoResult();
         LineDetector detect = new LineDetector();
+
+        calibrateImage(scale);
+
         lines.add(detect.detectLines(imp.getChannelProcessor(), sigma, upperThresh, lowerThresh, minLength, maxLength, false, true, true, true, OverlapOption.SLOPE));
+        nanoResult.setResultLines(this.getLines());
+
+        //Create Green Overlay image
+        Overlay overlay = this.displayContours();
+        imp.setOverlay(overlay);
+        ImagePlus imp2 = imp.flatten();
+        nanoResult.setResultImage(imp2);
+        nanoResult.setInitialImage(imp);
+
+        //Create report tables
+        ArrayList<NanoFullReport> nanoSummaryReports = new ArrayList<>();
+        ArrayList<NanoSummaryReports> nanoFullReports = new ArrayList<>();
+        this.createResultsTable(nanoSummaryReports, nanoFullReports);
+        nanoResult.setNanoFullReport(nanoSummaryReports);
+        nanoResult.setNanoSummaryReports(nanoFullReports);
+
+        //Create histogram with mean Datas
+        ArrayList<Double> meanDatas = this.retrieveMeanData();
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.FREQUENCY);
+        dataset.addSeries("Hist",meanDatas.stream().mapToDouble(Double::doubleValue).toArray(),200);
+        JFreeChart barChart = ChartFactory.createHistogram(
+                "Mean Line Width",
+                "Mean Line Width", "Occurrence",
+                dataset, PlotOrientation.VERTICAL,
+                true, true, false);
+        nanoResult.setHistogram(new ImagePlus("myimage",barChart.createBufferedImage(1200,600)));
+        return  nanoResult;
     }
 
     public ImagePlus getImp() {
@@ -65,7 +103,7 @@ public class NanotubesHelper {
         return meanData;
     }
 
-    public void createResultsTable(ArrayList<NanoFullReport> nanoSummaryReports, ArrayList<NanoResult> nanoFullReports) {
+    public void createResultsTable(ArrayList<NanoFullReport> nanoSummaryReports, ArrayList<NanoSummaryReports> nanoFullReports) {
         if(lines.size()==0) return;
         Calibration cal = imp.getCalibration();
         Iterator rt2 = lines.iterator();
@@ -96,7 +134,7 @@ public class NanotubesHelper {
                 }
                 //here we exclude lines with width == 0; //noise
                 if (j/(double)c.getNumber()*cal.pixelWidth!=0) {
-                    nanoFullReports.add(new NanoResult(
+                    nanoFullReports.add(new NanoSummaryReports(
                             String.valueOf(contours.getFrame()),
                             String.valueOf(c.getID()),
                             String.valueOf(c.estimateLength() * cal.pixelWidth),
@@ -107,7 +145,7 @@ public class NanotubesHelper {
                 totalMeanWidth+=j / (double) c.getNumber() * cal.pixelWidth;
             }
         }
-        nanoFullReports.add(0,new NanoResult(
+        nanoFullReports.add(0,new NanoSummaryReports(
                 "Average",
                 "Average",
                 String.valueOf(totalMeanLength/totalNonZero),
@@ -238,43 +276,19 @@ public class NanotubesHelper {
                 }
             }
         }
-           /*     if(this.showIDs) {
-                    int var39 = (int)pointroi.xpoints[pointroi.npoints / 2];
-                    int var40 = (int)pointroi.ypoints[pointroi.npoints / 2];
-                    TextRoi tr = new TextRoi(var39, var40, "" + cont.getID());
-                    tr.setCurrentFont(new Font("SansSerif", 0, 9));
-                    tr.setIgnoreClipRect(true);
-                    tr.setStrokeColor(Color.orange);
-                    tr.setPosition(((Junctions)this.resultJunction.get(k)).getFrame());
-                    ovpoly.add(tr);
-                }
-            }
-        }
-
-        if(this.showJunctionPoints) {
-            for(k = 0; k < this.resultJunction.size(); ++k) {
-                FloatPolygon var34 = new FloatPolygon();
-
-                for(int var35 = 0; var35 < ((Junctions)this.resultJunction.get(k)).size(); ++var35) {
-                    var34.addPoint((double)((Junction)((Junctions)this.resultJunction.get(k)).get(var35)).x + 0.5D, (double)((Junction)((Junctions)this.resultJunction.get(k)).get(var35)).y + 0.5D);
-                }
-
-                PointRoi var36 = new PointRoi(var34);
-                var36.setShowLabels(false);
-                int var37 = ((Junctions)this.resultJunction.get(k)).getFrame();
-                if(!this.doStack || this.isPreview) {
-                    var37 = this.imp.getCurrentSlice();
-                }
-
-                var36.setPosition(var37);
-                ovpoly.add(var36);
-            }
-        }
-
-        if(ovpoly.size() > 0) {
-            this.imp.setOverlay(ovpoly);
-        }*/
         return  ovpoly;
+    }
+
+    public void calibrateImage(Double scale) {
+        Calibration cal = this.imp.getCalibration();
+        Calibration calOrig = cal.copy();
+        cal.pixelWidth = scale / 1;
+        cal.pixelHeight = cal.pixelWidth;
+        cal.setUnit("nm");
+        if (!cal.equals(calOrig)) {
+            this.imp.setCalibration(cal);
+        }
+        this.imp.updateAndDraw();
     }
 
 

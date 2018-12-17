@@ -7,6 +7,9 @@ import dto.jpdi.DescriptorRequest;
 import dto.jpdi.DescriptorResponse;
 import ij.ImagePlus;
 import image.ApplicationMain;
+import image.helpers.DatasetMakerHelper;
+import image.helpers.NanotubesHelper;
+import image.models.nanotubes.NanoResult;
 import image.models.spherical.SphericalOptions;
 import image.models.spherical.SphericalReport;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -37,9 +41,12 @@ import java.util.logging.Logger;
 public class NanotubesResource {
     private static final Logger LOG = Logger.getLogger(resources.NanotubesResource.class.getName());
 
+    @Inject
+    DatasetMakerHelper datasetMakerHelper;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("calculate")
     @Operation(summary = "Calculate nanotubes descriptors",
             tags = {"nanotubes"},
@@ -51,23 +58,26 @@ public class NanotubesResource {
             })
     public Response calculate(@Parameter(description = "Descriptor Request") DescriptorRequest descriptorRequest) {
 
-        try {
+        try{
             Map<String, Object> parameters = descriptorRequest.getParameters() != null ? descriptorRequest.getParameters() : new HashMap<>();
-            String filter = (String) parameters.getOrDefault("filter", "Default");
+            Double sigma = (Double) parameters.getOrDefault("sigma", 8.58D);
+            Double lowt = (Double) parameters.getOrDefault("lowt", 0.00D);
+            Double uppt = (Double) parameters.getOrDefault("uppt", 0.17D);
 
             Dataset responseDataset = new Dataset();
             Set<FeatureInfo> featureInfoList = new HashSet<>();
             LinkedList<DataEntry> dataEntryList = new LinkedList<>();
-            int entryId = 0;
-            for (DataEntry dataEntry : descriptorRequest.getDataset().getDataEntry()) {
+            int imageCount=0;
+            for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()) {
 
                 BufferedImage bufferedImage = null;
 
                 String imageEncoded = "";
-                Double scale = 1d;
+                Double scale = 1.0D;
 
                 if (dataEntry.getValues().size() > 2)
                     return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
+
 
                 for (Object value : dataEntry.getValues().values()) {
                     if (String.valueOf(value).startsWith("data:image"))
@@ -82,18 +92,13 @@ public class NanotubesResource {
 
                 ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
 
+                NanotubesHelper nanotubesHelper = new NanotubesHelper(imagePlus);
 
-                SphericalOptions sphericalOptionsModel = new SphericalOptions();
-                List<String> selectedMeasurements = sphericalOptionsModel.getMeasurementList();
+                NanoResult nanoResult = nanotubesHelper.runRidgeDetection(sigma, uppt, lowt, 0.00D, 0.00D, scale);
 
-                ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
-                SphericalReport sphericalReport = null;
-
-                sphericalReport = applicationMain.countParticles();
-
-                // datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, entryId++, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
+                datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.NANOTUBES, imageCount++, dataEntryList, nanoResult.getNanoSummaryReports().get(0).getSummaryReport());
             }
-            //datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, dataEntryList.getFirst());
+            datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.NANOTUBES, featureInfoList, dataEntryList.getFirst());
 
             responseDataset.setDataEntry(dataEntryList);
             responseDataset.setFeatures(featureInfoList);
@@ -103,13 +108,10 @@ public class NanotubesResource {
 
 
             return Response.ok(descriptorResponse).build();
-
-        } catch (
-                MalformedURLException ex) {
+        } catch (MalformedURLException ex) {
             Logger.getLogger(SphericalResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.BAD_REQUEST).entity("bad uri provided").build();
-        } catch (
-                IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(SphericalResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

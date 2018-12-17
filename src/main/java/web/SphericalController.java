@@ -2,7 +2,6 @@ package web;
 
 import ij.ImagePlus;
 import image.ApplicationMain;
-import image.helpers.FileMinion;
 import image.models.spherical.SphericalOptions;
 import image.models.spherical.ParticleResult;
 import image.models.spherical.SphericalReport;
@@ -41,14 +40,12 @@ public class SphericalController implements Serializable {
 
     //variables
     private String thresholdType;
-    private FileMinion fileMinion;
     private List<String> measurements;
     private String[] selectedMeasurements;
     private BufferedImage bufferedImage;
     private String function;
     private SphericalReport result;
-    private List<ParticleResult> resultMap;
-    private Double scaleFactor = 0.3;
+    private Double scaleFactor =  1.0D;
     @Inject
     private ServletContext context;
     
@@ -56,15 +53,14 @@ public class SphericalController implements Serializable {
     public void init() {
         SphericalOptions sphericalOptionsModel = new SphericalOptions();
         this.measurements = sphericalOptionsModel.getMeasurementList();
-        this.fileMinion = new FileMinion();
     }
     
     public String submitForm() {
         try {
             String msg = FORM_SUBMITTED;
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
-            ApplicationMain applicationMain = new ApplicationMain(this.selectedMeasurements, this.thresholdType, imagePlus);
-            this.resultMap = new ArrayList<>();
+            ApplicationMain applicationMain = new ApplicationMain(this.selectedMeasurements, this.thresholdType, imagePlus,scaleFactor);
+            List<ParticleResult> resultMap = new ArrayList<>();
             if (this.function.equals(IMAGEANALYSIS)) {
                 this.result = applicationMain.analyseImage();
             } else {
@@ -75,7 +71,6 @@ public class SphericalController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fileMinion.deleteDirectoryAndFiles(DIR_PATH + getSessionID());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("result", this.result);
         return "spherical_result?faces-redirect=true";
     }

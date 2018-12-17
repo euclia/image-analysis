@@ -1775,7 +1775,7 @@ html[data-useragent*='MSIE 10.0'] .scrolldown {
  * ------------------------------------------------------------------- */
 #services {
     background-color: rgba(5, 5, 5, 0.7);
-    background-image: url(../images/services-bg.jpg);
+    background-image: url(../images/services-bg.jpeg);
     background-repeat: no-repeat;
     background-position: center;
     -webkit-background-size: cover;

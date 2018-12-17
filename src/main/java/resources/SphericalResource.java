@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.codec.binary.Base64;
-import web.SphericalController;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -48,8 +47,6 @@ public class SphericalResource {
     @Inject
     DatasetMakerHelper datasetMakerHelper;
 
-    @Inject
-    SphericalController sphericalController;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -73,13 +70,13 @@ public class SphericalResource {
         Dataset responseDataset = new Dataset();
         Set<FeatureInfo> featureInfoList = new HashSet<>();
         LinkedList<DataEntry> dataEntryList = new LinkedList<>();
-        int entryId=0;
+        Integer imageCount=0;
         for (DataEntry dataEntry :descriptorRequest.getDataset().getDataEntry()) {
 
             BufferedImage bufferedImage = null;
 
             String imageEncoded = "";
-            Double scale = 1d;
+            Double scale = 1.0D;
 
             if (dataEntry.getValues().size() > 2)
                 return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
@@ -101,12 +98,10 @@ public class SphericalResource {
             SphericalOptions sphericalOptionsModel = new SphericalOptions();
             List<String> selectedMeasurements = sphericalOptionsModel.getMeasurementList();
 
-            ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus);
-            SphericalReport sphericalReport = null;
+            ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus, scale);
+            SphericalReport sphericalReport = applicationMain.countParticles();
 
-            sphericalReport = applicationMain.countParticles();
-
-            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, entryId++, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
+            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, imageCount, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
         }
         datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, dataEntryList.getFirst());
 

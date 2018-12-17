@@ -3,8 +3,10 @@ package image.helpers;
 import ij.ImagePlus;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
+import ij.plugin.Scaler;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ParticleAnalyzer;
+import ij.plugin.filter.ScaleDialog;
 import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 import image.models.spherical.ParticleResult;
@@ -25,9 +27,11 @@ public class SphericalHelper {
 
     private ImagePlus imagePlus;
     private ImageConverter imageConverter;
+    private Double scale;
 
-    public SphericalHelper(ImagePlus imagePlus) {
+    public SphericalHelper(ImagePlus imagePlus, Double scale) {
         this.imagePlus = imagePlus;
+        this.scale = scale;
         this.imageConverter = new ImageConverter(this.imagePlus);
         this.imageConverter.convertToGray8();
     }
@@ -37,7 +41,9 @@ public class SphericalHelper {
         SphericalReport theResult;
         try {
             this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
-            this.imagePlus.updateAndDraw();
+
+            calibrateImage(scale);
+
             ResultsTable rt = new ResultsTable();
             Analyzer analyzer = new Analyzer(this.imagePlus, measurements, rt);
 
@@ -73,7 +79,6 @@ public class SphericalHelper {
         try {
             this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
             this.imagePlus.updateAndDraw();
-
             temp = this.imagePlus;
         } catch (Exception e) {
             System.out.println("Exception on countParticles");
@@ -89,7 +94,8 @@ public class SphericalHelper {
         try {
 
             this.imagePlus.getProcessor().setAutoThreshold(thresholdType,false,RED_LUT);
-            this.imagePlus.updateAndDraw();
+
+            calibrateImage(scale);
 
             ResultsTable rt = new ResultsTable();
             ParticleAnalyzer particleAnalyzer = new ParticleAnalyzer(ParticleAnalyzer.SHOW_OUTLINES, measurements, rt, 10, 99999);
@@ -159,14 +165,17 @@ public class SphericalHelper {
         ImageIO.write(croppedImage, "jpg", new File("cropped.jpg"));
     }
 
-    public void calibrateImage(double pX, double pY, String unit, ImagePlus imp) {
-        double originX = 0.0;
-        double originY = 0.0;
-        Calibration cal = imp.getCalibration();
-        cal.setUnit(unit);
-        cal.pixelWidth = pX;
-        cal.pixelHeight = pY;
-        cal.xOrigin = originX / pX;
-        cal.yOrigin = originY / pY;
+    public void calibrateImage(Double scale) {
+        Calibration cal = this.imagePlus.getCalibration();
+        Calibration calOrig = cal.copy();
+        cal.pixelWidth = scale / 1;
+        cal.pixelHeight = cal.pixelWidth;
+        cal.setUnit("nm");
+        if (!cal.equals(calOrig)) {
+            this.imagePlus.setCalibration(cal);
+        }
+        this.imagePlus.updateAndDraw();
     }
+
+
 }
