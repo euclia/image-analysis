@@ -6,12 +6,9 @@ import dto.dataset.FeatureInfo;
 import dto.jpdi.DescriptorRequest;
 import dto.jpdi.DescriptorResponse;
 import ij.ImagePlus;
-import image.ApplicationMain;
 import image.helpers.DatasetMakerHelper;
 import image.helpers.NanotubesHelper;
 import image.models.nanotubes.NanoResult;
-import image.models.spherical.SphericalOptions;
-import image.models.spherical.SphericalReport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -73,7 +70,7 @@ public class NanotubesResource {
                 BufferedImage bufferedImage = null;
 
                 String imageEncoded = "";
-                Double scale = 1.0D;
+                double scale = 1.0D;
 
                 if (dataEntry.getValues().size() > 2)
                     return Response.status(Response.Status.BAD_REQUEST).entity("Invalid size of data Entry").build();
@@ -83,7 +80,7 @@ public class NanotubesResource {
                     if (String.valueOf(value).startsWith("data:image"))
                         imageEncoded = String.valueOf(value);
                     else
-                        scale = Double.valueOf(value.toString());
+                        scale = Double.parseDouble(value.toString());
                 }
 
                 String base64Image = imageEncoded.split(",")[1];
