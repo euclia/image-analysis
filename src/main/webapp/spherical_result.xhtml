@@ -113,6 +113,11 @@
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>
+                <p:column headerText="Surface Diameter" rendered="#{resultController.isSurfaceDiameterSelected}" width="200">
+                    <h:outputText value="#{imageResult.surfaceDiameter}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
                 <p:column headerText="Volume to Surface" rendered="#{resultController.isVolumeToSurfaceSelected}" width="200">
                     <h:outputText value="#{imageResult.volumeToSurface}" >
                         <f:convertNumber minFractionDigits="3" />

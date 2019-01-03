@@ -48,6 +48,7 @@ public class SphericalResultController implements Serializable {
     private Boolean isFeretSelected = false;
     private Boolean isMedianSelected = false;
     private Boolean isKurtosisSelected = false;
+    private Boolean isSurfaceDiameterSelected =false;
 
     @Inject
     private ServletContext context;
@@ -125,6 +126,7 @@ public class SphericalResultController implements Serializable {
         this.isBoundingPrefsSelected = theMap.get(Constants.BOUNDING_PREFERENCES);
         this.isCentroidSelected = theMap.get(Constants.CENTROID);
         this.isVolumeToSurfaceSelected = theMap.get(Constants.VOLUME_TO_SURFACE);
+        this.isSurfaceDiameterSelected = theMap.get(Constants.SURFACE_DIAMETER);
     }
 
     public void setSelectedMeasurements(HashMap<String, Boolean> selectedMeasurements) {
@@ -209,6 +211,10 @@ public class SphericalResultController implements Serializable {
 
     public Boolean getIsKurtosisSelected() {
         return isKurtosisSelected;
+    }
+
+    public Boolean getIsSurfaceDiameterSelected() {
+        return isSurfaceDiameterSelected;
     }
 
     public void preProcessPDF(Object document){
