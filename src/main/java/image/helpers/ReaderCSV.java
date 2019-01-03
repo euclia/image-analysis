@@ -13,8 +13,8 @@ public class ReaderCSV {
     private BufferedReader br;
     private HashMap<String, String> map;
     private String filePath;
-    public List<ParticleResult> particleResults;
-    public String[] headersArray;
+    private List<ParticleResult> particleResults;
+    String[] headersArray;
 
     private String csv;
 
@@ -22,7 +22,7 @@ public class ReaderCSV {
         filePath = theFile;
     }
 
-    public ReaderCSV(StringBuilder sb) {
+    ReaderCSV(StringBuilder sb) {
         this.csv = sb.toString();
     }
 

@@ -1,6 +1,5 @@
 package dto.jpdi;
 
-
 import dto.dataset.Dataset;
 
 public class DescriptorResponse {

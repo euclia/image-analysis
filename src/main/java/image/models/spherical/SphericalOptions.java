@@ -1,12 +1,8 @@
 package image.models.spherical;
 
-import dto.dataset.FeatureInfo;
 import ij.measure.Measurements;
-
-import ij.plugin.MeasurementsWriter;
 import image.helpers.Constants;
 
-import javax.ws.rs.core.Feature;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,11 +116,7 @@ public class SphericalOptions {
 		return isRelated;
 	}
 
-
-
 	public List<String> getMeasurementList() {
 		return measurementList;
 	}
-
-
 }

@@ -101,7 +101,7 @@ public class SphericalResource {
             ApplicationMain applicationMain = new ApplicationMain(selectedMeasurements.toArray(new String[selectedMeasurements.size()]), filter, imagePlus, scale);
             SphericalReport sphericalReport = applicationMain.countParticles();
 
-            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, imageCount, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
+            datasetMakerHelper.getEntryList(DatasetMakerHelper.Particle.SPHERICAL, imageCount++, dataEntryList, sphericalReport.getStaticParticle().getParticleResult());
         }
         datasetMakerHelper.getFeatureList(DatasetMakerHelper.Particle.SPHERICAL, featureInfoList, dataEntryList.getFirst());
 

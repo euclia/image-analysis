@@ -4,25 +4,26 @@ package image.models.nanotubes;
  * Created by root on 2/11/2018.
  */
 public class NanoParameters {
-    double lineWidth = 3.5D;
-    double contrastHigh = 230.0D;
-    double contrastLow = 87.0D;
-    double sigma = 1.51D;
-    double lowerThresh = 3.06D;
-    double upperThresh = 7.99D;
-    double minLength = 0.0D;
-    double maxLength = 0.0D;
-    boolean isDarkLine = false;
+    private double lineWidth = 3.5D;
+    private double contrastHigh = 230.0D;
+    private double contrastLow = 87.0D;
+    private double sigma = 1.51D;
+    private double lowerThresh = 3.06D;
+    private double upperThresh = 7.99D;
+    private double minLength = 0.0D;
+    private double maxLength = 0.0D;
+    private boolean isDarkLine = false;
 
-    static final double lineWidthDefault = 3.5D;
-    static final double contrastHighDefault = 230.0D;
-    static final double contrastLowDefault = 87.0D;
-    static final double sigmaDefault = 1.51D;
-    static final double lowerThreshDefault = 3.06D;
-    static final double upperThreshDefault = 7.99D;
-    static final double minLengthDefault = 0.0D;
-    static final double maxLengthDefault = 0.0D;
-    static final boolean isDarkLineDefault = false;
+    private static final double lineWidthDefault = 3.5D;
+    private static final double contrastHighDefault = 230.0D;
+    private static final double contrastLowDefault = 87.0D;
+    private static final double sigmaDefault = 1.51D;
+    private static final double lowerThreshDefault = 3.06D;
+    private static final double upperThreshDefault = 7.99D;
+    private static final double minLengthDefault = 0.0D;
+    private static final double maxLengthDefault = 0.0D;
+    private static final boolean isDarkLineDefault = false;
+
 
     public NanoParameters(double lineWidth, double contrastHigh, double contrastLow, double sigma, double lowerThresh, double upperThresh, double minLength, double maxLength, boolean isDarkLine) {
         this.lineWidth = lineWidth;
