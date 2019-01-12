@@ -103,8 +103,8 @@ public class NanotubesController {
         if (bufferedImage != null) {
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
             BufferedImage temp = imagePlus.getBufferedImage();
-            int newWidth = new Double(temp.getWidth() * 0.5).intValue();
-            int newHeight = new Double(temp.getHeight() * 0.5).intValue();
+            int newWidth = 800;
+            int newHeight = new Double(newWidth/((double)temp.getWidth()/(double)temp.getHeight())).intValue();
             BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = newImage.createGraphics();
             g.drawImage(temp, 0, 0, newWidth, newHeight, null);

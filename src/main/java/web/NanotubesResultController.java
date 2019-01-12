@@ -35,8 +35,8 @@ public class NanotubesResultController implements Serializable {
             BufferedImage temp = imagePlus.getBufferedImage();
             BufferedImage newImage;
             if(halfResize) {
-                int newWidth = new Double(temp.getWidth() * 0.5).intValue();
-                int newHeight = new Double(temp.getHeight() * 0.5).intValue();
+                int newWidth = 800;
+                int newHeight = new Double(newWidth/((double)temp.getWidth()/(double)temp.getHeight())).intValue();
                 newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
                 Graphics2D g = newImage.createGraphics();
                 g.drawImage(temp, 0, 0, newWidth, newHeight, null);
@@ -51,7 +51,6 @@ public class NanotubesResultController implements Serializable {
             ByteArrayOutputStream bas = new ByteArrayOutputStream();
             try {
                 ImageIO.write(newImage, "png", bas);
-                System.out.println("bla");
             } catch (IOException e) {
                 e.printStackTrace();
             }
