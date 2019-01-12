@@ -52,7 +52,7 @@
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Feret X" rendered="#{resultController.isFeretSelected}" width="200">
+               <!-- <p:column headerText="Feret X" rendered="#{resultController.isFeretSelected}" width="200">
                     <h:outputText value="#{imageResult.feret_x}" >
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
@@ -61,7 +61,7 @@
                     <h:outputText value="#{imageResult.feret_y}" >
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
-                </p:column>
+                </p:column>-->
                 <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
                     <h:outputText value="#{imageResult.area}" >
                         <f:convertNumber minFractionDigits="3" />
@@ -97,7 +97,7 @@
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>
-                <p:column headerText="STD_DEV" rendered="#{resultController.isStandardDeviationSelected}" width="200">
+                <p:column headerText="Grey deviation" rendered="#{resultController.isStandardDeviationSelected}" width="200">
                     <h:outputText value="#{imageResult.std_dev}" >
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
@@ -164,7 +164,7 @@
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Center Of Mass X" rendered="#{resultController.isCenterOfMassSelected}" width="200">
+             <!--   <p:column headerText="Center Of Mass X" rendered="#{resultController.isCenterOfMassSelected}" width="200">
                     <h:outputText value="#{imageResult.x_center_of_mass}" >
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
@@ -183,7 +183,7 @@
                     <h:outputText value="#{imageResult.y_centroid}">
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
-                </p:column>
+                </p:column>-->
                 <p:column headerText="Modal Grey Value" rendered="#{resultController.isModalGrayValueSelected}" width="200">
                     <h:outputText value="#{imageResult.modal_grey_value}" >
                         <f:convertNumber minFractionDigits="3" />

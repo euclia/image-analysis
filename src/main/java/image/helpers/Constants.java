@@ -8,7 +8,7 @@ public class Constants {
 	public static final String AREA_FRACTION = "Porosity";
 	public static final String MIN_MAX = "Minimum and Maximum Grey Values";
 	public static final String CIRCULARITY = "Circularity";
-	public static final String STD_DEV = "Standard Deviation";
+	public static final String STD_DEV = "Grey deviation";
 	public static final String INT_DEN = "Integrated Density";
 	public static final String CENTER_OF_MASS = "Center of mass";
 	public static final String SHAPE_DESCRIPTORS = "Shape Descriptors";

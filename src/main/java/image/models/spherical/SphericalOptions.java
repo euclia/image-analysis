@@ -24,8 +24,8 @@ public class SphericalOptions {
 		this.measurementList.add(Constants.AREA);
 		this.measurementList.add(Constants.AREA_FRACTION);
 		//this.measurementList.add(Constants.BOUNDING_PREFERENCES);
-		this.measurementList.add(Constants.CENTER_OF_MASS);
-		this.measurementList.add(Constants.CENTROID);
+		//this.measurementList.add(Constants.CENTER_OF_MASS);
+		//this.measurementList.add(Constants.CENTROID);
 		this.measurementList.add(Constants.FERET);
 		this.measurementList.add(Constants.FIT_ELLIPSE);
 		this.measurementList.add(Constants.INT_DEN);
@@ -51,8 +51,8 @@ public class SphericalOptions {
 		this.measurementMap.put(Constants.AREA, Measurements.AREA);
 		this.measurementMap.put(Constants.AREA_FRACTION, Measurements.AREA_FRACTION);
 		//this.measurementMap.put(Constants.BOUNDING_PREFERENCES, Measurements.LIMIT);
-		this.measurementMap.put(Constants.CENTER_OF_MASS, Measurements.CENTER_OF_MASS);
-		this.measurementMap.put(Constants.CENTROID, Measurements.CENTROID);
+		//this.measurementMap.put(Constants.CENTER_OF_MASS, Measurements.CENTER_OF_MASS);
+		//this.measurementMap.put(Constants.CENTROID, Measurements.CENTROID);
 		this.measurementMap.put(Constants.FERET, Measurements.FERET);
 		this.measurementMap.put(Constants.FIT_ELLIPSE, Measurements.ELLIPSE);
 		this.measurementMap.put(Constants.INT_DEN, Measurements.INTEGRATED_DENSITY);

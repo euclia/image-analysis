@@ -29,7 +29,7 @@ public class AnalysisHelper {
 
 	public double getSurfaceDiameter(double area)
 	{
-		return Math.sqrt(area/PI);
+		return Math.sqrt(area/PI)*2;
 	}
 
 	public double getVolumeDiameter(double volume)

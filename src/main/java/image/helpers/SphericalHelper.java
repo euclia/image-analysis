@@ -3,21 +3,19 @@ package image.helpers;
 import ij.ImagePlus;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
-import ij.plugin.Scaler;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ParticleAnalyzer;
 import ij.plugin.filter.ScaleDialog;
-import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 import image.models.spherical.ParticleResult;
 import image.models.spherical.SphericalReport;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,23 +24,22 @@ import static ij.process.ImageProcessor.RED_LUT;
 public class SphericalHelper {
 
     private ImagePlus imagePlus;
-    private ImageConverter imageConverter;
     private Double scale;
 
     public SphericalHelper(ImagePlus imagePlus, Double scale) {
         this.imagePlus = imagePlus;
         this.scale = scale;
-        this.imageConverter = new ImageConverter(this.imagePlus);
-        this.imageConverter.convertToGray8();
-    }
+      }
 
     public SphericalReport analyseImage(int measurements, String threshold) throws NullPointerException {
         List<ParticleResult> resultsMap = new ArrayList<>();
         SphericalReport theResult;
         try {
-            this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
 
             calibrateImage(scale);
+
+            this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
+
 
             ResultsTable rt = new ResultsTable();
             Analyzer analyzer = new Analyzer(this.imagePlus, measurements, rt);
@@ -93,9 +90,9 @@ public class SphericalHelper {
         SphericalReport theResult;
         try {
 
-            this.imagePlus.getProcessor().setAutoThreshold(thresholdType,false,RED_LUT);
 
             calibrateImage(scale);
+            this.imagePlus.getProcessor().setAutoThreshold(thresholdType,false,RED_LUT);
 
             ResultsTable rt = new ResultsTable();
             ParticleAnalyzer particleAnalyzer = new ParticleAnalyzer(ParticleAnalyzer.SHOW_OUTLINES, measurements, rt, 10, 99999);
@@ -165,10 +162,11 @@ public class SphericalHelper {
         ImageIO.write(croppedImage, "jpg", new File("cropped.jpg"));
     }
 
-    public void calibrateImage(Double scale) {
+
+    private void calibrateImage(Double scale) {
         Calibration cal = this.imagePlus.getCalibration();
         Calibration calOrig = cal.copy();
-        cal.pixelWidth = scale / 1;
+        cal.pixelWidth = scale;
         cal.pixelHeight = cal.pixelWidth;
         cal.setUnit("nm");
         if (!cal.equals(calOrig)) {
@@ -176,6 +174,4 @@ public class SphericalHelper {
         }
         this.imagePlus.updateAndDraw();
     }
-
-
 }

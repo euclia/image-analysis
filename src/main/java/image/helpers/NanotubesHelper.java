@@ -279,17 +279,16 @@ public class NanotubesHelper {
         return  ovpoly;
     }
 
-    public void calibrateImage(Double scale) {
+    private void calibrateImage(Double scale) {
         Calibration cal = this.imp.getCalibration();
         Calibration calOrig = cal.copy();
-        cal.pixelWidth = scale / 1;
-        cal.pixelHeight = cal.pixelWidth;
+        cal.pixelWidth = scale;
+        cal.pixelHeight = cal.pixelWidth ;
         cal.setUnit("nm");
         if (!cal.equals(calOrig)) {
             this.imp.setCalibration(cal);
         }
         this.imp.updateAndDraw();
     }
-
 
 }
