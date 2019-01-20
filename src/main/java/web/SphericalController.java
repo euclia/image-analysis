@@ -183,6 +183,7 @@ public class SphericalController implements Serializable {
     public void useExample(){
         try {
             bufferedImage = ImageIO.read(context.getResourceAsStream(SPHERICAL_IMAGE_PATH));
+            setScaleFactor(1.9219);
         } catch (IOException e) {
             e.printStackTrace();
         }

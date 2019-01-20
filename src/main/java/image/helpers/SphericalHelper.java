@@ -171,7 +171,7 @@ public class SphericalHelper {
     private void calibrateImage(Double scale) {
         Calibration cal = this.imagePlus.getCalibration();
         Calibration calOrig = cal.copy();
-        cal.pixelWidth = scale;
+        cal.pixelWidth = 1/scale;
         cal.pixelHeight = cal.pixelWidth;
         cal.setUnit("nm");
         if (!cal.equals(calOrig)) {

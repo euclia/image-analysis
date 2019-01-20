@@ -78,17 +78,22 @@
                         <f:selectItem itemLabel="Otsu" itemValue="Otsu"/>
                         <f:selectItem itemLabel="RenyiEntropy" itemValue="RenyiEntropy"/>
                         <f:selectItem itemLabel="Shanbhag" itemValue="Shanbhag"/>
-
                         <p:ajax update="spherical"/>
                     </p:selectOneMenu>
+
                     <p:outputLabel for="function" value="Select function type:"/>
                     <p:selectOneMenu id="function" value="#{indexController.function}" style="width: 240px;align-items: center">
                         <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
                         <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
                     </p:selectOneMenu>
-                </h:panelGrid>
-                <br/>
 
+                    <h:outputText value="pixel/nm:"/>
+                    <p:inputNumber  minValue="0.000" id="ScaleFactor" value="#{indexController.scaleFactor}"/>
+                </h:panelGrid>
+
+
+                <br/>
+                <br/>
                 <h:outputText value="Select Descriptors:"/>
                 <br/>
                 <p:commandButton id="selectAll" value="Select All" action="#{indexController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
@@ -99,11 +104,7 @@
                                    itemValue="#{measurement}"/>
                 </p:selectManyCheckbox>
                 <br/>
-                <p:row>
-                    <p:column>
-                        Pixel to nm ratio:  1:<p:inputNumber  minValue="0.000" id="ScaleFactor" value="#{indexController.scaleFactor}"/>
-                    </p:column>
-                </p:row>
+
             </p:panel>
             <p:commandButton id="submit" value="Submit" action="#{indexController.submitForm}" icon="ui-icon-check"/>
         </p:panel>

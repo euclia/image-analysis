@@ -66,14 +66,11 @@
 
                     <h:outputText value="Lower Threshold: " />
                     <p:inputText id="lowerThreshold" value="#{ridgeController.lowt}"  pt:data-tooltip="Line points with a response smaller as this threshold are rejected"/>
-
-
+                    
                     <h:outputText value="Upper Threshold: " />
                     <p:inputText id="upperThreshold" value="#{ridgeController.uppt}"  pt:data-tooltip="Line points with a response larger as this threshold are accepted."/>
 
-
-
-                    <h:outputText value="Pixel to nm ratio:  1:" />
+                    <h:outputText value="pixels/nm:" />
                     <p:inputNumber  minValue="0.000"  id="ScaleFactor" value="#{ridgeController.scaleFactor}"/>
 
                     </h:panelGrid>

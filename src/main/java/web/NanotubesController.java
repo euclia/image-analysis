@@ -64,6 +64,7 @@ public class NanotubesController {
     public void useExample(){
         try {
             bufferedImage = ImageIO.read(context.getResourceAsStream(NANOTUBE_IMAGE_PATH));
+            setScaleFactor(0.1177);
         } catch (IOException e) {
             e.printStackTrace();
         }
