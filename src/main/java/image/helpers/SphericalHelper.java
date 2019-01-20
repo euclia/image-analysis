@@ -43,7 +43,6 @@ public class SphericalHelper {
 
             ResultsTable rt = new ResultsTable();
             Analyzer analyzer = new Analyzer(this.imagePlus, measurements, rt);
-
             analyzer.measure();
 
             String headers = rt.getColumnHeadings().replace('\t', ',');
@@ -99,24 +98,30 @@ public class SphericalHelper {
             particleAnalyzer.setHideOutputImage(true);
             particleAnalyzer.analyze(this.imagePlus);
 
-            String headers = rt.getColumnHeadings().replace('\t', ',');
-            StringBuilder sb = new StringBuilder(headers);
-            sb.append("\n");
-            sb.append(
-                    IntStream.range(0, rt.getCounter())
-                    .mapToObj(i -> {
-                        return rt.getRowAsString(i).replace('\t', ',');
-                    }).collect(Collectors.joining("\n"))
-            );
+            //Case of error in particle analyzer
+            if (particleAnalyzer.getOutputImage()==null)
+                theResult = new SphericalReport(resultsMap,null);
+            else {
+                String headers = rt.getColumnHeadings().replace('\t', ',');
+                StringBuilder sb = new StringBuilder(headers);
+                sb.append("\n");
+                sb.append(
+                        IntStream.range(0, rt.getCounter())
+                                .mapToObj(i -> {
+                                    return rt.getRowAsString(i).replace('\t', ',');
+                                }).collect(Collectors.joining("\n"))
+                );
 
-            ReaderCSV readerCSV = new ReaderCSV(sb);
-            resultsMap = readerCSV.read();
+                ReaderCSV readerCSV = new ReaderCSV(sb);
+                resultsMap = readerCSV.read();
 
-            theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
-            theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
-            theResult.staticParticle.setId("Average Particle");
-            theResult.particleResults.add(0, theResult.staticParticle);
-            rt.reset();
+                theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
+                theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
+                theResult.staticParticle.setId("Average Particle");
+                theResult.particleResults.add(0, theResult.staticParticle);
+                rt.reset();
+            }
+
         } catch (Exception e) {
             theResult = new SphericalReport();
             System.out.println("Exception on countParticles");
