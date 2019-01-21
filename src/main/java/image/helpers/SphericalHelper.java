@@ -5,7 +5,6 @@ import ij.measure.Calibration;
 import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
 import ij.plugin.filter.ParticleAnalyzer;
-import ij.plugin.filter.ScaleDialog;
 import ij.process.ImageProcessor;
 import image.models.spherical.ParticleResult;
 import image.models.spherical.SphericalReport;

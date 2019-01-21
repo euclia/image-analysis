@@ -2,11 +2,14 @@ package web;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
+import ij.measure.Measurements;
 import image.helpers.Constants;
 import image.models.spherical.ParticleResult;
+import image.models.spherical.SphericalOptions;
 import image.models.spherical.SphericalReport;
 import org.primefaces.model.DefaultStreamedContent;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
@@ -28,30 +31,34 @@ public class SphericalResultController implements Serializable {
     private SphericalReport result;
     private List<ParticleResult> particleResults;
     private HashMap<String, Boolean> selectedMeasurements;
-    private Boolean isAreaSelected = false;
-    private Boolean isVolumeSelected = false;
-    private Boolean isSphericitySelected = false;
-    private Boolean isVolumeToSurfaceSelected = false;
-    private Boolean isShapeDescriptorsSelected = false;
-    private Boolean isStandardDeviationSelected = false;
-    private Boolean isMinMaxSelected = false;
-    private Boolean isCenterOfMassSelected = false;
-    private Boolean isBoundingPrefsSelected = false;
-    private Boolean isIntegratedDensitySelected = false;
-    private Boolean isSkewenessSelected = false;
-    private Boolean isPorositySelected = false;
-    private Boolean isMeanGrayValueSelected = false;
-    private Boolean isModalGrayValueSelected = false;
-    private Boolean isCentroidSelected = false;
-    private Boolean isPerimeterSelected = false;
-    private Boolean isFitEllipseSelected = false;
-    private Boolean isFeretSelected = false;
-    private Boolean isMedianSelected = false;
-    private Boolean isKurtosisSelected = false;
-    private Boolean isSurfaceDiameterSelected =false;
 
+    private Boolean isAngleSelected = false;
+    private Boolean isAreaSelected = false;
+    private Boolean isAspectRationSelected = false;
+    private Boolean isCircularitySelected = false;
+    private Boolean isFeretAngleSelected = false;
+    private Boolean isStandardDeviationSelected = false;
+    private Boolean isIntegratedDensitySelected = false;
+    private Boolean isKurtosisSelected = false;
+    private Boolean isMajorSelected = false;
+    private Boolean isMaxGreyValueSelected = false;
+    private Boolean isMeanSelected = false;
+    private Boolean isMinGreyValueSelected = false;
+    private Boolean isMinFeretSelected = false;
+    private Boolean isMinorSelected = false;
+    private Boolean isModalGrayValueSelected = false;
+    private Boolean isPerimeterSelected = false;
+    private Boolean isPorositySelected = false;
+    private Boolean isRoundnessSelected = false;
+    private Boolean isSkewenessSelected = false;
+    private Boolean isSoliditySelected = false;
+    private Boolean isSphericitySelected =false;
+    private Boolean isSurfaceDiameterSelected =false;
+    private Boolean isVolumeSelected =false;
+    private Boolean isVolumeToSurfaceSelected=false;
     @Inject
     private ServletContext context;
+
 
     public void initialize() {
         this.result = (SphericalReport) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("result");
@@ -107,115 +114,133 @@ public class SphericalResultController implements Serializable {
 
     private void initializeRenderedColumns(HashMap<String, Boolean> theMap) {
         this.isAreaSelected = theMap.get(Constants.AREA);
-        this.isPorositySelected = theMap.get(Constants.AREA_FRACTION);
+        this.isAngleSelected = theMap.get(Constants.ANGLE);
+        this.isAspectRationSelected = theMap.get(Constants.ASPECT_RATIO);
+        this.isCircularitySelected = theMap.get(Constants.CIRCULARITY);
+        this.isFeretAngleSelected = theMap.get(Constants.FERET_ANGLE);
         this.isStandardDeviationSelected = theMap.get(Constants.STD_DEV);
-        this.isBoundingPrefsSelected = theMap.get(Constants.BOUNDING_PREFERENCES);
-        this.isShapeDescriptorsSelected = theMap.get(Constants.SHAPE_DESCRIPTORS);
         this.isIntegratedDensitySelected = theMap.get(Constants.INT_DEN);
-        this.isSkewenessSelected = theMap.get(Constants.SKEWNESS);
-        this.isMeanGrayValueSelected = theMap.get(Constants.MEAN);
-        this.isMinMaxSelected = theMap.get(Constants.MIN_MAX);
         this.isKurtosisSelected = theMap.get(Constants.KURTOSIS);
-        this.isMedianSelected = theMap.get(Constants.MEDIAN);
-        this.isSphericitySelected = theMap.get(Constants.SPHERICITY);
+        this.isMajorSelected = theMap.get(Constants.MAJOR);
+        this.isMaxGreyValueSelected = theMap.get(Constants.MAX_GREY_VALUE);
+        this.isMeanSelected = theMap.get(Constants.MEAN);
+        this.isMinGreyValueSelected = theMap.get(Constants.MIN_GREY_VALUE);
+        this.isMinFeretSelected = theMap.get(Constants.MIN_FERET);
+        this.isMinorSelected = theMap.get(Constants.MINOR);
+        this.isModalGrayValueSelected = theMap.get(Constants.MODAL_GREY_VALUE);
         this.isPerimeterSelected = theMap.get(Constants.PERIMETER);
-        this.isCenterOfMassSelected = theMap.get(Constants.CENTER_OF_MASS);
-        this.isFeretSelected = theMap.get(Constants.FERET);
-        this.isVolumeSelected = theMap.get(Constants.VOLUME);
-        this.isModalGrayValueSelected = theMap.get(Constants.MODAL);
-        this.isFitEllipseSelected = theMap.get(Constants.FIT_ELLIPSE);
-        this.isBoundingPrefsSelected = theMap.get(Constants.BOUNDING_PREFERENCES);
-        this.isCentroidSelected = theMap.get(Constants.CENTROID);
-        this.isVolumeToSurfaceSelected = theMap.get(Constants.VOLUME_TO_SURFACE);
+        this.isPorositySelected = theMap.get(Constants.POROSITY);
+        this.isRoundnessSelected = theMap.get(Constants.ROUNDNESS);
+        this.isSkewenessSelected = theMap.get(Constants.SKEWNESS);
+        this.isSoliditySelected = theMap.get(Constants.SOLIDITY);
+        this.isSphericitySelected = theMap.get(Constants.SPHERICITY);
         this.isSurfaceDiameterSelected = theMap.get(Constants.SURFACE_DIAMETER);
+        this.isVolumeSelected = theMap.get(Constants.VOLUME);
+        this.isVolumeToSurfaceSelected = theMap.get(Constants.VOLUME_TO_SURFACE);
     }
 
     public void setSelectedMeasurements(HashMap<String, Boolean> selectedMeasurements) {
         this.selectedMeasurements = selectedMeasurements;
     }
 
+    public Boolean getIsAngleSelected() {
+        return isAngleSelected;
+    }
+
     public Boolean getIsAreaSelected() {
         return isAreaSelected;
     }
 
-    public Boolean getIsVolumeSelected() {
-        return isVolumeSelected;
+    public Boolean getIsAspectRationSelected() {
+        return isAspectRationSelected;
     }
 
-    public Boolean getIsSphericitySelected() {
-        return isSphericitySelected;
+    public Boolean getIsCircularitySelected() {
+        return isCircularitySelected;
     }
 
-    public Boolean getIsVolumeToSurfaceSelected() {
-        return isVolumeToSurfaceSelected;
-    }
-
-    public Boolean getIsShapeDescriptorsSelected() {
-        return isShapeDescriptorsSelected;
+    public Boolean getIsFeretAngleSelected() {
+        return isFeretAngleSelected;
     }
 
     public Boolean getIsStandardDeviationSelected() {
         return isStandardDeviationSelected;
     }
 
-    public Boolean getIsMinMaxSelected() {
-        return isMinMaxSelected;
-    }
-
-    public Boolean getIsCenterOfMassSelected() {
-        return isCenterOfMassSelected;
-    }
-
-    public Boolean getIsBoundingPrefsSelected() {
-        return isBoundingPrefsSelected;
-    }
-
     public Boolean getIsIntegratedDensitySelected() {
         return isIntegratedDensitySelected;
-    }
-
-    public Boolean getIsSkewenessSelected() {
-        return isSkewenessSelected;
-    }
-
-    public Boolean getIsPorositySelected() {
-        return isPorositySelected;
-    }
-
-    public Boolean getIsMeanGrayValueSelected() {
-        return isMeanGrayValueSelected;
-    }
-
-    public Boolean getIsModalGrayValueSelected() {
-        return isModalGrayValueSelected;
-    }
-
-    public Boolean getIsCentroidSelected() {
-        return isCentroidSelected;
-    }
-
-    public Boolean getIsPerimeterSelected() {
-        return isPerimeterSelected;
-    }
-
-    public Boolean getIsFitEllipseSelected() {
-        return isFitEllipseSelected;
-    }
-
-    public Boolean getIsFeretSelected() {
-        return isFeretSelected;
-    }
-
-    public Boolean getIsMedianSelected() {
-        return isMedianSelected;
     }
 
     public Boolean getIsKurtosisSelected() {
         return isKurtosisSelected;
     }
 
+    public Boolean getIsMajorSelected() {
+        return isMajorSelected;
+    }
+
+    public Boolean getIsMaxGreyValueSelected() {
+        return isMaxGreyValueSelected;
+    }
+
+    public Boolean getIsMeanSelected() {
+        return isMeanSelected;
+    }
+
+    public Boolean getIsMinGreyValueSelected() {
+        return isMinGreyValueSelected;
+    }
+
+    public Boolean getIsMinFeretSelected() {
+        return isMinFeretSelected;
+    }
+
+    public Boolean getIsMinorSelected() {
+        return isMinorSelected;
+    }
+
+    public Boolean getIsModalGrayValueSelected() {
+        return isModalGrayValueSelected;
+    }
+
+    public Boolean getIsPerimeterSelected() {
+        return isPerimeterSelected;
+    }
+
+    public Boolean getIsPorositySelected() {
+        return isPorositySelected;
+    }
+
+    public Boolean getIsRoundnessSelected() {
+        return isRoundnessSelected;
+    }
+
+    public Boolean getIsSkewenessSelected() {
+        return isSkewenessSelected;
+    }
+
+    public Boolean getIsSoliditySelected() {
+        return isSoliditySelected;
+    }
+
+    public Boolean getIsSphericitySelected() {
+        return isSphericitySelected;
+    }
+
     public Boolean getIsSurfaceDiameterSelected() {
         return isSurfaceDiameterSelected;
+    }
+
+    public Boolean getIsVolumeSelected() {
+        return isVolumeSelected;
+    }
+
+    public Boolean getIsVolumeToSurfaceSelected() {
+        return isVolumeToSurfaceSelected;
+    }
+
+    public ServletContext getContext() {
+        return context;
     }
 
     public void preProcessPDF(Object document){

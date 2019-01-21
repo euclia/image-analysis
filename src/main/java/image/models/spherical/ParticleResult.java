@@ -141,6 +141,10 @@ public class ParticleResult {
         }
     }
 
+    private String replaceNull(String input) {
+        return input == null ? "" : input;
+    }
+
     public String getId() {
         return id;
     }
@@ -149,15 +153,6 @@ public class ParticleResult {
         this.id = id;
     }
 
-    private String replaceNull(String input) {
-        return input == null ? "" : input;
-    }
-
-    private String getID(HashMap<String, String> theMap) {
-        return theMap.get("");
-    }
-
-    // getters and setters
     public String getAngle() {
         return angle;
     }
@@ -252,6 +247,14 @@ public class ParticleResult {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getModal_grey_value() {
+        return modal_grey_value;
+    }
+
+    public void setModal_grey_value(String modal_grey_value) {
+        this.modal_grey_value = modal_grey_value;
     }
 
     public String getMax_grey_value() {
@@ -453,14 +456,4 @@ public class ParticleResult {
     public void setVolumeToSurface(Double volumeToSurface) {
         this.volumeToSurface = volumeToSurface;
     }
-
-    public String getModal_grey_value() {
-        return modal_grey_value;
-    }
-
-    public void setModal_grey_value(String modal_grey_value) {
-        this.modal_grey_value = modal_grey_value;
-    }
-
-
 }

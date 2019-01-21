@@ -16,87 +16,66 @@ public class SphericalOptions {
 
 	public SphericalOptions(){
 		this.populateMeasurementList();
-		this.matchingMeasurementsWithName();
+		//this.matchingMeasurementsWithName();
 	}
 
 	private void populateMeasurementList(){
 		this.measurementList = new ArrayList<>();
+		this.measurementList.add(Constants.ANGLE);
 		this.measurementList.add(Constants.AREA);
-		this.measurementList.add(Constants.AREA_FRACTION);
-		//this.measurementList.add(Constants.BOUNDING_PREFERENCES);
-		//this.measurementList.add(Constants.CENTER_OF_MASS);
-		//this.measurementList.add(Constants.CENTROID);
-		this.measurementList.add(Constants.FERET);
-		this.measurementList.add(Constants.FIT_ELLIPSE);
+		this.measurementList.add(Constants.ASPECT_RATIO);
+		this.measurementList.add(Constants.CIRCULARITY);
+		this.measurementList.add(Constants.FERET_ANGLE);
+		this.measurementList.add(Constants.STD_DEV);
 		this.measurementList.add(Constants.INT_DEN);
 		this.measurementList.add(Constants.KURTOSIS);
+		this.measurementList.add(Constants.MAJOR);
+		this.measurementList.add(Constants.MAX_GREY_VALUE);
 		this.measurementList.add(Constants.MEAN);
-		this.measurementList.add(Constants.MEDIAN);
-		this.measurementList.add(Constants.MIN_MAX);
-		this.measurementList.add(Constants.MODAL);
+		this.measurementList.add(Constants.MIN_GREY_VALUE);
+		this.measurementList.add(Constants.MIN_FERET);
+		this.measurementList.add(Constants.MINOR);
+		this.measurementList.add(Constants.MODAL_GREY_VALUE);
 		this.measurementList.add(Constants.PERIMETER);
-		this.measurementList.add(Constants.SHAPE_DESCRIPTORS);
+		this.measurementList.add(Constants.POROSITY);
+		this.measurementList.add(Constants.ROUNDNESS);
 		this.measurementList.add(Constants.SKEWNESS);
-		this.measurementList.add(Constants.STD_DEV);
-		//Volume related measurements
+		this.measurementList.add(Constants.SOLIDITY);
+
 		this.measurementList.add(Constants.SPHERICITY);
-		this.measurementList.add(Constants.VOLUME);
 		this.measurementList.add(Constants.SURFACE_DIAMETER);
+		this.measurementList.add(Constants.VOLUME);
 		this.measurementList.add(Constants.VOLUME_TO_SURFACE);
-		this.measurementList.add(Constants.VOLUME_DIAMETER);
 	}
 
-	private void matchingMeasurementsWithName(){
+/*	private void matchingMeasurementsWithName(){
 		this.measurementMap = new HashMap<>();
+		this.measurementMap.put(Constants.ANGLE, Measurements.ELLIPSE);
 		this.measurementMap.put(Constants.AREA, Measurements.AREA);
-		this.measurementMap.put(Constants.AREA_FRACTION, Measurements.AREA_FRACTION);
-		//this.measurementMap.put(Constants.BOUNDING_PREFERENCES, Measurements.LIMIT);
-		//this.measurementMap.put(Constants.CENTER_OF_MASS, Measurements.CENTER_OF_MASS);
-		//this.measurementMap.put(Constants.CENTROID, Measurements.CENTROID);
-		this.measurementMap.put(Constants.FERET, Measurements.FERET);
-		this.measurementMap.put(Constants.FIT_ELLIPSE, Measurements.ELLIPSE);
+		this.measurementMap.put(Constants.ASPECT_RATIO, Measurements.SHAPE_DESCRIPTORS);
+		this.measurementMap.put(Constants.CIRCULARITY, Measurements.CIRCULARITY);
+		this.measurementMap.put(Constants.FERET_ANGLE, Measurements.FERET);
+		this.measurementMap.put(Constants.STD_DEV, Measurements.STD_DEV);
 		this.measurementMap.put(Constants.INT_DEN, Measurements.INTEGRATED_DENSITY);
 		this.measurementMap.put(Constants.KURTOSIS, Measurements.KURTOSIS);
+		this.measurementMap.put(Constants.MAJOR, Measurements.ELLIPSE);
+		this.measurementMap.put(Constants.MAX_GREY_VALUE, Measurements.MIN_MAX);
 		this.measurementMap.put(Constants.MEAN, Measurements.MEAN);
-		this.measurementMap.put(Constants.MEDIAN, Measurements.MEDIAN);
-		this.measurementMap.put(Constants.MIN_MAX, Measurements.MIN_MAX);
-		this.measurementMap.put(Constants.MODAL, Measurements.MODE);
+		this.measurementMap.put(Constants.MIN_GREY_VALUE, Measurements.MIN_MAX);
+		this.measurementMap.put(Constants.MINOR, Measurements.ELLIPSE);
+		this.measurementMap.put(Constants.MODAL_GREY_VALUE, Measurements.MODE);
 		this.measurementMap.put(Constants.PERIMETER, Measurements.PERIMETER);
-		this.measurementMap.put(Constants.SHAPE_DESCRIPTORS, Measurements.SHAPE_DESCRIPTORS);
+		this.measurementMap.put(Constants.POROSITY, Measurements.AREA_FRACTION);
+		this.measurementMap.put(Constants.ROUNDNESS, Measurements.SHAPE_DESCRIPTORS);
 		this.measurementMap.put(Constants.SKEWNESS, Measurements.SKEWNESS);
-		this.measurementMap.put(Constants.STD_DEV, Measurements.STD_DEV);
-	}
-
+		this.measurementMap.put(Constants.SOLIDITY, Measurements.SHAPE_DESCRIPTORS);
+	}*/
 
 	public int convertMeasurementListToInt(String[] selectedMeasurements){
-		int result = 0;
-		for (int i = 0; i < selectedMeasurements.length; i++) {
-			this.selectedMeasurementsMap.put(selectedMeasurements[i], true);
-			if (!this.isMeasureVolumeRelated(selectedMeasurements[i])) {
-				Integer value = measurementMap.get(selectedMeasurements[i]);
-				result += value.intValue();
-			}
+		int result = Measurements.ALL_STATS;
+		for (String s: selectedMeasurements) {
+			this.selectedMeasurementsMap.put(s,true);
 		}
-		if ((selectedMeasurementsMap.get(Constants.VOLUME) != null)
-				|| (selectedMeasurementsMap.get(Constants.SPHERICITY) != null)
-				|| (selectedMeasurementsMap.get(Constants.VOLUME_DIAMETER) != null)
-				|| (selectedMeasurementsMap.get(Constants.VOLUME_TO_SURFACE) != null)
-				|| (selectedMeasurementsMap.get(Constants.SURFACE_DIAMETER) != null)){
-			if (selectedMeasurementsMap.get(Constants.SHAPE_DESCRIPTORS) == null) {
-//				selectedMeasurementsMap.put(Constants.SHAPE_DESCRIPTORS, true);
-				result = result + Measurements.SHAPE_DESCRIPTORS;
-			}
-
-			if (selectedMeasurementsMap.get(Constants.AREA) == null) {
-//				selectedMeasurementsMap.put(Constants.AREA, true);
-				result = result + Measurements.AREA;
-			}
-			if (selectedMeasurementsMap.get(Constants.FERET) == null) {
-//				selectedMeasurementsMap.put(Constants.FERET, true);
-				result = result + Measurements.FERET;
-			}
-		}
-
 		return result;
 	}
 
@@ -107,8 +86,6 @@ public class SphericalOptions {
 		} else if (measure.equals(Constants.SPHERICITY)) {
 			isRelated = true;
 		} else if (measure.equals(Constants.VOLUME_TO_SURFACE)) {
-			isRelated = true;
-		} else if (measure.equals(Constants.VOLUME_DIAMETER)) {
 			isRelated = true;
 		} else if (measure.equals(Constants.SURFACE_DIAMETER)) {
 			isRelated = true;

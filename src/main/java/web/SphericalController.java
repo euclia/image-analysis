@@ -31,12 +31,8 @@ public class SphericalController implements Serializable {
     //constants
     private final String FORM_SUBMITTED = "The form submitted successfully!";
     private final String IMAGEANALYSIS = "imageAnalysis";
-    private final String DIR_PATH2 = "/src/main/webapp/WEB-INF/files/";
-    private final String DIR_PATH = "src/main/webapp/WEB-INF/files/";
     private final String BLANK_IMAGE_PATH = "/resources/blank.png";
     private final String SPHERICAL_IMAGE_PATH = "/resources/spherical.jpg";
-
-    private final int BUFFER_SIZE = 6124;
 
     //variables
     private String thresholdType;
