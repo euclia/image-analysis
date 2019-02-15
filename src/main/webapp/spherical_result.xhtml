@@ -42,13 +42,13 @@
                 <p:column headerText="id" width="200">
                     <h:outputText value="#{imageResult.id}"/>
                 </p:column>
-                <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
-                    <h:outputText value="#{imageResult.area}" >
+                <p:column headerText="Angle" rendered="#{resultController.isAngleSelected}" width="200">
+                    <h:outputText value="#{imageResult.angle}" >
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Angle" rendered="#{resultController.isAngleSelected}" width="200">
-                    <h:outputText value="#{imageResult.angle}">
+                <p:column headerText="Area" rendered="#{resultController.isAreaSelected}" width="200">
+                    <h:outputText value="#{imageResult.area}">
                         <f:convertNumber minFractionDigits="3" />
                     </h:outputText>
                 </p:column>

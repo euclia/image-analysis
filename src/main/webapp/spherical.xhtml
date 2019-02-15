@@ -22,39 +22,36 @@
 
         <p:growl id="growl" />
 
-            <p:panel id ="spherical"  style="margin-bottom:20px">
 
 
-                <p:panel id="imgPreview" header="Image Preview" style="margin-bottom:20px">
+
+                <p:panel id="imgPreviewPanel" header="Image Preview" style="margin-bottom:20px">
 
                 <h:panelGrid columns="1" cellpadding="10">
                     <p:row>
                         <p:column>
                             <p:fileUpload fileUploadListener="#{indexController.handleFileUpload}"
                                           mode="advanced"
-                                          update="messages,imgPreview"
+                                          update="scaleFactor, messages,imgPreviewPic"
                                           multiple="true"
                                           label="Choose a file from your system"
                                           sizeLimit="10485760"
                                           allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                                           invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
-                                          invalidFileMessage="You are allowed to upload only images !"
-                            >
+                                          invalidFileMessage="You are allowed to upload only images !">
                             </p:fileUpload>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <h:commandButton  update="nanotubes,messages"
+                            <h:commandButton  update="messages, scaleFactor"
                                               value="Or use an example Spherical Image"
                                               action="#{indexController.useExample}"/>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:graphicImage value="#{indexController.imgPreview}"
-                                            cache="false"
-                                            onmouseup="#{indexController.imgPreview}"/>
+                            <p:graphicImage id="imgPreviewPic" update="messages" value="#{indexController.imgPreview}" cache="false"/>
                         </p:column>
                     </p:row>
                     <p:growl id="messages" showDetail="true" life="5000"/>
@@ -64,7 +61,7 @@
             <p:panel id="parameters" header="Parameters" style="margin-bottom:20px">
                 <h:panelGrid columns="2">
                     <p:outputLabel for="thresholdType" value="Select filter type:"/>
-                    <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}" style="width: 240px;align-items: center">
+                    <p:selectOneMenu id="thresholdType"  valueChangeListener="#{indexController.updateThresholdType}" value="#{indexController.thresholdType}"  style="width: 240px;align-items: center">
                         <f:selectItem itemLabel="Default" itemValue="Default"/>
                         <f:selectItem itemLabel="Huang" itemValue="Huang"/>
                         <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
@@ -78,7 +75,7 @@
                         <f:selectItem itemLabel="Otsu" itemValue="Otsu"/>
                         <f:selectItem itemLabel="RenyiEntropy" itemValue="RenyiEntropy"/>
                         <f:selectItem itemLabel="Shanbhag" itemValue="Shanbhag"/>
-                        <p:ajax update="spherical"/>
+                        <p:ajax update="imgPreviewPic"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel for="function" value="Select function type:"/>
@@ -88,7 +85,7 @@
                     </p:selectOneMenu>
 
                     <h:outputText value="pixel/nm:"/>
-                    <p:inputNumber  minValue="0.000" id="ScaleFactor" value="#{indexController.scaleFactor}"/>
+                    <p:inputNumber  minValue="0.000" id="scaleFactor" value="#{indexController.scaleFactor}"/>
                 </h:panelGrid>
 
 
@@ -107,7 +104,7 @@
 
             </p:panel>
             <p:commandButton id="submit" value="Submit" action="#{indexController.submitForm}" icon="ui-icon-check"/>
-        </p:panel>
+
         </h:form>
         <div class="p-col-12">
             <ui:insert name="footer" >

@@ -73,6 +73,7 @@ public class SphericalController implements Serializable {
     
     public void handleFileUpload(FileUploadEvent event) {
         try {
+
             InputStream inputStream = event.getFile().getInputstream();
             bufferedImage = ImageIO.read(inputStream);
             FacesMessage msg
@@ -81,6 +82,7 @@ public class SphericalController implements Serializable {
                             + event.getFile().getSize() / 1024 + " Kb content type: "
                             + event.getFile().getContentType() + "The file was uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            scaleFactor = 1.0000;
         } catch (IOException e) {
             e.printStackTrace();
             FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "The files were not uploaded!", "");
@@ -149,10 +151,25 @@ public class SphericalController implements Serializable {
 
     public DefaultStreamedContent getImgPreview() {
         DefaultStreamedContent imgPreview;
+
+        //Threshold procedure
+        BufferedImage temp = null;
         if (bufferedImage != null) {
             ImagePlus imagePlus = new ImagePlus("theTitle", bufferedImage);
             ApplicationMain applicationMain = new ApplicationMain(imagePlus);
-            BufferedImage temp = applicationMain.applyThreshold(this.thresholdType);
+            temp = applicationMain.applyThreshold(this.thresholdType);
+            //Failed threshold case
+            if (temp==null) {
+                bufferedImage = null;
+                String msg = "Error when applying threshold on image, try uploading a 8 or 16 bit image.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
+            }
+        }
+
+        //Resulting image presentation
+        //Either thresholded image (temp) or blank image
+        if (temp != null)
+        {
             int newWidth = 800;
             int newHeight = new Double(newWidth/((double)temp.getWidth()/(double)temp.getHeight())).intValue();
             BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
@@ -168,12 +185,10 @@ public class SphericalController implements Serializable {
             byte[] data = bas.toByteArray();
             InputStream is = new ByteArrayInputStream(data);
             imgPreview = new DefaultStreamedContent(is);
-
         } else {
             imgPreview = this.getBlankImage();
         }
         return imgPreview;
-        
     }
 
     public void useExample(){

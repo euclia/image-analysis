@@ -126,10 +126,11 @@ public class ParticleResult {
     private void calculateExtraParameters() {
         if (!this.area.isEmpty() && !this.circularity.isEmpty() && !this.feret.isEmpty()) {
             AnalysisHelper analysisHelper = new AnalysisHelper();
-            double volume = analysisHelper.findApproximateVolume(Double.parseDouble(this.circularity),
-                    Double.parseDouble(this.feret_x),
-                    Double.parseDouble(this.feret_y));
+
             double surfaceDiameter = analysisHelper.getSurfaceDiameter(Double.parseDouble(this.area));
+            double volume = analysisHelper.findApproximateVolume(Double.parseDouble(this.circularity),
+                    surfaceDiameter,
+                    Double.parseDouble(this.min_feret));
             double sphericity = analysisHelper.getSphericity(volume, Double.parseDouble(this.area));
             double volumeDiameter = analysisHelper.getVolumeDiameter(volume);
             double volumeToSurface = analysisHelper.getVolumeToSurface(volume, Double.parseDouble(this.area));

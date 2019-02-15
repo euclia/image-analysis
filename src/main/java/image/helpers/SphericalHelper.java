@@ -71,6 +71,7 @@ public class SphericalHelper {
 
     public BufferedImage applyThreshold(String threshold) {
         ImagePlus temp = new ImagePlus();
+        if (this.imagePlus.getBitDepth()>16) return null;
         try {
             this.imagePlus.getProcessor().setAutoThreshold(threshold,false,RED_LUT);
             this.imagePlus.updateAndDraw();
@@ -88,37 +89,41 @@ public class SphericalHelper {
         SphericalReport theResult;
         try {
 
-
-            calibrateImage(scale);
-            this.imagePlus.getProcessor().setAutoThreshold(thresholdType,false,RED_LUT);
-
-            ResultsTable rt = new ResultsTable();
-            ParticleAnalyzer particleAnalyzer = new ParticleAnalyzer(ParticleAnalyzer.SHOW_OUTLINES, measurements, rt, 10, 99999);
-            particleAnalyzer.setHideOutputImage(true);
-            particleAnalyzer.analyze(this.imagePlus);
-
-            //Case of error in particle analyzer
-            if (particleAnalyzer.getOutputImage()==null)
+            if (this.imagePlus.getProcessor()==null)
                 theResult = new SphericalReport(resultsMap,null);
             else {
-                String headers = rt.getColumnHeadings().replace('\t', ',');
-                StringBuilder sb = new StringBuilder(headers);
-                sb.append("\n");
-                sb.append(
-                        IntStream.range(0, rt.getCounter())
-                                .mapToObj(i -> {
-                                    return rt.getRowAsString(i).replace('\t', ',');
-                                }).collect(Collectors.joining("\n"))
-                );
+                calibrateImage(scale);
+                this.imagePlus.getProcessor().setAutoThreshold(thresholdType, false, RED_LUT);
 
-                ReaderCSV readerCSV = new ReaderCSV(sb);
-                resultsMap = readerCSV.read();
 
-                theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
-                theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
-                theResult.staticParticle.setId("Average Particle");
-                theResult.particleResults.add(0, theResult.staticParticle);
-                rt.reset();
+                ResultsTable rt = new ResultsTable();
+                ParticleAnalyzer particleAnalyzer = new ParticleAnalyzer(ParticleAnalyzer.SHOW_OUTLINES, measurements, rt, 10, 99999);
+                particleAnalyzer.setHideOutputImage(true);
+                particleAnalyzer.analyze(this.imagePlus);
+
+                //Case of error in particle analyzer
+                if (particleAnalyzer.getOutputImage() == null)
+                    theResult = new SphericalReport(resultsMap, null);
+                else {
+                    String headers = rt.getColumnHeadings().replace('\t', ',');
+                    StringBuilder sb = new StringBuilder(headers);
+                    sb.append("\n");
+                    sb.append(
+                            IntStream.range(0, rt.getCounter())
+                                    .mapToObj(i -> {
+                                        return rt.getRowAsString(i).replace('\t', ',');
+                                    }).collect(Collectors.joining("\n"))
+                    );
+
+                    ReaderCSV readerCSV = new ReaderCSV(sb);
+                    resultsMap = readerCSV.read();
+
+                    theResult = new SphericalReport(resultsMap, particleAnalyzer.getOutputImage().getBufferedImage());
+                    theResult.staticParticle = new ParticleResult(this.calculateAverageModel(rt, readerCSV.headersArray));
+                    theResult.staticParticle.setId("Average Particle");
+                    theResult.particleResults.add(0, theResult.staticParticle);
+                    rt.reset();
+                }
             }
 
         } catch (Exception e) {
