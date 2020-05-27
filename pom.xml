@@ -19,12 +19,12 @@
         <repository>
             <id>imagej repo</id>
             <name>Imagej Repo</name>
-            <url>http://maven.imagej.net/content/repositories/releases/</url>
+            <url>https://maven.imagej.net/content/repositories/releases/</url>
         </repository>
         <repository>
             <id>prime-repo</id>
             <name>Prime Repo</name>
-            <url>http://repository.primefaces.org</url>
+            <url>https://repository.primefaces.org</url>
         </repository>
     </repositories>
 

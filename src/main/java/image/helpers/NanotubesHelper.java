@@ -42,7 +42,8 @@ public class NanotubesHelper {
 
         calibrateImage(scale);
 
-        lines.add(detect.detectLines(imp.getChannelProcessor(), sigma, upperThresh, lowerThresh, minLength, maxLength, false, true, true, true, OverlapOption.SLOPE));
+//        detect.
+        lines.add(detect.detectLines(imp.getChannelProcessor(), sigma, upperThresh, lowerThresh, minLength, maxLength, false, false, true, false, OverlapOption.NONE));
         nanoResult.setResultLines(this.getLines());
 
         //Create Green Overlay image
@@ -125,8 +126,11 @@ public class NanotubesHelper {
                             String.valueOf(c.getXCoordinates()[i] * cal.pixelWidth),
                             String.valueOf(c.getYCoordinates()[i] * cal.pixelHeight),
                             String.valueOf(c.estimateLength() * cal.pixelHeight),
-                            String.valueOf(Math.abs(c.getIntensity()[i])),
-                            String.valueOf(Math.abs(c.getAsymmetry()[i])),
+                            
+                            "0",
+//                            String.valueOf(Math.abs(c.getIntensity()[i])) ,
+                            "0",
+//                            String.valueOf(Math.abs(c.getAsymmetry()[i])),
                             String.valueOf((c.getLineWidthL()[i] + c.getLineWidthR()[i]) * cal.pixelWidth),
                             String.valueOf((double) c.getAngle()[i]),
                             String.valueOf(c.getContourClass().toString().substring(5))));
