@@ -158,6 +158,7 @@ public class NanotubesHelper {
 
     public ImagePlus makeBinary() {
         if(lines.size()==0) return null;
+        
         ImagePlus binary = IJ.createHyperStack(imp.getTitle() + " Detected segments", imp.getWidth(), imp.getHeight(), imp.getNChannels(), imp.getStackSize() / imp.getNChannels(), 1, 8);
         binary.copyScale(imp);
         ImageProcessor binaryProcessor = binary.getProcessor();

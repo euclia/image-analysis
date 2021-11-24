@@ -15,6 +15,11 @@
         <managed-bean-class>web.NanotubesController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>agglomeratesController</managed-bean-name>
+        <managed-bean-class>web.AgglomerateController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <navigation-rule>
         <display-name>Spherical Particles</display-name>
         <from-view-id>spherical.xhtml</from-view-id>
@@ -29,6 +34,15 @@
         <navigation-case>
             <from-outcome>Nanotubes Report</from-outcome>
             <to-view-id>nanotubes_result.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <display-name>Agglomerates</display-name>
+        <from-view-id>agglomerates.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Agglomerates Report</from-outcome>
+            <to-view-id>agglomerates_result.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
