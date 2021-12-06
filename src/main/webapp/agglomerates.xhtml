@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Agglomerates</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+    </h:head>
+    <ui:insert name="header" >
+        <ui:include src="header.html">
+            <ui:param name = "Title" value = "Agglomerates" />
+        </ui:include>
+    </ui:insert>
+    <script type="text/javascript">
+        function start() {
+            PF('statusDialog').show();
+        }
+
+        function stop() {
+            PF('statusDialog').hide();
+        }
+    </script>
+    <h:body>
+        <!--
+                <div class="card">
+                    <h:form>
+                        <p:commandButton value="Ajax Download" icon="pi pi-arrow-down" styleClass="ui-button-outlined">
+                            <p:fileDownload value="#{fileViewController.file}"/>
+                            
+                        </p:commandButton>
+                    </h:form>            
+        
+                </div>-->
+
+        <div style="text-align: left; font-size: 1.6em; padding: 1em">
+           Images ought to be processed with ImageJ. Plugin:
+                <br/> run("Apply LUT"); 
+                <br/> run("Smooth");
+                <br/> run("Smooth");
+                <br/> run("Smooth");
+           	<br/> setAutoThreshold("Huang");
+                <br/> setOption("BlackBackground", false);
+                <br/> run("Convert to Mask");
+                <br/> run("Erode");
+                <br/> run("Watershed");
+                <br/> run("Erode");
+        </div>
+
+
+        <h:form enctype="multipart/form-data">
+
+
+
+
+
+            <p:growl id="growl" />
+
+            <p:panel id="imgPreviewPanel" header="Image Preview" style="margin-bottom:20px">
+
+                <h:panelGrid columns="1" cellpadding="10">
+                    <p:row>
+                        <p:column>
+                            <p:fileUpload fileUploadListener="#{agglomeratesController.handleFileUpload}"
+                                          mode="advanced"
+                                          update="scaleFactor, messages,imgPreviewPic"
+                                          multiple="true"
+                                          label="Choose a file from your system"
+                                          sizeLimit="10485760"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                          invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
+                                          invalidFileMessage="You are allowed to upload only images !">
+                            </p:fileUpload>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:commandButton  update="messages, scaleFactor"
+                                              value="Or use an example processed Image"
+                                              action="#{agglomeratesController.useExample}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:graphicImage id="imgPreviewPic" update="messages" value="#{agglomeratesController.imgPreview}" cache="false"/>
+                        </p:column>
+                    </p:row>
+                    <p:growl id="messages" showDetail="true" life="5000"/>
+                </h:panelGrid>
+            </p:panel>
+            <br/>
+            <p:panel id="parameters" header="Parameters" style="margin-bottom:20px">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="thresholdType" value="Select filter type:"/>
+                    <p:selectOneMenu id="thresholdType"  valueChangeListener="#{agglomeratesController.updateThresholdType}" value="#{agglomeratesController.thresholdType}"  style="width: 240px;align-items: center">
+                        <f:selectItem itemLabel="Default" itemValue="Default"/>
+                        <f:selectItem itemLabel="Huang" itemValue="Huang"/>
+                        <f:selectItem itemLabel="Triangle" itemValue="Triangle"/>
+                        <f:selectItem itemLabel="Intermodes" itemValue="Intermodes"/>
+                        <f:selectItem itemLabel="IsoData" itemValue="IsoData"/>
+                        <f:selectItem itemLabel="IJ_IsoData" itemValue="IJ_IsoData"/>
+                        <f:selectItem itemLabel="Li" itemValue="Li"/>
+                        <f:selectItem itemLabel="MaxEntropy" itemValue="MaxEntropy"/>
+                        <f:selectItem itemLabel="Mean" itemValue="Mean"/>
+                        <f:selectItem itemLabel="Moments" itemValue="Moments"/>
+                        <f:selectItem itemLabel="Otsu" itemValue="Otsu"/>
+                        <f:selectItem itemLabel="RenyiEntropy" itemValue="RenyiEntropy"/>
+                        <f:selectItem itemLabel="Shanbhag" itemValue="Shanbhag"/>
+                        <f:selectItem itemLabel="Watershed" itemValue="Watershed"/>
+                        <p:ajax update="imgPreviewPic"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="function" value="Select function type:"/>
+                    <p:selectOneMenu id="function" value="#{agglomeratesController.function}" style="width: 240px;align-items: center">
+                        <f:selectItem itemLabel="Particle count and analysis" itemValue="particleAnalysis"/>
+                        <f:selectItem itemLabel="Full image Analysis" itemValue="imageAnalysis" />
+                    </p:selectOneMenu>
+
+                    <h:outputText value="pixel/nm:"/>
+                    <p:inputNumber  minValue="0.000" id="scaleFactor" value="#{agglomeratesController.scaleFactor}"/>
+                </h:panelGrid>
+
+
+                <br/>
+                <br/>
+                <h:outputText value="Select Descriptors:"/>
+                <br/>
+                <p:commandButton id="selectAll" value="Select All" action="#{agglomeratesController.selectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+                <p:commandButton id="deselectAll" value="Deselect All" action="#{agglomeratesController.deselectAllMeasurements}" update="grid" style="font-size: small; width:110px;height:25px"/>
+                <br/>
+                <p:selectManyCheckbox id="grid" value="#{agglomeratesController.selectedMeasurements}" layout="grid" columns="6">
+                    <f:selectItems value="#{agglomeratesController.measurements}" var="measurement" itemLabel="#{measurement}"
+                                   itemValue="#{measurement}"/>
+                </p:selectManyCheckbox>
+                <br/>
+
+            </p:panel>
+            <p:commandButton id="submit" value="Submit" action="#{agglomeratesController.submitForm}" icon="ui-icon-check"/>
+
+        </h:form>
+        <div class="p-col-12">
+            <ui:insert name="footer" >
+                <ui:include src="spherical_footer.xhtml" />
+            </ui:insert>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+    <f:event type="preRenderView" listener="#{agglomerateResult.initialize}"/>
+</f:metadata>
+<h:head>
+    <title>Agglomerate Report</title>
+    <h:outputStylesheet library="css" name="style.css"  />
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+</h:head>
+
+<ui:insert name="header" >
+    <ui:include src="header.html">
+        <ui:param name = "Title" value = "Agglomerates Report" />
+    </ui:include>
+</ui:insert>
+
+<h:body>
+    
+        <p:button class="back_button" value="Back" outcome="agglomerates" />
+        <h:form enctype="multipart/form-data">
+            <p:panel id="basic" header="Image Preview" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:graphicImage value="#{agglomerateResult.imgPreview}" cache="false" onmouseup="#{agglomerateResult.imgPreview}"/>
+                </h:panelGrid>
+            </p:panel>
+            <p:dataTable class="dataTable" id="imageResults" var="imageResult" value="#{agglomerateResult.particleResults}"
+                         rows="25"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,25,50">
+                <f:facet name="header">
+                    List of Properties
+                    <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                    <p:columnToggler datasource="imageResults" trigger="toggler" />
+                </f:facet>
+                <p:column headerText="id" width="200">
+                    <h:outputText value="#{imageResult.id}"/>
+                </p:column>
+                <p:column headerText="Angle" rendered="#{agglomerateResult.isAngleSelected}" width="200">
+                    <h:outputText value="#{imageResult.angle}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Area" rendered="#{agglomerateResult.isAreaSelected}" width="200">
+                    <h:outputText value="#{imageResult.area}">
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Aspect Ratio" rendered="#{agglomerateResult.isAspectRationSelected}" width="200">
+                    <h:outputText value="#{imageResult.aspect_ratio}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Circularity" rendered="#{agglomerateResult.isCircularitySelected}" width="200">
+                    <h:outputText value="#{imageResult.circularity}">
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Feret Angle" rendered="#{agglomerateResult.isFeretAngleSelected}" width="200">
+                    <h:outputText value="#{imageResult.feret_angle}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Grey deviation" rendered="#{agglomerateResult.isStandardDeviationSelected}" width="200">
+                    <h:outputText value="#{imageResult.std_dev}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Integrated Density" rendered="#{agglomerateResult.isIntegratedDensitySelected}" width="200">
+                    <h:outputText value="#{imageResult.integrated_density}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Kurtosis" rendered="#{agglomerateResult.isKurtosisSelected}" width="200">
+                    <h:outputText value="#{imageResult.kurtosis}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Major Axis" rendered="#{agglomerateResult.isMajorSelected}" width="200">
+                    <h:outputText value="#{imageResult.major}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Max Grey Value" rendered="#{agglomerateResult.isMaxGreyValueSelected}" width="200">
+                    <h:outputText value="#{imageResult.max_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Mean Grey Value" rendered="#{agglomerateResult.isMeanSelected}" width="200">
+                    <h:outputText value="#{imageResult.mean_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Min Feret" rendered="#{agglomerateResult.isMinFeretSelected}" width="200">
+                    <h:outputText value="#{imageResult.min_feret}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Min Grey Value" rendered="#{agglomerateResult.isMinGreyValueSelected}" width="200">
+                    <h:outputText value="#{imageResult.min_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Minor Axis" rendered="#{agglomerateResult.isMinorSelected}" width="200">
+                    <h:outputText value="#{imageResult.minor}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Modal Grey Value" rendered="#{agglomerateResult.isModalGrayValueSelected}" width="200">
+                    <h:outputText value="#{imageResult.modal_grey_value}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Perimeter" rendered="#{agglomerateResult.isPerimeterSelected}" width="200">
+                    <h:outputText value="#{imageResult.perimeter}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Porosity" rendered="#{agglomerateResult.isPorositySelected}" width="200">
+                    <h:outputText value="#{imageResult.area_fraction}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Roundness" rendered="#{agglomerateResult.isRoundnessSelected}" width="200">
+                    <h:outputText value="#{imageResult.roundness}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Skeweness" rendered="#{agglomerateResult.isSkewenessSelected}" width="200">
+                    <h:outputText value="#{imageResult.skewness}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Solidity" rendered="#{agglomerateResult.isSoliditySelected}" width="200">
+                    <h:outputText value="#{imageResult.solidity}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Sphericity" rendered="#{agglomerateResult.isSphericitySelected}" width="200">
+                    <h:outputText value="#{imageResult.sphericity}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Surface Diameter" rendered="#{agglomerateResult.isSurfaceDiameterSelected}" width="200">
+                    <h:outputText value="#{imageResult.surfaceDiameter}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Volume" rendered="#{agglomerateResult.isVolumeSelected}" width="200">
+                <h:outputText value="#{imageResult.volume}" >
+                    <f:convertNumber minFractionDigits="3" />
+                </h:outputText>
+            </p:column>
+                <p:column headerText="Volume to Surface" rendered="#{agglomerateResult.isVolumeToSurfaceSelected}" width="200">
+                    <h:outputText value="#{imageResult.volumeToSurface}" >
+                        <f:convertNumber minFractionDigits="3" />
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+            <div class="dataTableExports">
+                <h:commandLink style="float:right">
+                    <p:graphicImage name="xml.png" width="50px"/>
+                    <p:dataExporter type="xml" target="imageResults" fileName="sphericalReport" />
+                </h:commandLink>
+                <h:commandLink style="float:right">
+                    <p:graphicImage name="csv.png" width="50px"/>
+                    <p:dataExporter type="csv" target="imageResults" fileName="sphericalReport" />
+                </h:commandLink>
+                <h:commandLink style="float:right">
+                    <p:graphicImage name="pdf.png" width="50px"/>
+                    <p:dataExporter type="pdf" target="imageResults" fileName="sphericalReport" preProcessor="#{agglomerateResult.preProcessPDF}"/>
+                </h:commandLink>
+                <h:commandLink style="float:right">
+                    <p:graphicImage name="excel.png" width="50px"/>
+                    <p:dataExporter type="xls" target="imageResults" fileName="sphericalReport" />
+                </h:commandLink>
+                <span style="font-size:2vw; float:right"  >Download Spherical Descriptors: </span>
+            </div>
+
+        </h:form>
+        <div class="p-col-12">
+            <ui:insert name="footer" >
+                <ui:include src="spherical_footer.xhtml" />
+            </ui:insert>
+        </div>
+    </h:body>
+<!--<div class="p-col-12">
+    <ui:insert name="footer" >
+        <ui:include src="agglomerates_footer.xhtml" />
+    </ui:insert>
+</div>-->
+</html>

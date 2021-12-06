@@ -4,12 +4,17 @@ import ij.ImagePlus;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
 import ij.plugin.filter.Analyzer;
+import ij.plugin.filter.EDM;
 import ij.plugin.filter.ParticleAnalyzer;
+import ij.process.AutoThresholder;
+import ij.process.AutoThresholder.Method;
+import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
+import static ij.process.ImageProcessor.BLACK_AND_WHITE_LUT;
+import static ij.process.ImageProcessor.OVER_UNDER_LUT;
+import static ij.process.ImageProcessor.RED_LUT;
 import image.models.spherical.ParticleResult;
 import image.models.spherical.SphericalReport;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -17,15 +22,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javax.imageio.ImageIO;
 
-import static ij.process.ImageProcessor.RED_LUT;
-
-public class SphericalHelper {
+//import static ij.process.ImageProcessor.;
+/**
+ *
+ * @author pantelispanka
+ */
+public class AgglomeratesHelper {
 
     private ImagePlus imagePlus;
     private Double scale;
 
-    public SphericalHelper(ImagePlus imagePlus, Double scale) {
+    public AgglomeratesHelper(ImagePlus imagePlus, Double scale) {
         this.imagePlus = imagePlus;
         this.scale = scale;
     }
@@ -182,4 +191,17 @@ public class SphericalHelper {
         }
         this.imagePlus.updateAndDraw();
     }
+
+    public BufferedImage getWatershed() {
+
+        this.imagePlus.getProcessor().setAutoThreshold(Method.IJ_IsoData, false, RED_LUT);
+        this.imagePlus.updateAndDraw();
+        this.imagePlus.getProcessor().autoThreshold();
+
+        ij.plugin.filter.EDM edm = new EDM();
+        edm.setup("watershed", this.imagePlus);
+        edm.toWatershed(this.imagePlus.getProcessor());
+        return this.imagePlus.getBufferedImage();
+    }
+
 }

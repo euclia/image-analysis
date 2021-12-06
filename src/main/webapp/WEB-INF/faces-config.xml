@@ -10,9 +10,26 @@
         <managed-bean-class>web.SphericalController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>indexController</managed-bean-name>
+        <managed-bean-class>web.SphericalController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>fileViewController</managed-bean-name>
+        <managed-bean-class>web.FileViewController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>ridgeController</managed-bean-name>
         <managed-bean-class>web.NanotubesController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>agglomeratesController</managed-bean-name>
+        <managed-bean-class>web.AgglomerateController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <navigation-rule>
@@ -29,6 +46,15 @@
         <navigation-case>
             <from-outcome>Nanotubes Report</from-outcome>
             <to-view-id>nanotubes_result.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <display-name>Agglomerates</display-name>
+        <from-view-id>agglomerates.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Agglomerates Report</from-outcome>
+            <to-view-id>agglomerates_result.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

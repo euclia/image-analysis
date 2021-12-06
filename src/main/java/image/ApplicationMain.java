@@ -6,7 +6,7 @@ import image.models.spherical.SphericalOptions;
 import image.models.spherical.SphericalReport;
 
 import java.awt.image.BufferedImage;
-
+import image.helpers.AgglomeratesHelper;
 
 public class ApplicationMain{
 
@@ -47,12 +47,35 @@ public class ApplicationMain{
 	}
 
 	public BufferedImage applyThreshold(String selectedThreshold){
-		if (selectedThreshold != null){
+		if (selectedThreshold != null && !"Watershed".equals(selectedThreshold)){
 			SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus,1.0D);
 			return sphericalHelper.applyThreshold(selectedThreshold);
-		} else {
+		}if (selectedThreshold != null && "Watershed".equals(selectedThreshold)){
+			AgglomeratesHelper agglomeratesHelper = new AgglomeratesHelper(this.imagePlus,1.0D);
+			return agglomeratesHelper.applyThreshold(selectedThreshold);
+		}
+                else {
 			SphericalHelper sphericalHelper = new SphericalHelper(this.imagePlus, 1.0D);
 			return sphericalHelper.applyThreshold("Default");
 		}
 	}
+        
+	public SphericalReport analyseAgglomeratedImage(){
+		SphericalReport theSphericalReport;
+		AgglomeratesHelper agglomeratesHelper = new AgglomeratesHelper(this.imagePlus,scale);
+		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
+		theSphericalReport = agglomeratesHelper.analyseImage(measurements, this.selectedThreshold);
+		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
+		return theSphericalReport;
+	}
+
+	public SphericalReport countAgglomeratedParticles(){
+		SphericalReport theSphericalReport;
+		AgglomeratesHelper agglomeratesHelper = new AgglomeratesHelper(this.imagePlus,scale);
+		int measurements = this.sphericalOptions.convertMeasurementListToInt(this.selectedMeasurements);
+		theSphericalReport =  agglomeratesHelper.countParticles(this.selectedThreshold, measurements);
+		theSphericalReport.setSelectedMeasurements(this.sphericalOptions.selectedMeasurementsMap);
+		return theSphericalReport;
+	}
+        
 }
